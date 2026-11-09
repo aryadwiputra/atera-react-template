@@ -23,6 +23,14 @@ import CalendarPage from '@/pages/calendar'
 import WizardPage from '@/pages/wizard'
 import UsersPage from '@/pages/users'
 import SupportPage from '@/pages/support'
+import FinancePage from '@/pages/finance'
+import MarketingPage from '@/pages/marketing'
+import ProjectManagementPage from '@/pages/project-management'
+import AiChatPage from '@/pages/ai-chat'
+import WidgetsPage from '@/pages/widgets'
+import EditorPage from '@/pages/editor'
+import MapsPage from '@/pages/maps'
+import { LoginV2Page, RegisterV2Page } from '@/pages/auth-v2'
 import { NotificationsPage, ProfilePage } from '@/pages/workspaces'
 import { ForgotPasswordPage, LockScreenPage, ResetPasswordPage, SignUpPage, TwoFactorPage, VerifyEmailPage } from '@/pages/auth-pages'
 import SettingsAppearancePage from '@/pages/settings/appearance'
@@ -50,19 +58,26 @@ const placeholderRoutes = navigationItems.filter((item) => item.href !== '/dashb
 
 const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
-  { element: <AuthRoutes />, children: [{ path: '/login', element: <LoginPage /> }, { path: '/sign-in', element: <LoginPage /> }, { path: '/sign-up', element: <SignUpPage /> }, { path: '/forgot-password', element: <ForgotPasswordPage /> }, { path: '/reset-password', element: <ResetPasswordPage /> }, { path: '/two-factor', element: <TwoFactorPage /> }, { path: '/verify-email', element: <VerifyEmailPage /> }, { path: '/lock-screen', element: <LockScreenPage /> }] },
+  { element: <AuthRoutes />, children: [{ path: '/login', element: <LoginPage /> }, { path: '/sign-in', element: <LoginPage /> }, { path: '/sign-up', element: <SignUpPage /> }, { path: '/forgot-password', element: <ForgotPasswordPage /> }, { path: '/reset-password', element: <ResetPasswordPage /> }, { path: '/two-factor', element: <TwoFactorPage /> }, { path: '/verify-email', element: <VerifyEmailPage /> }, { path: '/lock-screen', element: <LockScreenPage /> }, { path: '/login-v2', element: <LoginV2Page /> }, { path: '/register-v2', element: <RegisterV2Page /> }] },
   {
     element: <ProtectedLayout />,
     children: [
       { path: '/dashboard', element: <DashboardPage /> },
       { path: '/analytics', element: <AnalyticsPage /> },
+      { path: '/charts', element: <ChartsPage /> },
       { path: '/orders', element: <OrdersPage /> },
       { path: '/products', element: <ProductsPage /> },
       { path: '/customers', element: <CustomersPage /> },
       { path: '/ecommerce', element: <EcommercePage /> },
       { path: '/crm', element: <CrmPage /> },
       { path: '/saas', element: <SaasPage /> },
-      { path: '/charts', element: <ChartsPage /> },
+      { path: '/finance', element: <FinancePage /> },
+      { path: '/marketing', element: <MarketingPage /> },
+      { path: '/project-management', element: <ProjectManagementPage /> },
+      { path: '/ai-chat', element: <AiChatPage /> },
+      { path: '/widgets', element: <WidgetsPage /> },
+      { path: '/editor', element: <EditorPage /> },
+      { path: '/maps', element: <MapsPage /> },
       { path: '/orders/new', element: <OrderFormPage /> },
       { path: '/orders/:id/edit', element: <OrderFormPage /> },
       { path: '/orders/:id', element: <OrderDetailPage /> },
