@@ -1,9 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft, Check, Plus, Save } from 'lucide-react'
+import { ArrowLeft, Check, Pencil, Plus, Save, Trash2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useNavigate, useParams } from 'react-router'
 import { z } from 'zod'
 import { DataTable, createAppColumnHelper } from '@/components/shared/data-table'
+import type { ColumnDef } from '@tanstack/react-table'
+import { useState } from 'react'
+import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { useToast } from '@/components/shared/toast'
+import { tableFeaturesConfig } from '@/components/shared/data-table'
 import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { Badge } from '@/components/ui/badge'
@@ -15,7 +20,7 @@ import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
 import { listCustomers } from '@/lib/data/customers'
 import { createOrder, getOrder, updateOrder } from '@/lib/data/orders'
-import { listInvoices } from '@/lib/data/invoices'
+import { listInvoices, removeInvoice } from '@/lib/data/invoices'
 import { createProduct, getProduct, updateProduct } from '@/lib/data/products'
 import type { Invoice } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
@@ -55,8 +60,46 @@ export function ProductFormPage() {
 }
 
 const invoiceHelper = createAppColumnHelper<Invoice>()
-const invoiceColumns = [invoiceHelper.accessor('id', { header: 'Invoice' }), invoiceHelper.accessor('customer', { header: 'Customer' }), invoiceHelper.accessor('date', { header: 'Issued' }), invoiceHelper.accessor('dueDate', { header: 'Due' }), invoiceHelper.accessor('amount', { header: 'Amount', cell: (info) => `$${info.getValue().toFixed(2)}` }), invoiceHelper.accessor('status', { header: 'Status', cell: (info) => <Badge variant={info.getValue() === 'Paid' ? 'default' : 'secondary'}>{info.getValue()}</Badge> })] as any
-export function InvoicesPage() { const { language } = useCustomizePreferences(); const t = useTranslations(language); return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6"><PageHeader title={t('invoices')} description={t('reviewInvoicesDescription')} actions={<Button size="sm"><Plus className="size-4" />{t('createInvoice')}</Button>} /><DataTable columns={invoiceColumns} data={listInvoices()} filterPlaceholder={t('filterInvoices')} /></main></PageTransition> }
+export function InvoicesPage() {
+  const { language } = useCustomizePreferences()
+  const t = useTranslations(language)
+  const { toast } = useToast()
+  const [items, setItems] = useState(listInvoices())
+  const [pendingDelete, setPendingDelete] = useState<Invoice | null>(null)
+
+  const columns: ColumnDef<typeof tableFeaturesConfig, Invoice, any>[] = [
+    invoiceHelper.accessor('id', { header: 'Invoice', cell: (info) => <span className="font-medium">{info.getValue()}</span> }),
+    invoiceHelper.accessor('customer', { header: 'Customer' }),
+    invoiceHelper.accessor('date', { header: 'Issued' }),
+    invoiceHelper.accessor('dueDate', { header: 'Due' }),
+    invoiceHelper.accessor('amount', { header: 'Amount', cell: (info) => `$${info.getValue().toFixed(2)}` }),
+    invoiceHelper.accessor('status', { header: 'Status', cell: (info) => <Badge variant={info.getValue() === 'Paid' ? 'default' : 'secondary'}>{info.getValue()}</Badge> }),
+    invoiceHelper.display({ id: 'actions', header: '', cell: ({ row }) => (
+      <div className="flex justify-end gap-1">
+        <Button variant="ghost" size="icon" className="size-8" asChild aria-label={t('edit')}><Link to={`/invoices/${row.original.id}/edit`}><Pencil className="size-4" /></Link></Button>
+        <Button variant="ghost" size="icon" className="size-8 text-destructive hover:text-destructive" aria-label={t('delete')} onClick={() => setPendingDelete(row.original)}><Trash2 className="size-4" /></Button>
+      </div>
+    ) }),
+  ]
+
+  return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6"><PageHeader title={t('invoices')} description={t('reviewInvoicesDescription')} actions={<Button asChild size="sm"><Link to="/invoices/new"><Plus className="size-4" />{t('createInvoice')}</Link></Button>} /><DataTable columns={columns} data={items} filterPlaceholder={t('filterInvoices')} />
+    <ConfirmDialog
+      open={pendingDelete !== null}
+      onOpenChange={(open) => !open && setPendingDelete(null)}
+      title={t('deleteInvoice')}
+      description={t('deleteInvoiceDescription')}
+      confirmLabel={t('delete')}
+      cancelLabel={t('cancel')}
+      trigger={<span />}
+      onConfirm={() => {
+        if (!pendingDelete) return
+        removeInvoice(pendingDelete.id)
+        setItems(listInvoices())
+        toast({ title: t('invoiceDeleted'), variant: 'success' })
+      }}
+    />
+  </main></PageTransition>
+}
 
 export function BillingPage() { const { language } = useCustomizePreferences(); const t = useTranslations(language); const plans = [{ name: 'Starter', price: '$49', description: 'For growing teams', features: ['3 team members', 'Basic analytics', 'Email support'] }, { name: 'Pro', price: '$129', description: 'For scaling businesses', features: ['Unlimited members', 'Advanced analytics', 'Priority support'] }, { name: 'Enterprise', price: '$599', description: 'For complex operations', features: ['Dedicated success manager', 'Custom reporting', 'SLA and SSO'] }]; return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6"><PageHeader title={t('billing')} description={t('manageSubscriptionDescription')} /><div className="grid gap-4 lg:grid-cols-3">{plans.map((plan, index) => <Card key={plan.name} className={cn(index === 1 && 'border-primary shadow-sm')}><CardHeader><div className="flex items-center justify-between"><CardTitle>{plan.name}</CardTitle>{index === 1 && <Badge>{t('currentPlan')}</Badge>}</div><p className="text-sm text-muted-foreground">{plan.description}</p><p className="pt-3 text-3xl font-semibold">{plan.price}<span className="text-sm font-normal text-muted-foreground"> / {t('month')}</span></p></CardHeader><CardContent className="space-y-3">{plan.features.map((feature) => <p key={feature} className="flex items-center gap-2 text-sm"><Check className="size-4 text-primary" />{feature}</p>)}<Button variant={index === 1 ? 'default' : 'outline'} className="mt-3 w-full">{index === 1 ? t('managePlan') : t('choosePlan')}</Button></CardContent></Card>)}</div></main></PageTransition> }
 

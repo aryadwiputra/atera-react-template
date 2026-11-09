@@ -1,7 +1,7 @@
 import {
   BarChart3, Bell, CalendarDays, ChartNoAxesCombined, CircleDollarSign, CreditCard, FilePenLine, FileText, Folder, FolderKanban, FormInput,
   HelpCircle, KanbanSquare, LayoutGrid, LayoutPanelTop, Mail, MapPin, Megaphone, MessageSquare, Package, Settings, ShoppingCart,
-  Sparkles, Users, WalletCards, UserCircle,
+  Sparkles, Users, WalletCards, UserCircle, Wand2,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { TranslationKey } from '@/i18n'
@@ -38,7 +38,8 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Files', href: '/files', icon: Folder, group: 'apps', keywords: ['documents', 'storage'], translationKey: 'files' },
   { title: 'Kanban', href: '/kanban', icon: KanbanSquare, group: 'apps', keywords: ['tasks', 'board'], translationKey: 'kanban' },
   { title: 'Calendar', href: '/calendar', icon: CalendarDays, group: 'apps', keywords: ['events', 'schedule'], translationKey: 'calendar' },
-  { title: 'Forms', href: '/wizard', icon: FormInput, group: 'apps', keywords: ['wizard', 'workflow'], translationKey: 'forms' },
+  { title: 'Wizard', href: '/wizard', icon: Wand2, group: 'apps', keywords: ['setup', 'workflow'], translationKey: 'wizard' },
+  { title: 'Forms', href: '/forms', icon: FormInput, group: 'apps', keywords: ['inputs', 'validation'], translationKey: 'forms' },
   { title: 'AI Chat', href: '/ai-chat', icon: Sparkles, group: 'apps', keywords: ['assistant', 'ai'], translationKey: 'aiChat' },
   { title: 'Editor', href: '/editor', icon: FilePenLine, group: 'apps', keywords: ['rich text', 'tiptap'], translationKey: 'editor' },
   { title: 'Maps', href: '/maps', icon: MapPin, group: 'apps', keywords: ['locations', 'leaflet'], translationKey: 'maps' },

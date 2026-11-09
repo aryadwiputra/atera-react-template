@@ -31,6 +31,9 @@ import WidgetsPage from '@/pages/widgets'
 import EditorPage from '@/pages/editor'
 import MapsPage from '@/pages/maps'
 import { LoginV2Page, RegisterV2Page } from '@/pages/auth-v2'
+import FormsPage from '@/pages/forms'
+import CustomerFormPage from '@/pages/customer-form'
+import InvoiceFormPage from '@/pages/invoice-form'
 import { NotificationsPage, ProfilePage } from '@/pages/workspaces'
 import { ForgotPasswordPage, LockScreenPage, ResetPasswordPage, SignUpPage, TwoFactorPage, VerifyEmailPage } from '@/pages/auth-pages'
 import SettingsAppearancePage from '@/pages/settings/appearance'
@@ -78,14 +81,19 @@ const router = createBrowserRouter([
       { path: '/widgets', element: <WidgetsPage /> },
       { path: '/editor', element: <EditorPage /> },
       { path: '/maps', element: <MapsPage /> },
+      { path: '/forms', element: <FormsPage /> },
       { path: '/orders/new', element: <OrderFormPage /> },
       { path: '/orders/:id/edit', element: <OrderFormPage /> },
       { path: '/orders/:id', element: <OrderDetailPage /> },
       { path: '/products/new', element: <ProductFormPage /> },
       { path: '/products/:id/edit', element: <ProductFormPage /> },
       { path: '/products/:id', element: <ProductDetailPage /> },
+      { path: '/customers/new', element: <CustomerFormPage /> },
+      { path: '/customers/:id/edit', element: <CustomerFormPage /> },
       { path: '/customers/:id', element: <CustomerDetailPage /> },
       { path: '/invoices', element: <InvoicesPage /> },
+      { path: '/invoices/new', element: <InvoiceFormPage /> },
+      { path: '/invoices/:id/edit', element: <InvoiceFormPage /> },
       { path: '/billing', element: <BillingPage /> },
       { path: '/pricing', element: <PricingPage /> },
       { path: '/mail', element: <MailPage /> },

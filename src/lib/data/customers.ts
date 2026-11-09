@@ -9,3 +9,18 @@ const customers: Customer[] = [
 
 export const listCustomers = () => [...customers]
 export const getCustomer = (id: string) => customers.find((customer) => customer.id === id)
+export const createCustomer = (customer: Omit<Customer, 'id'>) => {
+  const created = { ...customer, id: `CUS-${String(Math.max(...customers.map((c) => Number.parseInt(c.id.slice(4), 10) || 0), 0) + 1).padStart(3, '0')}` }
+  customers.unshift(created)
+  return created
+}
+export const updateCustomer = (id: string, updates: Partial<Customer>) => {
+  const index = customers.findIndex((customer) => customer.id === id)
+  if (index === -1) return undefined
+  customers[index] = { ...customers[index], ...updates }
+  return customers[index]
+}
+export const removeCustomer = (id: string) => {
+  const index = customers.findIndex((customer) => customer.id === id)
+  if (index !== -1) customers.splice(index, 1)
+}
