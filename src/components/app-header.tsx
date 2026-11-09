@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import {
     Bell,
     Languages,
@@ -38,6 +38,7 @@ import { CustomizeDialog } from '@/components/app-sidebar-header';
 import { useAppearance } from '@/hooks/use-appearance';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
+import { navigationItems } from '@/lib/navigation';
 
 import type { BreadcrumbItem, NavItem } from '@/types';
 
@@ -52,6 +53,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     const [searchOpen, setSearchOpen] = useState(false);
     const [customizeOpen, setCustomizeOpen] = useState(false);
     const appearance = useAppearance();
+    const navigate = useNavigate();
     const preferences = useCustomizePreferences();
     const { language } = preferences;
     const t = useTranslations(language);
@@ -206,12 +208,19 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                 <CommandInput placeholder={t('searchPages')} />
                 <CommandList>
                     <CommandEmpty>{t('noResults')}</CommandEmpty>
-                    <CommandItem onSelect={() => setSearchOpen(false)}>
-                        {t('dashboard')}
-                    </CommandItem>
-                    <CommandItem onSelect={() => setSearchOpen(false)}>
-                        {t('settings')}
-                    </CommandItem>
+                    {navigationItems.map((item) => (
+                        <CommandItem
+                            key={item.href}
+                            value={[item.title, ...item.keywords].join(' ')}
+                            onSelect={() => {
+                                setSearchOpen(false);
+                                navigate(item.href);
+                            }}
+                        >
+                            <item.icon className="size-4" />
+                            {t(item.translationKey)}
+                        </CommandItem>
+                    ))}
                 </CommandList>
             </CommandDialog>
             <CustomizeDialog

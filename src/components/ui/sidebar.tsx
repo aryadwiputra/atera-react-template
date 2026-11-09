@@ -299,6 +299,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
     <main
       data-slot="sidebar-inset"
+      data-scroll-container
         className={cn(
           "bg-background relative flex min-h-svh max-w-full flex-1 flex-col",
           className

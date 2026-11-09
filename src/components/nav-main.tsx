@@ -35,7 +35,7 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
             groups.forEach((group) => {
                 if (
                     group.items.some(
-                        (item) => !item.disabled && isCurrentUrl(item.href),
+                        (item) =>                     !item.disabled && (isCurrentUrl(item.href) || (item.href !== '/dashboard' && currentUrl.startsWith(item.href))),
                     )
                 ) {
                     if (!next[group.label]) {

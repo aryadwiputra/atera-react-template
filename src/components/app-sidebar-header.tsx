@@ -46,7 +46,10 @@ import {
 } from '@/components/ui/select';
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 
+import { useNavigate } from 'react-router';
+import { navigationItems } from '@/lib/navigation';
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
+
 
 const colors: ColorPreset[] = [
     'neutral',
@@ -69,6 +72,7 @@ export function AppSidebarHeader({
     const t = useTranslations(preferences.language);
     const isCollapsed = !isMobile && state === 'collapsed';
     const [searchOpen, setSearchOpen] = useState(false);
+    const navigate = useNavigate();
     const [customizeOpen, setCustomizeOpen] = useState(false);
 
     useEffect(() => {
@@ -126,12 +130,19 @@ export function AppSidebarHeader({
                     <CommandInput placeholder={t('searchPages')} />
                     <CommandList>
                         <CommandEmpty>{t('noResults')}</CommandEmpty>
-                        <CommandItem onSelect={() => setSearchOpen(false)}>
-                            {t('dashboard')}
-                        </CommandItem>
-                        <CommandItem onSelect={() => setSearchOpen(false)}>
-                            {t('settings')}
-                        </CommandItem>
+                        {navigationItems.map((item) => (
+                            <CommandItem
+                                key={item.href}
+                                value={[item.title, ...item.keywords].join(' ')}
+                                onSelect={() => {
+                                    setSearchOpen(false);
+                                    navigate(item.href);
+                                }}
+                            >
+                                <item.icon className="size-4" />
+                                {t(item.translationKey)}
+                            </CommandItem>
+                        ))}
                     </CommandList>
                 </CommandDialog>
                 <div className="ml-auto flex items-center gap-1">

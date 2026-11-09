@@ -1,0 +1,32 @@
+- main [ref=f11e3]:
+  - generic [ref=f11e4]:
+    - generic [ref=f11e5]:
+      - generic [ref=f11e22]:
+        - generic [ref=f11e23]: Atera
+        - generic [ref=f11e24]: Dashboard
+      - generic [ref=f11e25]:
+        - paragraph [ref=f11e26]: Atera workspace
+        - heading "One platform for every tool your company runs." [level=1] [ref=f11e27]
+        - paragraph [ref=f11e28]: Bring company profile, HRIS, asset management, CRM, and ERP into one focused workspace.
+      - paragraph [ref=f11e29]: Atera Admin Platform
+    - generic [ref=f11e32]:
+      - generic [ref=f11e33]:
+        - heading "Log in to your account" [level=1] [ref=f11e34]
+        - paragraph [ref=f11e35]: Enter your email and password below to log in
+      - generic [ref=f11e36]:
+        - generic [ref=f11e37]:
+          - text: Email address
+          - textbox "Email address" [ref=f11e38]: demo@example.com
+        - generic [ref=f11e39]:
+          - text: Password
+          - generic [ref=f11e40]:
+            - textbox "Password Show password" [ref=f11e41]: ZenithDemo2026!
+            - button "Show password" [ref=f11e42]
+        - button "Log in" [ref=f11e46]
+      - generic [ref=f11e47]:
+        - strong [ref=f11e48]: Demo access
+        - paragraph [ref=f11e49]: Use demo@example.com and ZenithDemo2026!
+      - paragraph [ref=f11e50]:
+        - text: Don't have an account?
+        - link "Sign up" [ref=f11e51] [cursor=pointer]:
+          - /url: /sign-up

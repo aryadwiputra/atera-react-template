@@ -1,0 +1,158 @@
+- generic [ref=f14e3]:
+  - banner [ref=f14e4]:
+    - link "Atera Dashboard" [ref=f14e6] [cursor=pointer]:
+      - /url: /dashboard
+      - generic [ref=f14e22]:
+        - generic [ref=f14e23]: Atera
+        - generic [ref=f14e24]: Dashboard
+    - generic [ref=f14e25]:
+      - button "Search anything... ⌘ K" [ref=f14e26]:
+        - generic [ref=f14e27]: Search anything...
+        - generic [ref=f14e28]: ⌘ K
+      - generic [ref=f14e29]:
+        - heading "Command Palette" [level=2] [ref=f14e30]
+        - paragraph [ref=f14e31]: Search for a command to run...
+      - generic [ref=f14e32]:
+        - button "New order" [ref=f14e33]
+        - button "Toggle theme" [ref=f14e34]
+        - button "Customize theme" [ref=f14e35]
+        - button "Language" [ref=f14e36]
+        - button "Notifications" [ref=f14e37]
+  - generic [ref=f14e39]:
+    - generic [ref=f14e43]:
+      - navigation "Main navigation" [ref=f14e45]:
+        - generic [ref=f14e46]:
+          - button "Overview" [expanded] [ref=f14e47]
+          - list [ref=f14e53]:
+            - listitem [ref=f14e54]:
+              - link "Dashboard" [ref=f14e55] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=f14e62]:
+              - link "Analytics" [ref=f14e63] [cursor=pointer]:
+                - /url: /analytics
+            - listitem [ref=f14e67]:
+              - link "eCommerce" [ref=f14e68] [cursor=pointer]:
+                - /url: /ecommerce
+            - listitem [ref=f14e75]:
+              - link "CRM" [ref=f14e76] [cursor=pointer]:
+                - /url: /crm
+            - listitem [ref=f14e83]:
+              - link "SaaS" [ref=f14e84] [cursor=pointer]:
+                - /url: /saas
+            - listitem [ref=f14e89]:
+              - link "Charts" [ref=f14e90] [cursor=pointer]:
+                - /url: /charts
+        - generic [ref=f14e94]:
+          - button "Commerce" [expanded] [ref=f14e95]
+          - list [ref=f14e101]:
+            - listitem [ref=f14e102]:
+              - link "Orders" [ref=f14e103] [cursor=pointer]:
+                - /url: /orders
+              - generic: "12"
+            - listitem [ref=f14e109]:
+              - link "Products" [ref=f14e110] [cursor=pointer]:
+                - /url: /products
+            - listitem [ref=f14e117]:
+              - link "Customers" [ref=f14e118] [cursor=pointer]:
+                - /url: /customers
+            - listitem [ref=f14e125]:
+              - link "Invoices" [ref=f14e126] [cursor=pointer]:
+                - /url: /invoices
+            - listitem [ref=f14e131]:
+              - link "Billing" [ref=f14e132] [cursor=pointer]:
+                - /url: /billing
+            - listitem [ref=f14e136]:
+              - link "Pricing" [ref=f14e137] [cursor=pointer]:
+                - /url: /pricing
+        - generic [ref=f14e142]:
+          - button "Apps" [expanded] [ref=f14e143]
+          - list [ref=f14e149]:
+            - listitem [ref=f14e150]:
+              - link "Mail" [ref=f14e151] [cursor=pointer]:
+                - /url: /mail
+            - listitem [ref=f14e156]:
+              - link "Chat" [ref=f14e157] [cursor=pointer]:
+                - /url: /chat
+            - listitem [ref=f14e161]:
+              - link "Files" [ref=f14e162] [cursor=pointer]:
+                - /url: /files
+            - listitem [ref=f14e166]:
+              - link "Kanban" [ref=f14e167] [cursor=pointer]:
+                - /url: /kanban
+            - listitem [ref=f14e171]:
+              - link "Calendar" [ref=f14e172] [cursor=pointer]:
+                - /url: /calendar
+            - listitem [ref=f14e176]:
+              - link "Forms" [ref=f14e177] [cursor=pointer]:
+                - /url: /wizard
+        - generic [ref=f14e181]:
+          - button "System" [expanded] [ref=f14e182]
+          - list [ref=f14e188]:
+            - listitem [ref=f14e189]:
+              - link "Profile" [ref=f14e190] [cursor=pointer]:
+                - /url: /profile
+            - listitem [ref=f14e196]:
+              - link "Users" [ref=f14e197] [cursor=pointer]:
+                - /url: /users
+            - listitem [ref=f14e204]:
+              - link "Notifications" [ref=f14e205] [cursor=pointer]:
+                - /url: /notifications
+              - generic: "3"
+            - listitem [ref=f14e210]:
+              - link "Settings" [ref=f14e211] [cursor=pointer]:
+                - /url: /settings/appearance
+            - listitem [ref=f14e216]:
+              - link "Help & Support" [ref=f14e217] [cursor=pointer]:
+                - /url: /support
+      - list [ref=f14e223]:
+        - listitem [ref=f14e224]:
+          - button "TU Test User" [ref=f14e225]:
+            - generic [ref=f14e226]: TU
+            - generic [ref=f14e228]: Test User
+      - button "Collapse sidebar" [ref=f14e233]
+    - main [ref=f14e236]:
+      - main [ref=f14e238]:
+        - generic [ref=f14e239]:
+          - navigation "breadcrumb" [ref=f14e240]:
+            - list [ref=f14e241]:
+              - listitem [ref=f14e242]:
+                - link "Workspace" [ref=f14e243] [cursor=pointer]:
+                  - /url: /dashboard
+              - listitem [aria-hidden] [ref=f14e244]
+              - listitem [ref=f14e247]:
+                - link "Chat" [disabled] [ref=f14e248]
+          - generic [ref=f14e250]:
+            - heading "Chat" [level=1] [ref=f14e251]
+            - paragraph [ref=f14e252]: Stay connected with your team.
+        - generic [ref=f14e254]:
+          - complementary [ref=f14e255]:
+            - generic [ref=f14e256]:
+              - generic [ref=f14e257]: Channels
+              - button "Add channel" [ref=f14e258]
+            - generic [ref=f14e259]:
+              - button "General" [ref=f14e260]
+              - button "Product" [ref=f14e263]
+              - button "Design" [ref=f14e266]
+              - button "Random" [ref=f14e269]
+          - generic [ref=f14e272]:
+            - generic [ref=f14e277]:
+              - heading "General" [level=2] [ref=f14e278]
+              - paragraph [ref=f14e279]: Team conversation
+            - generic [ref=f14e280]:
+              - generic [ref=f14e281]:
+                - generic [ref=f14e282]: AM
+                - generic [ref=f14e283]:
+                  - generic [ref=f14e284]:
+                    - generic [ref=f14e285]: Avery Morgan
+                    - generic [ref=f14e286]: Today, 10:4 AM
+                  - paragraph [ref=f14e287]: Welcome to the Atera team space.
+              - generic [ref=f14e288]:
+                - generic [ref=f14e289]: SC
+                - generic [ref=f14e290]:
+                  - generic [ref=f14e291]:
+                    - generic [ref=f14e292]: Sofia Chen
+                    - generic [ref=f14e293]: Today, 10:5 AM
+                  - paragraph [ref=f14e294]: The quarterly review is ready for your feedback.
+            - generic [ref=f14e295]:
+              - 'textbox "Message #general" [ref=f14e296]'
+              - button "Send" [ref=f14e297]

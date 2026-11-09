@@ -11,4 +11,18 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/react')) return 'react'
+          if (id.includes('node_modules/react-dom')) return 'react'
+          if (id.includes('node_modules/react-router')) return 'react'
+          if (id.includes('node_modules/recharts')) return 'charts'
+          if (id.includes('node_modules/framer-motion')) return 'motion'
+        },
+      },
+    },
+    chunkSizeWarningLimit: 520,
+  },
 })

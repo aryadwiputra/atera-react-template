@@ -1,0 +1,202 @@
+- generic [ref=f16e3]:
+  - banner [ref=f16e4]:
+    - link "Atera Dashboard" [ref=f16e6] [cursor=pointer]:
+      - /url: /dashboard
+      - generic [ref=f16e22]:
+        - generic [ref=f16e23]: Atera
+        - generic [ref=f16e24]: Dashboard
+    - generic [ref=f16e25]:
+      - button "Search anything... ⌘ K" [ref=f16e26]:
+        - generic [ref=f16e27]: Search anything...
+        - generic [ref=f16e28]: ⌘ K
+      - generic [ref=f16e29]:
+        - heading "Command Palette" [level=2] [ref=f16e30]
+        - paragraph [ref=f16e31]: Search for a command to run...
+      - generic [ref=f16e32]:
+        - button "New order" [ref=f16e33]
+        - button "Toggle theme" [ref=f16e34]
+        - button "Customize theme" [ref=f16e35]
+        - button "Language" [ref=f16e36]
+        - button "Notifications" [ref=f16e37]
+  - generic [ref=f16e39]:
+    - generic [ref=f16e43]:
+      - navigation "Main navigation" [ref=f16e45]:
+        - generic [ref=f16e46]:
+          - button "Overview" [expanded] [ref=f16e47]
+          - list [ref=f16e53]:
+            - listitem [ref=f16e54]:
+              - link "Dashboard" [ref=f16e55] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=f16e62]:
+              - link "Analytics" [ref=f16e63] [cursor=pointer]:
+                - /url: /analytics
+            - listitem [ref=f16e67]:
+              - link "eCommerce" [ref=f16e68] [cursor=pointer]:
+                - /url: /ecommerce
+            - listitem [ref=f16e75]:
+              - link "CRM" [ref=f16e76] [cursor=pointer]:
+                - /url: /crm
+            - listitem [ref=f16e83]:
+              - link "SaaS" [ref=f16e84] [cursor=pointer]:
+                - /url: /saas
+            - listitem [ref=f16e89]:
+              - link "Charts" [ref=f16e90] [cursor=pointer]:
+                - /url: /charts
+        - generic [ref=f16e94]:
+          - button "Commerce" [expanded] [ref=f16e95]
+          - list [ref=f16e101]:
+            - listitem [ref=f16e102]:
+              - link "Orders" [ref=f16e103] [cursor=pointer]:
+                - /url: /orders
+              - generic: "12"
+            - listitem [ref=f16e109]:
+              - link "Products" [ref=f16e110] [cursor=pointer]:
+                - /url: /products
+            - listitem [ref=f16e117]:
+              - link "Customers" [ref=f16e118] [cursor=pointer]:
+                - /url: /customers
+            - listitem [ref=f16e125]:
+              - link "Invoices" [ref=f16e126] [cursor=pointer]:
+                - /url: /invoices
+            - listitem [ref=f16e131]:
+              - link "Billing" [ref=f16e132] [cursor=pointer]:
+                - /url: /billing
+            - listitem [ref=f16e136]:
+              - link "Pricing" [ref=f16e137] [cursor=pointer]:
+                - /url: /pricing
+        - generic [ref=f16e142]:
+          - button "Apps" [expanded] [ref=f16e143]
+          - list [ref=f16e149]:
+            - listitem [ref=f16e150]:
+              - link "Mail" [ref=f16e151] [cursor=pointer]:
+                - /url: /mail
+            - listitem [ref=f16e156]:
+              - link "Chat" [ref=f16e157] [cursor=pointer]:
+                - /url: /chat
+            - listitem [ref=f16e161]:
+              - link "Files" [ref=f16e162] [cursor=pointer]:
+                - /url: /files
+            - listitem [ref=f16e166]:
+              - link "Kanban" [ref=f16e167] [cursor=pointer]:
+                - /url: /kanban
+            - listitem [ref=f16e171]:
+              - link "Calendar" [ref=f16e172] [cursor=pointer]:
+                - /url: /calendar
+            - listitem [ref=f16e176]:
+              - link "Forms" [ref=f16e177] [cursor=pointer]:
+                - /url: /wizard
+        - generic [ref=f16e181]:
+          - button "System" [expanded] [ref=f16e182]
+          - list [ref=f16e188]:
+            - listitem [ref=f16e189]:
+              - link "Profile" [ref=f16e190] [cursor=pointer]:
+                - /url: /profile
+            - listitem [ref=f16e196]:
+              - link "Users" [ref=f16e197] [cursor=pointer]:
+                - /url: /users
+            - listitem [ref=f16e204]:
+              - link "Notifications" [ref=f16e205] [cursor=pointer]:
+                - /url: /notifications
+              - generic: "3"
+            - listitem [ref=f16e210]:
+              - link "Settings" [ref=f16e211] [cursor=pointer]:
+                - /url: /settings/appearance
+            - listitem [ref=f16e216]:
+              - link "Help & Support" [ref=f16e217] [cursor=pointer]:
+                - /url: /support
+      - list [ref=f16e223]:
+        - listitem [ref=f16e224]:
+          - button "TU Test User" [ref=f16e225]:
+            - generic [ref=f16e226]: TU
+            - generic [ref=f16e228]: Test User
+      - button "Collapse sidebar" [ref=f16e233]
+    - main [ref=f16e236]:
+      - main [ref=f16e238]:
+        - generic [ref=f16e240]:
+          - generic [ref=f16e241]:
+            - heading "Orders" [level=1] [ref=f16e242]
+            - paragraph [ref=f16e243]: Track, review, and manage customer orders.
+          - link "New order" [ref=f16e245] [cursor=pointer]:
+            - /url: /orders/new
+        - generic [ref=f16e247]:
+          - generic [ref=f16e248]:
+            - textbox "Filter orders..." [ref=f16e253]
+            - generic [ref=f16e254]:
+              - button "View" [ref=f16e255]
+              - button "Export" [ref=f16e256]
+          - generic [ref=f16e257]: 5 results
+          - table [ref=f16e260]:
+            - rowgroup [ref=f16e261]:
+              - row [ref=f16e262]:
+                - columnheader [ref=f16e263]:
+                  - checkbox "Select all visible rows" [ref=f16e264]
+                - columnheader [ref=f16e265]:
+                  - button "Order ID" [ref=f16e266]
+                - columnheader [ref=f16e270]:
+                  - button "Customer" [ref=f16e271]
+                - columnheader [ref=f16e275]:
+                  - button "Product" [ref=f16e276]
+                - columnheader [ref=f16e280]:
+                  - button "Status" [ref=f16e281]
+                - columnheader [ref=f16e285]:
+                  - button "Amount" [ref=f16e286]
+                - columnheader [ref=f16e290]:
+                  - button "Date" [ref=f16e291]
+            - rowgroup [ref=f16e295]:
+              - row [ref=f16e296]:
+                - cell [ref=f16e297]:
+                  - checkbox "Select row 1" [ref=f16e298]
+                - cell "#ORD-7291" [ref=f16e299]
+                - cell "Olivia Martin" [ref=f16e301]
+                - cell "Pro subscription" [ref=f16e302]
+                - cell "Paid" [ref=f16e303]
+                - cell "$249.00" [ref=f16e305]
+                - cell "2026-11-05" [ref=f16e306]
+              - row [ref=f16e307]:
+                - cell [ref=f16e308]:
+                  - checkbox "Select row 2" [ref=f16e309]
+                - cell "#ORD-7289" [ref=f16e310]
+                - cell "Jackson Lee" [ref=f16e312]
+                - cell "Team plan" [ref=f16e313]
+                - cell "Pending" [ref=f16e314]
+                - cell "$129.00" [ref=f16e316]
+                - cell "2026-11-04" [ref=f16e317]
+              - row [ref=f16e318]:
+                - cell [ref=f16e319]:
+                  - checkbox "Select row 3" [ref=f16e320]
+                - cell "#ORD-7286" [ref=f16e321]
+                - cell "Isabella Nguyen" [ref=f16e323]
+                - cell "Starter plan" [ref=f16e324]
+                - cell "Paid" [ref=f16e325]
+                - cell "$49.00" [ref=f16e327]
+                - cell "2026-11-03" [ref=f16e328]
+              - row [ref=f16e329]:
+                - cell [ref=f16e330]:
+                  - checkbox "Select row 4" [ref=f16e331]
+                - cell "#ORD-7281" [ref=f16e332]
+                - cell "William Kim" [ref=f16e334]
+                - cell "Pro subscription" [ref=f16e335]
+                - cell "Refunded" [ref=f16e336]
+                - cell "$249.00" [ref=f16e338]
+                - cell "2026-11-01" [ref=f16e339]
+              - row [ref=f16e340]:
+                - cell [ref=f16e341]:
+                  - checkbox "Select row 5" [ref=f16e342]
+                - cell "#ORD-7278" [ref=f16e343]
+                - cell "Emma Davis" [ref=f16e345]
+                - cell "Enterprise plan" [ref=f16e346]
+                - cell "Paid" [ref=f16e347]
+                - cell "$599.00" [ref=f16e349]
+                - cell "2026-10-30" [ref=f16e350]
+          - generic [ref=f16e351]:
+            - generic [ref=f16e352]:
+              - generic [ref=f16e353]: Rows per page
+              - combobox [ref=f16e354]:
+                - option "5"
+                - option "10" [selected]
+                - option "25"
+              - generic [ref=f16e355]: 1-5 of 5
+            - generic [ref=f16e356]:
+              - button "Previous" [disabled]
+              - generic [ref=f16e357]: 1 / 1
+              - button "Next" [disabled]

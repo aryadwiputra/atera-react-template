@@ -1,7 +1,5 @@
-import type { useTranslations } from '@/i18n'
 
-export type Translator = ReturnType<typeof useTranslations>
-
+export type { Translator } from '@/i18n'
 export type Metric = {
   label: 'totalRevenue' | 'activeUsers' | 'totalOrders' | 'pageViews'
   value: string
@@ -16,7 +14,20 @@ export const metrics: Metric[] = [
   { label: 'pageViews', value: '284K', change: '+24.7%', positive: true },
 ]
 
-export const chartData = [42, 56, 48, 68, 60, 78, 66, 88, 75, 96, 84, 100]
+export const chartData = [
+  { name: 'Jan', value: 42 },
+  { name: 'Feb', value: 56 },
+  { name: 'Mar', value: 48 },
+  { name: 'Apr', value: 68 },
+  { name: 'May', value: 60 },
+  { name: 'Jun', value: 78 },
+  { name: 'Jul', value: 66 },
+  { name: 'Aug', value: 88 },
+  { name: 'Sep', value: 75 },
+  { name: 'Oct', value: 96 },
+  { name: 'Nov', value: 84 },
+  { name: 'Dec', value: 100 },
+]
 
 export const orders = [
   { customer: 'Olivia Martin', id: '#ORD-7291', product: 'Pro subscription', status: 'Paid', amount: '$249.00' },
