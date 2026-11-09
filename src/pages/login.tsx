@@ -46,7 +46,7 @@ export default function LoginPage() {
       {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
       <Button className="w-full" disabled={loading}>{loading && <LoaderCircle className="size-4 animate-spin" />}{t('logIn')}</Button>
     </form>
-    <div className="rounded-lg border bg-muted/40 p-3 text-xs text-muted-foreground"><strong className="text-foreground">Demo access</strong><p className="mt-1">{t('signInDemo')}</p></div>
+    <div className="rounded-lg border bg-muted/40 p-3 text-xs text-muted-foreground"><strong className="text-foreground">{t('demoAccess')}</strong><p className="mt-1">{t('signInDemo')}</p></div>
     <p className="text-center text-sm text-muted-foreground">{t('noAccount')} <Link className="font-medium text-foreground underline-offset-4 hover:underline" to="/sign-up">{t('signUp')}</Link></p>
   </div>
 }

@@ -84,7 +84,7 @@ export default function ChatPage() {
                     <div>
                       <div className="flex items-baseline gap-2">
                         <span className="text-sm font-medium">{senders[index % senders.length]}</span>
-                        <Badge variant="secondary" className="text-[10px]">Now</Badge>
+                        <Badge variant="secondary" className="text-[10px]">{t('now')}</Badge>
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground">{item}</p>
                     </div>

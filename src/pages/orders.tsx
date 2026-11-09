@@ -41,14 +41,15 @@ export default function OrdersPage() {
   ]
 
   return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
-    <PageHeader title={t('orders')} description="Track, review, and manage customer orders." actions={<Button asChild size="sm"><Link to="/orders/new"><Plus className="size-4" />{t('newOrder')}</Link></Button>} />
-    <DataTable columns={columns} data={items} filterPlaceholder="Filter orders..." />
+    <PageHeader title={t('orders')} description={t('ordersDescription')} actions={<Button asChild size="sm"><Link to="/orders/new"><Plus className="size-4" />{t('newOrder')}</Link></Button>} />
+    <DataTable columns={columns} data={items} filterPlaceholder={t('filterOrders')} />
     <ConfirmDialog
       open={pendingDelete !== null}
       onOpenChange={(open) => !open && setPendingDelete(null)}
       title={t('deleteOrder')}
       description={t('deleteOrderDescription')}
       confirmLabel={t('delete')}
+      cancelLabel={t('cancel')}
       trigger={<span />}
       onConfirm={() => {
         if (!pendingDelete) return

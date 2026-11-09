@@ -17,5 +17,5 @@ const columns: ColumnDef<typeof tableFeaturesConfig, Customer, any>[] = [helper.
 export default function CustomersPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
-  return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6"><PageHeader title={t('customers')} description="Keep track of your customer relationships." actions={<Button size="sm" variant="outline"><Mail className="size-4" />Contact customers</Button>} /><DataTable columns={columns} data={listCustomers()} filterPlaceholder="Filter customers..." /></main></PageTransition>
+  return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6"><PageHeader title={t('customers')} description={t('customersDescription')} actions={<Button size="sm" variant="outline"><Mail className="size-4" />{t('contactCustomers')}</Button>} /><DataTable columns={columns} data={listCustomers()} filterPlaceholder={t('filterCustomers')} /></main></PageTransition>
 }

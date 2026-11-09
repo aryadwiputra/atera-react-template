@@ -41,14 +41,15 @@ export default function ProductsPage() {
   ]
 
   return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
-    <PageHeader title={t('products')} description="Manage your product catalog and inventory." actions={<Button asChild size="sm"><Link to="/products/new"><Plus className="size-4" />{t('create')}</Link></Button>} />
-    <DataTable columns={columns} data={items} filterPlaceholder="Filter products..." />
+    <PageHeader title={t('products')} description={t('productsDescription')} actions={<Button asChild size="sm"><Link to="/products/new"><Plus className="size-4" />{t('create')}</Link></Button>} />
+    <DataTable columns={columns} data={items} filterPlaceholder={t('filterProducts')} />
     <ConfirmDialog
       open={pendingDelete !== null}
       onOpenChange={(open) => !open && setPendingDelete(null)}
       title={t('deleteProduct')}
       description={t('deleteProductDescription')}
       confirmLabel={t('delete')}
+      cancelLabel={t('cancel')}
       trigger={<span />}
       onConfirm={() => {
         if (!pendingDelete) return
