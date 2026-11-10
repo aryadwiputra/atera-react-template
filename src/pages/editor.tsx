@@ -28,7 +28,7 @@ import { PageTransition } from '@/components/shared/page-transition'
 import { useToast } from '@/components/shared/toast'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { createEditorDocument, getEditorDocument, listEditorDocuments, removeEditorDocument, updateEditorDocument } from '@/lib/data/editor-docs'
+import { editorDocumentService } from '@/services/editor-document-service'
 import { cn } from '@/lib/utils'
 
 function ToolbarButton({ icon: Icon, label, isActive, disabled, onClick }: { icon: typeof Bold; label: string; isActive: boolean; disabled?: boolean; onClick: () => void }) {
@@ -54,7 +54,7 @@ export default function EditorPage() {
   const t = useTranslations(language)
   const { toast } = useToast()
 
-  const [docs, setDocs] = useState(() => listEditorDocuments())
+  const [docs, setDocs] = useState(() => editorDocumentService.list())
   const [activeId, setActiveId] = useState<string | null>(null)
   const [dirty, setDirty] = useState(false)
   const [savedAt, setSavedAt] = useState<Date | null>(null)
@@ -62,7 +62,7 @@ export default function EditorPage() {
   const [linkUrl, setLinkUrl] = useState('')
   const pendingSelectionRef = useRef<number | null>(null)
 
-  const activeDoc = activeId ? getEditorDocument(activeId) : null
+  const activeDoc = activeId ? editorDocumentService.get(activeId) : null
   const initialContent = activeDoc?.content ?? '<p></p>'
 
   const editor = useEditor({
@@ -99,13 +99,13 @@ export default function EditorPage() {
     }
   }, [editor, activeDoc?.id])
 
-  const refreshDocs = () => setDocs(listEditorDocuments())
+  const refreshDocs = () => setDocs(editorDocumentService.list())
 
   const persist = (titleOverride?: string) => {
     if (!editor || !activeId) return
     const content = editor.getHTML()
     const title = titleOverride ?? firstHeading(editor, t('untitledDocument'))
-    updateEditorDocument(activeId, { content, title })
+    editorDocumentService.update(activeId, { content, title })
     setDirty(false)
     setSavedAt(new Date())
     refreshDocs()
@@ -137,15 +137,15 @@ export default function EditorPage() {
   })
 
   const createDoc = () => {
-    const doc = createEditorDocument({ title: t('untitledDocument') })
+    const doc = editorDocumentService.create({ title: t('untitledDocument') })
     refreshDocs()
     setActiveId(doc.id)
     setDirty(false)
   }
 
   const deleteDoc = (id: string) => {
-    removeEditorDocument(id)
-    const remaining = listEditorDocuments()
+    editorDocumentService.remove(id)
+    const remaining = editorDocumentService.list()
     refreshDocs()
     if (id === activeId) setActiveId(remaining[0]?.id ?? null)
     toast({ title: t('documentDeleted'), variant: 'success' })
