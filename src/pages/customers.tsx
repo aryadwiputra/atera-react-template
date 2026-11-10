@@ -11,7 +11,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { listCustomers, removeCustomer } from '@/lib/data/customers'
+import { customerService } from '@/services/customer-service'
 import type { Customer } from '@/lib/data/types'
 
 const helper = createAppColumnHelper<Customer>()
@@ -20,7 +20,7 @@ export default function CustomersPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
   const { toast } = useToast()
-  const [items, setItems] = useState(listCustomers())
+  const [items, setItems] = useState(customerService.list())
   const [pendingDelete, setPendingDelete] = useState<Customer | null>(null)
 
   const columns: ColumnDef<typeof tableFeaturesConfig, Customer, any>[] = [
@@ -52,8 +52,8 @@ export default function CustomersPage() {
       trigger={<span />}
       onConfirm={() => {
         if (!pendingDelete) return
-        removeCustomer(pendingDelete.id)
-        setItems(listCustomers())
+        customerService.remove(pendingDelete.id)
+        setItems(customerService.list())
         toast({ title: t('customerDeleted'), variant: 'success' })
       }}
     />

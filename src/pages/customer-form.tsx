@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { createCustomer, getCustomer, updateCustomer } from '@/lib/data/customers'
+import { customerService } from '@/services/customer-service'
 
 const customerSchema = z.object({ name: z.string().min(2), email: z.string().email(), company: z.string().min(2), orders: z.coerce.number().int().nonnegative(), spent: z.coerce.number().nonnegative(), joined: z.string().min(1) })
 type CustomerFormValues = z.input<typeof customerSchema>
@@ -27,10 +27,10 @@ export default function CustomerFormPage() {
   const navigate = useNavigate()
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
-  const existing = id ? getCustomer(id) : undefined
+  const existing = id ? customerService.get(id) : undefined
   const form = useForm<CustomerFormValues, unknown, CustomerSubmitValues>({ resolver: zodResolver(customerSchema), defaultValues: existing ?? { name: '', email: '', company: '', orders: 0, spent: 0, joined: new Date().toISOString().slice(0, 10) } })
   if (id && !existing) return <Navigate to="/customers" replace />
-  const submit = (values: CustomerSubmitValues) => { if (id) updateCustomer(id, values); else createCustomer(values); navigate('/customers') }
+  const submit = (values: CustomerSubmitValues) => { if (id) customerService.update(id, values); else customerService.create(values); navigate('/customers') }
   return <PageTransition><main className="flex min-h-full w-full flex-col gap-6 p-4 md:p-6"><PageHeader breadcrumbs={[{ title: t('customers'), href: '/customers' }, { title: id ? t('editCustomer') : t('newCustomer'), href: id ? `/customers/${id}/edit` : '/customers/new' }]} title={id ? t('editCustomer') : t('newCustomer')} description={t('customersDescription')} actions={<Button variant="outline" asChild><Link to="/customers"><ArrowLeft className="size-4" />{t('backToCustomers')}</Link></Button>} /><div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_280px]"><Card><CardHeader><CardTitle>{t('customers')}</CardTitle></CardHeader><CardContent><form className="grid gap-5 sm:grid-cols-2" onSubmit={form.handleSubmit(submit)}>
     <Field label={t('name')} error={form.formState.errors.name?.message}><Input {...form.register('name')} /></Field>
     <Field label={t('email')} error={form.formState.errors.email?.message}><Input type="email" {...form.register('email')} /></Field>
