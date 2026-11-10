@@ -4,7 +4,7 @@ export default function AppLogo({ compact = false }: { compact?: boolean }) {
     return (
         <div className="flex items-center">
             <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
-                <AppLogoIcon className="size-5 fill-current text-background dark:text-foreground" />
+                <AppLogoIcon className="size-5 fill-current text-sidebar-primary-foreground" />
             </div>
             <div
                 className={`ml-3 text-left text-sm leading-none ${compact ? 'hidden' : ''}`}

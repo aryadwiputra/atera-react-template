@@ -1,6 +1,7 @@
 import { Link, Navigate, useLocation, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { Eye, EyeOff, LoaderCircle } from 'lucide-react'
+import { SocialAuthButtons } from '@/components/shared/auth-controls'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
@@ -38,14 +39,15 @@ export default function LoginPage() {
     navigate(destination, { replace: true })
   }
 
-  return <div className="w-full max-w-sm space-y-6">
+  return <div className="w-full max-w-sm space-y-8">
     <div><h1 className="text-2xl font-semibold tracking-tight">{t('loginTitle')}</h1><p className="mt-2 text-sm text-muted-foreground">{t('loginDescription')}</p></div>
-    <form className="space-y-4" onSubmit={submit}>
+    <form className="space-y-5" onSubmit={submit}>
       <label className="space-y-2 text-sm font-medium"><span>{t('emailAddress')}</span><Input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
-      <label className="space-y-2 text-sm font-medium"><span>{t('password')}</span><div className="relative"><Input className="pr-10" type={showPassword ? 'text' : 'password'} value={password} onChange={(event) => setPassword(event.target.value)} required /><button type="button" aria-label={showPassword ? 'Hide password' : 'Show password'} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground" onClick={() => setShowPassword((value) => !value)}>{showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}</button></div></label>
+      <label className="space-y-2 text-sm font-medium"><span>{t('password')}</span><div className="relative"><Input className="pr-10" type={showPassword ? 'text' : 'password'} value={password} onChange={(event) => setPassword(event.target.value)} required /><button type="button" aria-label={showPassword ? t('hidePassword') : t('showPassword')} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground" onClick={() => setShowPassword((value) => !value)}>{showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}</button></div></label>
       {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
-      <Button className="w-full" disabled={loading}>{loading && <LoaderCircle className="size-4 animate-spin" />}{t('logIn')}</Button>
+      <Button className="mt-2 w-full" disabled={loading}>{loading && <LoaderCircle className="size-4 animate-spin" />}{t('logIn')}</Button>
     </form>
+    <SocialAuthButtons />
     <div className="rounded-lg border bg-muted/40 p-3 text-xs text-muted-foreground"><strong className="text-foreground">{t('demoAccess')}</strong><p className="mt-1">{t('signInDemo')}</p></div>
     <p className="text-center text-sm text-muted-foreground">{t('noAccount')} <Link className="font-medium text-foreground underline-offset-4 hover:underline" to="/sign-up">{t('signUp')}</Link></p>
   </div>

@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router'
 import { z } from 'zod'
+import { SocialAuthButtons } from '@/components/shared/auth-controls'
+import AppLogo from '@/components/app-logo'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { notifyAuthChanged, useAuth } from '@/hooks/use-auth'
@@ -16,7 +18,7 @@ function BrandPanel() {
   const t = useTranslations(language)
   return (
     <aside className="hidden flex-1 flex-col justify-between border-r bg-muted/30 p-10 lg:flex">
-      <div className="text-lg font-semibold">{t('ateraWorkspace')}</div>
+      <AppLogo />
       <div className="max-w-md space-y-4">
         <h2 className="text-3xl font-semibold tracking-tight">{t('authBrandTitle')}</h2>
         <p className="text-sm text-muted-foreground">{t('authBrandDescription')}</p>
@@ -58,12 +60,12 @@ export function LoginV2Page() {
     <div className="flex min-h-svh">
       <BrandPanel />
       <main className="flex flex-1 items-center justify-center p-4 md:p-6">
-        <div className="w-full max-w-sm space-y-6">
+        <div className="w-full max-w-sm space-y-8">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">{t('loginTitle')}</h1>
             <p className="mt-2 text-sm text-muted-foreground">{t('loginDescription')}</p>
           </div>
-          <form className="space-y-4" onSubmit={submit}>
+          <form className="space-y-5" onSubmit={submit}>
             <label className="space-y-2 text-sm font-medium">
               <span>{t('emailAddress')}</span>
               <Input
@@ -85,7 +87,7 @@ export function LoginV2Page() {
                 />
                 <button
                   type="button"
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={showPassword ? t('hidePassword') : t('showPassword')}
                   className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
                   onClick={() => setShowPassword((value) => !value)}
                 >
@@ -154,17 +156,17 @@ export function RegisterV2Page() {
     <div className="flex min-h-svh">
       <BrandPanel />
       <main className="flex flex-1 items-center justify-center p-4 md:p-6">
-        <div className="w-full max-w-sm space-y-6">
+        <div className="w-full max-w-sm space-y-8">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">{t('createYourAccount')}</h1>
             <p className="mt-2 text-sm text-muted-foreground">{t('createAccountDescription')}</p>
           </div>
-          <form className="space-y-4" onSubmit={form.handleSubmit(submit)}>
+          <form className="space-y-5" onSubmit={form.handleSubmit(submit)}>
             <label className="grid gap-2 text-sm font-medium">
               {t('name')}
               <Input {...form.register('name')} placeholder={t('enterYourName')} />
               {form.formState.errors.name && (
-                <span className="text-xs text-destructive">{t('enterYourName')}</span>
+                <span className="text-xs text-destructive">{t('enterName')}</span>
               )}
             </label>
             <label className="grid gap-2 text-sm font-medium">
@@ -183,8 +185,9 @@ export function RegisterV2Page() {
                 {error}
               </p>
             )}
-            <Button className="w-full">{t('createAccount')}</Button>
+            <Button className="mt-2 w-full">{t('createAccount')}</Button>
           </form>
+          <SocialAuthButtons />
           <p className="text-center text-sm text-muted-foreground">
             {t('haveAccount')}{' '}
             <Link className="font-medium text-foreground underline-offset-4 hover:underline" to="/login">
