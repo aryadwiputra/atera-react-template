@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import type { Translator } from '@/i18n'
+import type { TranslationKey, Translator } from '@/i18n'
 
 const contactSchema = z.object({
   name: z.string().min(2, 'nameRequired'),
@@ -83,6 +83,9 @@ function ValidationSection({ t }: { t: Translator }) {
     defaultValues: { name: '', email: '', message: '' },
   })
 
+  const errorText = (error: string | undefined): string | undefined =>
+    error ? t(error as TranslationKey) : undefined
+
   const onSubmit = () => {
     toast({ title: t('validationPassed'), variant: 'success' })
     form.reset()
@@ -95,13 +98,13 @@ function ValidationSection({ t }: { t: Translator }) {
       </CardHeader>
       <CardContent>
         <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-          <Field label={t('name')} error={form.formState.errors.name?.message}>
+          <Field label={t('name')} error={errorText(form.formState.errors.name?.message)}>
             <Input {...form.register('name')} placeholder={t('name')} />
           </Field>
-          <Field label={t('email')} error={form.formState.errors.email?.message}>
+          <Field label={t('email')} error={errorText(form.formState.errors.email?.message)}>
             <Input type="email" {...form.register('email')} placeholder={t('email')} />
           </Field>
-          <Field label={t('message')} error={form.formState.errors.message?.message}>
+          <Field label={t('message')} error={errorText(form.formState.errors.message?.message)}>
             <Input {...form.register('message')} placeholder={t('message')} />
           </Field>
           <Button type="submit">{t('submit')}</Button>
@@ -149,13 +152,13 @@ export default function FormsPage() {
     <PageTransition>
       <main className="flex min-h-full w-full flex-col gap-6 p-4 md:p-6">
         <PageHeader title={t('forms')} description={t('formsDescription')} />
+        <div className="grid gap-6 lg:grid-cols-2">
+          <InputVariantsSection t={t} />
+          <SelectSection t={t} />
+          <ValidationSection t={t} />
+          <FileUploadSection t={t} />
+        </div>
       </main>
-      <div className="grid gap-6 lg:grid-cols-2">
-        <InputVariantsSection t={t} />
-        <SelectSection t={t} />
-        <ValidationSection t={t} />
-        <FileUploadSection t={t} />
-      </div>
     </PageTransition>
   )
 }

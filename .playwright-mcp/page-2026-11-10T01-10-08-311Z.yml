@@ -1,0 +1,226 @@
+- main [ref=e3]:
+  - navigation "Main" [ref=e5]:
+    - link "Atera home" [ref=e6] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e22]:
+        - generic [ref=e23]: Atera
+        - generic [ref=e24]: Dashboard
+    - generic [ref=e25]:
+      - link "Features" [ref=e26] [cursor=pointer]:
+        - /url: "#features"
+      - link "Analytics" [ref=e27] [cursor=pointer]:
+        - /url: "#analytics"
+      - link "Pricing" [ref=e28] [cursor=pointer]:
+        - /url: "#pricing"
+    - generic [ref=e29]:
+      - button "Switch to light mode" [active] [ref=e324]
+      - link [ref=e33] [cursor=pointer]:
+        - /url: /login
+        - button "Log in" [ref=e34]
+      - link [ref=e35] [cursor=pointer]:
+        - /url: /sign-up
+        - button "Start free trial" [ref=e36]
+  - generic [ref=e38]:
+    - generic [ref=e39]: "New: ask your dashboard questions in plain language"
+    - heading "Turn your data into decisions" [level=1] [ref=e43]
+    - paragraph [ref=e44]: Atera brings analytics, orders, customers, and billing into one workspace, so your team acts on numbers instead of guessing.
+    - generic [ref=e45]:
+      - link [ref=e46] [cursor=pointer]:
+        - /url: /sign-up
+        - button "Start free trial" [ref=e47]
+      - link [ref=e48] [cursor=pointer]:
+        - /url: /login
+        - button "View live demo" [ref=e49]
+    - paragraph [ref=e50]: No credit card required. Cancel anytime.
+    - img "Preview of the Atera analytics dashboard" [ref=e52]:
+      - generic [ref=e53]:
+        - generic [ref=e54]: Revenue, last 12 months
+        - generic [ref=e57]: Updated 4 min ago
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - paragraph [ref=e61]: Revenue
+          - paragraph [ref=e62]: $84,310
+        - generic [ref=e63]:
+          - paragraph [ref=e64]: Orders
+          - paragraph [ref=e65]: 1,248
+        - generic [ref=e66]:
+          - paragraph [ref=e67]: Conversion
+          - paragraph [ref=e68]: 3.4%
+  - region "Key numbers" [ref=e69]:
+    - generic [ref=e70]:
+      - generic [ref=e71]:
+        - paragraph [ref=e72]: 4,218
+        - paragraph [ref=e73]: active workspaces
+      - generic [ref=e74]:
+        - paragraph [ref=e75]: 38%
+        - paragraph [ref=e76]: faster weekly reporting
+      - generic [ref=e77]:
+        - paragraph [ref=e78]: 12.4M
+        - paragraph [ref=e79]: orders processed
+      - generic [ref=e80]:
+        - paragraph [ref=e81]: 99.98%
+        - paragraph [ref=e82]: uptime over the last year
+  - generic [ref=e83]:
+    - generic [ref=e84]:
+      - heading "Everything your team runs on, in one place" [level=2] [ref=e85]
+      - paragraph [ref=e86]: Six workspaces that share one customer record, so data flows between them without copies or exports.
+    - generic [ref=e87]:
+      - generic [ref=e89]:
+        - heading "Analytics that answer questions" [level=3] [ref=e93]
+        - paragraph [ref=e94]: Revenue, traffic, and conversion on one screen. Drill from a headline number down to the order behind it in two clicks.
+      - generic [ref=e96]:
+        - heading "Orders without the spreadsheet" [level=3] [ref=e101]
+        - paragraph [ref=e102]: Track every order from payment to refund. Status changes surface instantly, so nothing slips past your team.
+      - generic [ref=e104]:
+        - heading "A customer record that keeps itself" [level=3] [ref=e111]
+        - paragraph [ref=e112]: Contact details, order history, and notes live together. You stop digging through inboxes to find the last conversation.
+      - generic [ref=e114]:
+        - heading "Team chat inside the work" [level=3] [ref=e118]
+        - paragraph [ref=e119]: Discuss an order without leaving the order. Channels keep each project outside the general noise.
+      - generic [ref=e121]:
+        - heading "Files where the work happens" [level=3] [ref=e125]
+        - paragraph [ref=e126]: Contracts, exports, and screenshots sit next to the record they belong to, searchable in one place.
+      - generic [ref=e128]:
+        - heading "Plans the team actually follows" [level=3] [ref=e131]
+        - paragraph [ref=e132]: A kanban board tied to real orders and customers. Move a card and the status follows it everywhere.
+  - generic [ref=e134]:
+    - generic [ref=e135]:
+      - heading "See the whole month in one glance" [level=2] [ref=e136]
+      - paragraph [ref=e137]: "The dashboard starts where your attention goes: revenue, orders, and conversion. Everything else is one drill down away."
+      - list [ref=e138]:
+        - listitem [ref=e139]: Revenue, profit, and orders on a single screen
+        - listitem [ref=e143]: Traffic sources broken down by channel
+        - listitem [ref=e147]: Monthly goals with live progress bars
+      - link [ref=e151] [cursor=pointer]:
+        - /url: /login
+        - button "Open the demo workspace" [ref=e152]
+    - img "Preview of the Atera analytics dashboard" [ref=e154]:
+      - generic [ref=e155]:
+        - generic [ref=e156]: Revenue, last 12 months
+        - generic [ref=e159]: Updated 4 min ago
+      - generic [ref=e161]:
+        - generic [ref=e162]:
+          - paragraph [ref=e163]: Revenue
+          - paragraph [ref=e164]: $84,310
+        - generic [ref=e165]:
+          - paragraph [ref=e166]: Orders
+          - paragraph [ref=e167]: 1,248
+        - generic [ref=e168]:
+          - paragraph [ref=e169]: Conversion
+          - paragraph [ref=e170]: 3.4%
+  - paragraph [ref=e172]:
+    - generic [ref=e173]: Every
+    - generic [ref=e174]: number
+    - generic [ref=e175]: tells
+    - generic [ref=e176]: a
+    - generic [ref=e177]: story.
+    - generic [ref=e178]: Atera
+    - generic [ref=e179]: makes
+    - generic [ref=e180]: sure
+    - generic [ref=e181]: your
+    - generic [ref=e182]: team
+    - generic [ref=e183]: never
+    - generic [ref=e184]: misses
+    - generic [ref=e185]: one.
+  - generic [ref=e188]:
+    - blockquote [ref=e189]:
+      - paragraph [ref=e190]: "\"We used to spend a full morning pulling last month's numbers for the Monday review. Now it's a link I send before coffee.\""
+    - generic [ref=e191]:
+      - paragraph [ref=e192]: Dara Winata
+      - paragraph [ref=e193]: Operations lead, Kirana Logistics
+  - generic [ref=e194]:
+    - generic [ref=e195]:
+      - heading "Pricing that scales with the team, not against it" [level=2] [ref=e196]
+      - paragraph [ref=e197]: Start free for 14 days on any plan. Downgrade or cancel whenever the numbers say so.
+    - generic [ref=e198]:
+      - generic [ref=e200]:
+        - heading "Starter" [level=3] [ref=e202]
+        - generic [ref=e203]:
+          - generic [ref=e204]: $12
+          - generic [ref=e205]: /month
+        - paragraph [ref=e206]: For a solo operator getting their numbers in one place.
+        - list [ref=e207]:
+          - listitem [ref=e208]: 3 seats
+          - listitem [ref=e211]: Analytics and orders
+          - listitem [ref=e214]: 10GB file storage
+          - listitem [ref=e217]: Email support
+        - link [ref=e220] [cursor=pointer]:
+          - /url: /sign-up
+          - button "Start 14 day trial" [ref=e221]
+      - generic [ref=e223]:
+        - generic [ref=e224]:
+          - heading "Growth" [level=3] [ref=e225]
+          - generic [ref=e226]: Most popular
+        - generic [ref=e227]:
+          - generic [ref=e228]: $29
+          - generic [ref=e229]: /month
+        - paragraph [ref=e230]: For small teams running orders, customers, and reporting together.
+        - list [ref=e231]:
+          - listitem [ref=e232]: 10 seats
+          - listitem [ref=e235]: Everything in Starter
+          - listitem [ref=e238]: Team chat and kanban
+          - listitem [ref=e241]: Priority support
+        - link [ref=e244] [cursor=pointer]:
+          - /url: /sign-up
+          - button "Start 14 day trial" [ref=e245]
+      - generic [ref=e247]:
+        - heading "Scale" [level=3] [ref=e249]
+        - generic [ref=e250]:
+          - generic [ref=e251]: $79
+          - generic [ref=e252]: /month
+        - paragraph [ref=e253]: For operations that need roles, exports, and a longer history.
+        - list [ref=e254]:
+          - listitem [ref=e255]: Unlimited seats
+          - listitem [ref=e258]: Everything in Growth
+          - listitem [ref=e261]: Role-based access
+          - listitem [ref=e264]: CSV export for every table
+        - link [ref=e267] [cursor=pointer]:
+          - /url: /sign-up
+          - button "Start 14 day trial" [ref=e268]
+  - generic [ref=e271]:
+    - heading "Your data is already there. Put it to work." [level=2] [ref=e272]
+    - paragraph [ref=e273]: Set up a workspace in under five minutes. Your first dashboard is ready the moment you log in.
+    - generic [ref=e274]:
+      - link [ref=e275] [cursor=pointer]:
+        - /url: /sign-up
+        - button "Start free trial" [ref=e276]
+      - link [ref=e277] [cursor=pointer]:
+        - /url: /login
+        - button "View live demo" [ref=e278]
+  - generic [ref=e279]:
+    - generic [ref=e280]:
+      - generic [ref=e281]:
+        - link "Atera home" [ref=e282] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e298]:
+            - generic [ref=e299]: Atera
+            - generic [ref=e300]: Dashboard
+        - paragraph [ref=e301]: The analytics dashboard that turns data into decisions.
+      - navigation "Product" [ref=e302]:
+        - paragraph [ref=e303]: Product
+        - list [ref=e304]:
+          - listitem [ref=e305]:
+            - link "Features" [ref=e306] [cursor=pointer]:
+              - /url: /#features
+          - listitem [ref=e307]:
+            - link "Analytics" [ref=e308] [cursor=pointer]:
+              - /url: /#analytics
+          - listitem [ref=e309]:
+            - link "Pricing" [ref=e310] [cursor=pointer]:
+              - /url: /#pricing
+          - listitem [ref=e311]:
+            - link "Live demo" [ref=e312] [cursor=pointer]:
+              - /url: /login
+      - navigation "Account" [ref=e313]:
+        - paragraph [ref=e314]: Account
+        - list [ref=e315]:
+          - listitem [ref=e316]:
+            - link "Log in" [ref=e317] [cursor=pointer]:
+              - /url: /login
+          - listitem [ref=e318]:
+            - link "Sign up" [ref=e319] [cursor=pointer]:
+              - /url: /sign-up
+          - listitem [ref=e320]:
+            - link "Create account" [ref=e321] [cursor=pointer]:
+              - /url: /sign-up
+    - paragraph [ref=e323]: © 2026 Atera. All rights reserved.
