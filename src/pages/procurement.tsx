@@ -11,7 +11,7 @@ import { ClipboardList, ClipboardCheck, DollarSign, FileClock } from 'lucide-rea
 import { useState } from 'react'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { listPurchaseOrders, poTotal, updatePurchaseOrder } from '@/lib/data/procurement'
+import { procurementService } from '@/services/procurement-service'
 import type { POStatus, PurchaseOrder } from '@/lib/data/types'
 
 const helper = createAppColumnHelper<PurchaseOrder>()
@@ -31,26 +31,26 @@ export default function ProcurementPage() {
   const t = useTranslations(language)
   const { toast } = useToast()
 
-  const [items, setItems] = useState(listPurchaseOrders)
+  const [items, setItems] = useState(procurementService.list)
   const [detail, setDetail] = useState<PurchaseOrder | null>(null)
 
-  const refresh = () => setItems(listPurchaseOrders())
+  const refresh = () => setItems(procurementService.list())
 
   const openPos = items.filter((po) => po.status === 'Draft' || po.status === 'Pending' || po.status === 'Approved').length
   const pendingApproval = items.filter((po) => po.status === 'Pending').length
   const totalSpendYtd = items
     .filter((po) => po.status === 'Approved' || po.status === 'Received')
-    .reduce((sum, po) => sum + poTotal(po), 0)
+    .reduce((sum, po) => sum + procurementService.total(po), 0)
 
   const approvePo = (po: PurchaseOrder) => {
-    updatePurchaseOrder(po.id, { status: 'Approved' })
+    procurementService.update(po.id, { status: 'Approved' })
     refresh()
     toast({ title: t('poApproved'), variant: 'success' })
     setDetail(null)
   }
 
   const cancelPo = (po: PurchaseOrder) => {
-    updatePurchaseOrder(po.id, { status: 'Cancelled' })
+    procurementService.update(po.id, { status: 'Cancelled' })
     refresh()
     toast({ title: t('poCancelled'), variant: 'success' })
     setDetail(null)
@@ -66,7 +66,7 @@ export default function ProcurementPage() {
       <Badge variant="secondary" className={statusBadgeClass[info.getValue() as POStatus]}>{info.getValue()}</Badge>
     ) }),
     helper.display({ id: 'total', header: t('poTotal'), cell: ({ row }) => (
-      <span className="font-semibold tabular-nums">{formatMoney(poTotal(row.original))}</span>
+      <span className="font-semibold tabular-nums">{formatMoney(procurementService.total(row.original))}</span>
     ) }),
     helper.display({ id: 'actions', header: '', cell: ({ row }) => (
       <div className="flex justify-end gap-1">
@@ -139,7 +139,7 @@ export default function ProcurementPage() {
                       ))}
                       <tr className="border-t font-semibold">
                         <td colSpan={3} className="py-1.5">{t('poTotal')}</td>
-                        <td className="py-1.5 text-right tabular-nums">{formatMoney(poTotal(detail))}</td>
+                        <td className="py-1.5 text-right tabular-nums">{formatMoney(procurementService.total(detail))}</td>
                       </tr>
                     </tbody>
                   </table>
