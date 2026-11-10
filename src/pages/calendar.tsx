@@ -9,14 +9,14 @@ import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { listEvents } from '@/lib/data/calendar'
+import { calendarService } from '@/services/calendar-service'
 
 export default function CalendarPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(new Date())
-  const events = useMemo(() => listEvents(), [])
+  const events = useMemo(() => calendarService.listEvents(), [])
 
   const days = useMemo(() => {
     const start = startOfWeek(startOfMonth(currentMonth), { weekStartsOn: 0 })
