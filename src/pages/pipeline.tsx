@@ -14,7 +14,7 @@ import { StatCard } from '@/components/shared/stat-card'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations, type TranslationKey } from '@/i18n'
 import { cn } from '@/lib/utils'
-import { createDeal, listDeals, moveDeal, stages } from '@/lib/data/crm'
+import { crmService } from '@/services/crm-service'
 import type { Deal, DealStage } from '@/lib/data/types'
 
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -53,18 +53,18 @@ const stageAccent: Record<DealStage, string> = {
 export default function PipelinePage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
-  const [deals, setDeals] = useState<Deal[]>(() => listDeals())
+  const [deals, setDeals] = useState<Deal[]>(() => crmService.listDeals())
   const [open, setOpen] = useState(false)
 
   const handleMove = (dealId: string, stage: DealStage) => {
-    moveDeal(dealId, stage)
-    setDeals(listDeals())
+    crmService.moveDeal(dealId, stage)
+    setDeals(crmService.listDeals())
   }
 
   const handleCreate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    createDeal({
+    crmService.createDeal({
       company: String(data.get('company') || '').trim(),
       contact: String(data.get('contact') || '').trim(),
       email: String(data.get('email') || '').trim(),
@@ -73,7 +73,7 @@ export default function PipelinePage() {
       owner: String(data.get('owner') || '').trim(),
       createdAt: new Date().toISOString().slice(0, 10),
     })
-    setDeals(listDeals())
+    setDeals(crmService.listDeals())
     setOpen(false)
     event.currentTarget.reset()
   }
@@ -136,7 +136,7 @@ export default function PipelinePage() {
                     <Select name="stage" defaultValue="new">
                       <SelectTrigger id="deal-stage" className="w-full"><SelectValue /></SelectTrigger>
                       <SelectContent>
-                        {stages.map((stage) => (
+                        {crmService.stages.map((stage) => (
                           <SelectItem key={stage.id} value={stage.id}>{t(stageLabel[stage.id])}</SelectItem>
                         ))}
                       </SelectContent>
@@ -160,7 +160,7 @@ export default function PipelinePage() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {stages.map((stage) => {
+          {crmService.stages.map((stage) => {
             const stageDeals = deals.filter((deal) => deal.stage === stage.id)
             const stageValue = stageDeals.reduce((total, deal) => total + deal.value, 0)
             return (
@@ -206,7 +206,7 @@ export default function PipelinePage() {
                           <span className="shrink-0 text-2xs text-muted-foreground">{formatAge(t, daysAgo(deal.createdAt))}</span>
                         </div>
                         <div className="mt-3 flex flex-wrap gap-1">
-                          {stages.filter((col) => col.id !== deal.stage).map((col) => (
+                          {crmService.stages.filter((col) => col.id !== deal.stage).map((col) => (
                             <button
                               key={col.id}
                               type="button"
