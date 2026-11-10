@@ -12,7 +12,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { listOrders, removeOrder } from '@/lib/data/orders'
+import { orderService } from '@/services/order-service'
 import type { Order } from '@/lib/data/types'
 
 const helper = createAppColumnHelper<Order>()
@@ -21,7 +21,7 @@ export default function OrdersPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
   const { toast } = useToast()
-  const [items, setItems] = useState(listOrders())
+  const [items, setItems] = useState(orderService.list())
   const [pendingDelete, setPendingDelete] = useState<Order | null>(null)
 
   const columns: ColumnDef<typeof tableFeaturesConfig, Order, any>[] = [
@@ -53,8 +53,8 @@ export default function OrdersPage() {
       trigger={<span />}
       onConfirm={() => {
         if (!pendingDelete) return
-        removeOrder(pendingDelete.id)
-        setItems(listOrders())
+        orderService.remove(pendingDelete.id)
+        setItems(orderService.list())
         toast({ title: t('orderDeleted'), variant: 'success' })
       }}
     />
