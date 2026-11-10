@@ -52,7 +52,7 @@ export default function KanbanPage() {
                       >
                         <div className="flex items-start justify-between gap-2">
                           <p className="text-sm font-medium leading-snug">{task.title}</p>
-                          <Badge variant="outline" className={cn('shrink-0 text-[10px]', priorityColor[task.priority])}>{t(priorityLabel[task.priority])}</Badge>
+                          <Badge variant="outline" className={cn('shrink-0 text-2xs', priorityColor[task.priority])}>{t(priorityLabel[task.priority])}</Badge>
                         </div>
                         <p className="mt-2 text-xs text-muted-foreground">{task.assignee}</p>
                         <div className="mt-3 flex gap-1">
@@ -61,7 +61,7 @@ export default function KanbanPage() {
                               key={col.id}
                               type="button"
                               onClick={() => handleDrop(task.id, col.id)}
-                              className="rounded border px-1.5 py-0.5 text-[10px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                              className="rounded border px-1.5 py-0.5 text-2xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                               title={col.title}
                             >
                               {col.title} →

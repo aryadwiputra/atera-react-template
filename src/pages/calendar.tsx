@@ -82,7 +82,7 @@ export default function CalendarPage() {
                       <span>{format(day, 'd')}</span>
                       <span className="flex flex-wrap gap-0.5">
                         {dayEvents.slice(0, 2).map((event) => (
-                          <span key={event.id} className="rounded bg-muted px-1 py-0.5 text-[10px] font-normal text-muted-foreground">{event.title}</span>
+                          <span key={event.id} className="rounded bg-muted px-1 py-0.5 text-2xs font-normal text-muted-foreground">{event.title}</span>
                         ))}
                       </span>
                     </button>

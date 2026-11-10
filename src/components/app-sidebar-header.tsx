@@ -122,7 +122,7 @@ export function AppSidebarHeader({
                 >
                     <Search className="size-4" />
                     <span>{t('search')}</span>
-                    <kbd className="ml-auto rounded border bg-muted px-1.5 py-0.5 text-[10px]">
+                    <kbd className="ml-auto rounded border bg-muted px-1.5 py-0.5 text-2xs">
                         ⌘ K
                     </kbd>
                 </Button>
@@ -286,11 +286,11 @@ export function CustomizeDialog({
     ) => preferences.updatePreferences({ [key]: value });
     const colorClasses: Record<ColorPreset, string> = {
         neutral: 'bg-foreground',
-        zinc: 'bg-zinc-500',
-        blue: 'bg-blue-500',
-        violet: 'bg-violet-500',
-        rose: 'bg-rose-500',
-        orange: 'bg-orange-500',
+        zinc: 'bg-swatch',
+        blue: 'bg-swatch',
+        violet: 'bg-swatch',
+        rose: 'bg-swatch',
+        orange: 'bg-swatch',
     };
     const labels: Record<ColorPreset, string> = {
         neutral: 'Neutral',

@@ -67,18 +67,18 @@ const projects: Array<{
 ]
 
 const statusStyles: Record<ProjectStatus, string> = {
-  onTrack: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
-  atRisk: 'bg-amber-500/15 text-amber-600 dark:text-amber-400',
-  delayed: 'bg-red-500/15 text-red-600 dark:text-red-400',
+  onTrack: 'bg-status-success/15 text-status-success',
+  atRisk: 'bg-status-warning/15 text-status-warning',
+  delayed: 'bg-status-danger/15 text-status-danger',
 }
 
 function initialsColor(index: number) {
   const colors = [
-    'bg-blue-500/20 text-blue-600 dark:text-blue-400',
-    'bg-violet-500/20 text-violet-600 dark:text-violet-400',
-    'bg-rose-500/20 text-rose-600 dark:text-rose-400',
-    'bg-teal-500/20 text-teal-600 dark:text-teal-400',
-    'bg-amber-500/20 text-amber-600 dark:text-amber-400',
+    'bg-chart-1/20 text-chart-1',
+    'bg-chart-2/20 text-chart-2',
+    'bg-chart-3/20 text-chart-3',
+    'bg-chart-4/20 text-chart-4',
+    'bg-chart-5/20 text-chart-5',
   ]
   return colors[index % colors.length]
 }
@@ -136,7 +136,7 @@ export default function ProjectManagementPage() {
                             <span
                               key={member}
                               className={cn(
-                                'flex size-7 items-center justify-center rounded-full border-2 border-background text-[10px] font-semibold',
+                                'flex size-7 items-center justify-center rounded-full border-2 border-background text-2xs font-semibold',
                                 initialsColor(index),
                               )}
                             >

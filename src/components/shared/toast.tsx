@@ -21,7 +21,7 @@ interface ToastContextValue {
 const ToastContext = createContext<ToastContextValue | null>(null)
 
 const variantStyles: Record<ToastVariant, string> = {
-  success: 'border-emerald-500/30 bg-emerald-50 text-emerald-900 dark:border-emerald-500/30 dark:bg-emerald-950 dark:text-emerald-100',
+  success: 'border-chart-2/30 bg-chart-2/10 text-chart-2 dark:bg-chart-2/20',
   error: 'border-destructive/30 bg-destructive/10 text-destructive dark:border-destructive/30 dark:bg-destructive/20',
   info: 'border-primary/30 bg-primary/5 text-primary dark:border-primary/30 dark:bg-primary/10',
 }

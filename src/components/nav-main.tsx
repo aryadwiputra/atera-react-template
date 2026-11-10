@@ -69,7 +69,7 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
                                         [group.label]: !isOpen,
                                     }))
                                 }
-                                className="group/section w-full justify-between px-2 text-[10px] leading-5 font-medium tracking-[0.12em] text-sidebar-foreground/45 hover:bg-transparent hover:text-sidebar-foreground/70"
+                                className="group/section w-full justify-between px-2 text-2xs leading-5 font-medium tracking-[0.12em] text-sidebar-foreground/45 hover:bg-transparent hover:text-sidebar-foreground/70"
                             >
                                 <span className="truncate">{group.label}</span>
                                 <ChevronDown
@@ -103,7 +103,7 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
                                                 tooltip={{
                                                     children: item.title,
                                                 }}
-                                                className="h-9 text-[13px] leading-5 font-normal text-sidebar-foreground/70 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground"
+                                                className="h-9 text-xs leading-5 font-normal text-sidebar-foreground/70 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground"
                                             >
                                                 {item.disabled ? (
                                                     <>
