@@ -16,10 +16,10 @@ import { Input } from '@/components/ui/input'
 import { useAuth } from '@/hooks/use-auth'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { getProfile, saveProfile } from '@/lib/data/profile'
-import { listOrders } from '@/lib/data/orders'
-import { listInvoices } from '@/lib/data/invoices'
-import { listFiles } from '@/lib/data/files'
+import { profileService } from '@/services/profile-service'
+import { orderService } from '@/services/order-service'
+import { invoiceService } from '@/services/invoice-service'
+import { fileService } from '@/services/file-service'
 import type { Order } from '@/lib/data/types'
 
 const profileSchema = z.object({
@@ -42,14 +42,14 @@ export default function ProfilePage() {
   const t = useTranslations(language)
   const { toast } = useToast()
 
-  const [profile, setProfile] = useState(getProfile())
+  const [profile, setProfile] = useState(profileService.get())
   const fullName = profile.fullName || session?.name || 'User'
   const { email, jobTitle, company, location } = profile
   const joined = session?.authenticatedAt ? new Date(session.authenticatedAt) : new Date()
 
-  const orders = listOrders()
-  const invoices = listInvoices()
-  const files = listFiles()
+  const orders = orderService.list()
+  const invoices = invoiceService.list()
+  const files = fileService.list()
   const recentOrders = orders.slice(0, 3)
 
   const form = useForm<ProfileFormValues>({
@@ -64,7 +64,7 @@ export default function ProfilePage() {
   })
 
   const onSubmit = form.handleSubmit((values) => {
-    saveProfile(values)
+    profileService.save(values)
     setProfile(values)
     toast({ title: t('profileSaved'), variant: 'success' })
   })
