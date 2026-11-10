@@ -15,7 +15,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { createUser, listUsers, removeUser, updateUser } from '@/lib/data/users'
+import { userService } from '@/services/user-service'
 import type { User } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
 
@@ -47,7 +47,7 @@ export default function UsersPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
   const { toast } = useToast()
-  const [items, setItems] = useState(listUsers())
+  const [items, setItems] = useState(userService.list())
   const [confirmDelete, setConfirmDelete] = useState<User | null>(null)
   const [createOpen, setCreateOpen] = useState(false)
   const [editTarget, setEditTarget] = useState<User | null>(null)
@@ -55,7 +55,7 @@ export default function UsersPage() {
   const [form, setForm] = useState({ name: '', email: '', role: 'Viewer' as User['role'], department: 'Engineering' })
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({})
 
-  const refresh = () => setItems(listUsers())
+  const refresh = () => setItems(userService.list())
   const filtered = statusTab === 'all' ? items : items.filter((user) => user.status === statusTab)
 
   const openCreate = () => {
@@ -78,11 +78,11 @@ export default function UsersPage() {
     setErrors(next)
     if (Object.keys(next).length > 0) return
     if (editTarget) {
-      updateUser(editTarget.id, { name: form.name.trim(), email: form.email.trim(), role: form.role, department: form.department })
+      userService.update(editTarget.id, { name: form.name.trim(), email: form.email.trim(), role: form.role, department: form.department })
       toast({ title: t('userUpdated'), variant: 'success' })
       setEditTarget(null)
     } else {
-      createUser({ name: form.name.trim(), email: form.email.trim(), role: form.role, department: form.department, status: 'Invited' })
+      userService.create({ name: form.name.trim(), email: form.email.trim(), role: form.role, department: form.department, status: 'Invited' })
       toast({ title: t('userCreated'), variant: 'success' })
       setCreateOpen(false)
     }
@@ -207,7 +207,7 @@ export default function UsersPage() {
           description={t('deleteUserDescription')}
           confirmLabel={t('delete')}
           cancelLabel={t('cancel')}
-          onConfirm={() => { if (confirmDelete) { removeUser(confirmDelete.id); refresh(); toast({ title: t('userDeleted'), variant: 'success' }) } }}
+          onConfirm={() => { if (confirmDelete) { userService.remove(confirmDelete.id); refresh(); toast({ title: t('userDeleted'), variant: 'success' }) } }}
           trigger={<span />}
         />
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
