@@ -9,7 +9,6 @@ import {
   MessageSquare,
   Moon,
   ShoppingBag,
-  Sparkles,
   Sun,
   Users,
   X,
@@ -195,44 +194,18 @@ function Navbar() {
 }
 
 function DashboardPreview() {
-  const bars = [42, 58, 45, 70, 62, 84, 76, 91, 68, 80, 95, 88]
+  const { resolvedAppearance } = useAppearance()
+  const dark = resolvedAppearance === 'dark'
+
   return (
-    <div className="rounded-xl border bg-background p-4 shadow-sm" role="img" aria-label="Preview of the Atera analytics dashboard">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="size-2.5 rounded-full bg-primary" />
-          <span className="text-xs font-medium">Revenue, last 12 months</span>
-        </div>
-        <span className="text-xs text-muted-foreground">Updated 4 min ago</span>
-      </div>
-      <div className="mt-4 grid grid-cols-12 items-end gap-1.5" style={{ height: 148 }}>
-        {bars.map((height, index) => (
-          <div key={index} className="col-span-1 flex items-end">
-            <motion.div
-              className="w-full rounded-sm bg-primary/80"
-              initial={{ height: 0 }}
-              whileInView={{ height: `${height}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: EASE, delay: index * 0.04 }}
-            />
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 grid grid-cols-3 gap-3 border-t pt-4">
-        <div>
-          <p className="text-xs text-muted-foreground">Revenue</p>
-          <p className="text-lg font-semibold tracking-tight">$84,310</p>
-        </div>
-        <div>
-          <p className="text-xs text-muted-foreground">Orders</p>
-          <p className="text-lg font-semibold tracking-tight">1,248</p>
-        </div>
-        <div>
-          <p className="text-xs text-muted-foreground">Conversion</p>
-          <p className="text-lg font-semibold tracking-tight">3.4%</p>
-        </div>
-      </div>
-    </div>
+    <img
+      src="/dashboard-preview.png"
+      alt="A screenshot of Atera's analytics dashboard"
+      className={cn(
+        'w-full rounded-xl border object-cover shadow-sm',
+        dark && 'brightness-75 contrast-125 saturate-75'
+      )}
+    />
   )
 }
 
@@ -241,35 +214,26 @@ function Hero() {
   return (
     <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-16 sm:pt-24">
       <div className="mx-auto flex max-w-[680px] flex-col items-center text-center">
-        <motion.div
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground"
-        >
-          <Sparkles className="size-3" />
-          Built with React 19, TypeScript, and Tailwind CSS v4
-        </motion.div>
         <motion.h1
           initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE, delay: 0.08 }}
-          className="mt-6 bg-linear-to-r from-black to-[#666666] bg-clip-text text-transparent dark:from-white dark:to-[#9B9B9B] text-4xl font-bold tracking-tight text-balance sm:text-5xl"
+          transition={{ duration: 0.6, ease: EASE }}
+          className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
         >
-          A React dashboard template that ships fast
+          A React dashboard template for developers
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE, delay: 0.16 }}
+          transition={{ duration: 0.6, ease: EASE, delay: 0.08 }}
           className="mt-5 text-lg text-pretty text-muted-foreground"
         >
-          Atera is a fully typed React 19 admin dashboard template with 55+ ready routes, 15 shadcn style components, dark mode, and theming built in. Skip the setup and ship.
+          Atera includes typed admin pages, in-memory sample data, and theme controls, ready to explore and adapt to your project.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE, delay: 0.24 }}
+          transition={{ duration: 0.6, ease: EASE, delay: 0.16 }}
           className="mt-8 flex flex-col items-center gap-3 sm:flex-row"
         >
           <Link to="/sign-up">
@@ -285,20 +249,20 @@ function Hero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
+          transition={{ duration: 0.6, delay: 0.24 }}
           className="mt-4 text-sm text-muted-foreground"
         >
           One-time purchase. Free updates for 6 months.
         </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
-          className="mt-14 w-full max-w-3xl"
-        >
-          <DashboardPreview />
-        </motion.div>
       </div>
+      <motion.div
+        initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: EASE, delay: 0.12 }}
+        className="mt-14 w-full"
+      >
+        <DashboardPreview />
+      </motion.div>
     </section>
   )
 }
@@ -393,26 +357,6 @@ function Tagline() {
   )
 }
 
-function Testimonial() {
-  return (
-    <section className="border-y bg-muted/40">
-      <div className="mx-auto w-full max-w-3xl px-6 py-20 text-center">
-        <Reveal>
-          <blockquote>
-            <p className="text-xl leading-8 text-pretty sm:text-2xl">
-              "I have shipped four client dashboards since I bought Atera. The mock data layer alone saved me a week per project."
-            </p>
-          </blockquote>
-          <figcaption className="mt-6">
-            <p className="text-sm font-semibold">Dara Winata</p>
-            <p className="text-sm text-muted-foreground">Freelance full-stack developer</p>
-          </figcaption>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
 function Pricing() {
   return (
     <section id="pricing" className="mx-auto w-full max-w-6xl scroll-mt-24 px-6 py-24">
@@ -476,7 +420,7 @@ function FinalCta() {
             Your next admin panel starts here
           </h2>
           <p className="max-w-[520px] text-pretty opacity-80">
-            Clone the repo, run bun install, and you have a working dashboard in under five minutes.
+            Start with prebuilt admin pages, typed sample data, and theme controls in one React project.
           </p>
           <div className="flex flex-col items-center gap-3 sm:flex-row">
             <Link to="/sign-up">
@@ -520,7 +464,7 @@ function Footer() {
     <footer className="border-t bg-muted/40">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-14 md:grid-cols-[1.5fr_1fr_1fr]">
         <div>
-          <Link to="/" aria-label="Atera home">
+          <Link to="/" aria-label="Atera home" className="inline-flex items-center">
             <AppLogo />
           </Link>
           <p className="mt-4 max-w-xs text-sm text-pretty text-muted-foreground">
@@ -560,7 +504,6 @@ export default function HomePage() {
       <Features />
       <Showcase />
       <Tagline />
-      <Testimonial />
       <Pricing />
       <FinalCta />
       <Footer />
