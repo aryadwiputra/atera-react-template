@@ -9,16 +9,16 @@ import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { columns, listTasks, moveTask } from '@/lib/data/kanban'
+import { kanbanService } from '@/services/kanban-service'
 
 export default function KanbanPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
-  const [tasks, setTasks] = useState(listTasks())
+  const [tasks, setTasks] = useState(kanbanService.listTasks())
 
   const handleDrop = (taskId: string, columnId: string) => {
-    moveTask(taskId, columnId)
-    setTasks(listTasks())
+    kanbanService.moveTask(taskId, columnId)
+    setTasks(kanbanService.listTasks())
   }
 
   const priorityColor = { high: 'bg-destructive/15 text-destructive', medium: 'bg-muted text-muted-foreground', low: 'bg-muted/50 text-muted-foreground' } as const
@@ -29,7 +29,7 @@ export default function KanbanPage() {
       <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
         <PageHeader title={t('kanban')} description={t('kanbanDescription')} actions={<Button size="sm"><Plus className="size-4" />{t('addTask')}</Button>} />
         <div className="grid gap-4 md:grid-cols-3">
-          {columns.map((column) => {
+          {kanbanService.columns.map((column) => {
             const columnTasks = tasks.filter((task) => task.columnId === column.id)
             return (
               <Card key={column.id} className="flex flex-col">
@@ -56,7 +56,7 @@ export default function KanbanPage() {
                         </div>
                         <p className="mt-2 text-xs text-muted-foreground">{task.assignee}</p>
                         <div className="mt-3 flex gap-1">
-                          {columns.filter((col) => col.id !== task.columnId).map((col) => (
+                          {kanbanService.columns.filter((col) => col.id !== task.columnId).map((col) => (
                             <button
                               key={col.id}
                               type="button"
