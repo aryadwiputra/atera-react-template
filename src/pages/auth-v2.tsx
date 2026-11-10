@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Eye, EyeOff, LoaderCircle, Sparkles } from 'lucide-react'
+import { Eye, EyeOff, LoaderCircle } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router'
@@ -15,23 +15,12 @@ function BrandPanel() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
   return (
-    <aside className="relative hidden flex-1 flex-col justify-between overflow-hidden bg-primary p-10 text-primary-foreground lg:flex">
-      <div className="relative z-10 flex items-center gap-2 text-lg font-semibold">
-        <Sparkles className="size-5" />
-        {t('ateraWorkspace')}
-      </div>
-      <div className="relative z-10 max-w-md space-y-4">
+    <aside className="hidden flex-1 flex-col justify-between border-r bg-muted/30 p-10 lg:flex">
+      <div className="text-lg font-semibold">{t('ateraWorkspace')}</div>
+      <div className="max-w-md space-y-4">
         <h2 className="text-3xl font-semibold tracking-tight">{t('authBrandTitle')}</h2>
-        <p className="text-sm text-primary-foreground/80">{t('authBrandDescription')}</p>
+        <p className="text-sm text-muted-foreground">{t('authBrandDescription')}</p>
       </div>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-24 -bottom-24 size-96 rounded-full bg-primary-foreground/10"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-48 bottom-12 size-96 rounded-full bg-primary-foreground/10"
-      />
     </aside>
   )
 }
