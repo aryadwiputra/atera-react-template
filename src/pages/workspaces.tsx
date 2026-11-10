@@ -1,11 +1,10 @@
-import { Check, UserPlus } from 'lucide-react'
+import { UserPlus } from 'lucide-react'
 import { useState } from 'react'
 import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Card, CardContent } from '@/components/ui/card'
 import { listNotifications, markAllNotificationsRead, markNotificationRead } from '@/lib/data/notifications'
 import { listUsers } from '@/lib/data/users'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
@@ -15,4 +14,4 @@ export function NotificationsPage() { const { language } = useCustomizePreferenc
 
 export function UsersPage() { const { language } = useCustomizePreferences(); const t = useTranslations(language); const users = listUsers(); return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6"><PageHeader title={t('users')} description={t('usersDescription')} actions={<Button size="sm"><UserPlus className="size-4" />{t('inviteUser')}</Button>} /><Card><CardContent className="p-0">{users.map((user) => <div key={user.id} className="flex items-center gap-4 border-b p-4 last:border-0"><div className="flex size-9 items-center justify-center rounded-full bg-muted text-sm font-medium">{user.name.split(' ').map((part) => part[0]).join('')}</div><div className="min-w-0 flex-1"><p className="font-medium">{user.name}</p><p className="text-sm text-muted-foreground">{user.email}</p></div><Badge variant="secondary">{user.role}</Badge><span className="hidden text-sm text-muted-foreground sm:inline">{user.status}</span></div>)}</CardContent></Card></main></PageTransition> }
 
-export function ProfilePage() { const { language } = useCustomizePreferences(); const t = useTranslations(language); return <PageTransition><main className="flex min-h-full flex-col gap-6 p-4 md:p-6"><PageHeader title={t('profile')} description={t('profileDescription')} /><Card className="max-w-2xl"><CardHeader><CardTitle>{t('personalInformation')}</CardTitle></CardHeader><CardContent className="grid gap-4 sm:grid-cols-2"><label className="grid gap-2 text-sm font-medium">{t('fullName')}<Input defaultValue="Demo User" /></label><label className="grid gap-2 text-sm font-medium">{t('email')}<Input defaultValue="demo@example.com" type="email" /></label><label className="grid gap-2 text-sm font-medium sm:col-span-2">{t('role')}<Input defaultValue="Administrator" disabled /></label><Button className="sm:col-span-2"><Check className="size-4" />{t('saveChanges')}</Button></CardContent></Card></main></PageTransition> }
+
