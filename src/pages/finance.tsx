@@ -18,7 +18,7 @@ import { ArrowLeftRight, Pencil, PiggyBank, Plus, Trash2, TrendingDown, Trending
 import { useState } from 'react'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { createTransaction, listTransactions, removeTransaction, updateTransaction } from '@/lib/data/finance'
+import { financeService } from '@/services/finance-service'
 import type { FinanceTransaction } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
 
@@ -59,13 +59,13 @@ export default function FinancePage() {
   const t = useTranslations(language)
   const { toast } = useToast()
 
-  const [items, setItems] = useState(listTransactions)
+  const [items, setItems] = useState(financeService.list)
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<FinanceTransaction | null>(null)
   const [form, setForm] = useState<FormState>(emptyForm)
   const [pendingDelete, setPendingDelete] = useState<FinanceTransaction | null>(null)
 
-  const refresh = () => setItems(listTransactions())
+  const refresh = () => setItems(financeService.list())
 
   const totalIncome = items.filter((item) => item.type === 'Income').reduce((sum, item) => sum + item.amount, 0)
   const totalExpenses = items.filter((item) => item.type === 'Expense').reduce((sum, item) => sum + item.amount, 0)
@@ -89,10 +89,10 @@ export default function FinancePage() {
     event.preventDefault()
     if (form.description.trim() === '' || form.amount <= 0) return
     if (editing) {
-      updateTransaction(editing.id, form)
+      financeService.update(editing.id, form)
       toast({ title: t('transactionUpdated'), description: form.description, variant: 'success' })
     } else {
-      createTransaction(form)
+      financeService.create(form)
       toast({ title: t('transactionCreated'), description: form.description, variant: 'success' })
     }
     refresh()
@@ -268,7 +268,7 @@ export default function FinancePage() {
         trigger={<span />}
         onConfirm={() => {
           if (!pendingDelete) return
-          removeTransaction(pendingDelete.id)
+          financeService.remove(pendingDelete.id)
           refresh()
           toast({ title: t('transactionDeleted'), variant: 'success' })
         }}
