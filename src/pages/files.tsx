@@ -8,7 +8,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { listFiles } from '@/lib/data/files'
+import { fileService } from '@/services/file-service'
 
 const typeIcons = { folder: Folder, document: FileText, spreadsheet: FileSpreadsheet, image: Image } as const
 
@@ -19,7 +19,7 @@ export default function FilesPage() {
   const [search, setSearch] = useState('')
   const [uploading, setUploading] = useState(false)
   const [uploaded, setUploaded] = useState(false)
-  const files = listFiles().filter((file) => file.name.toLowerCase().includes(search.toLowerCase()))
+  const files = fileService.list().filter((file) => file.name.toLowerCase().includes(search.toLowerCase()))
 
   const simulateUpload = () => {
     setUploading(true)
