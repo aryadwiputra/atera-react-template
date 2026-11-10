@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { listCategories, listPosItems } from '@/lib/data/pos'
+import { posService } from '@/services/pos-service'
 import type { PosCartLine, PosItem, PosPaymentMethod } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
 
@@ -30,8 +30,8 @@ export default function PosPage() {
   const t = useTranslations(language)
   const { toast } = useToast()
 
-  const allItems = useMemo(() => listPosItems(), [])
-  const categories = useMemo(() => listCategories(), [])
+  const allItems = useMemo(() => posService.listItems(), [])
+  const categories = useMemo(() => posService.listCategories(), [])
 
   const [query, setQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState<string>('All')
