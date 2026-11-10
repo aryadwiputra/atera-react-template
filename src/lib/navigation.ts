@@ -1,6 +1,6 @@
 import {
   BarChart3, Bell, CalendarDays, ChartNoAxesCombined, CircleDollarSign, CreditCard, FilePenLine, FileText, Folder, FolderKanban, FormInput,
-  HelpCircle, KanbanSquare, LayoutGrid, LayoutPanelTop, Mail, MapPin, Megaphone, MessageSquare, Package, Settings, ShoppingCart,
+  HelpCircle, KanbanSquare, LayoutGrid, LayoutPanelTop, Mail, MapPin, Megaphone, MessageSquare, Package, Settings, ShoppingCart, Store,
   Sparkles, Users, WalletCards, UserCircle, Wand2,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -22,12 +22,14 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Analytics', href: '/analytics', icon: ChartNoAxesCombined, group: 'overview', keywords: ['metrics', 'reports'], translationKey: 'analytics' },
   { title: 'eCommerce', href: '/ecommerce', icon: ShoppingCart, group: 'overview', keywords: ['sales', 'shop'], translationKey: 'ecommerce' },
   { title: 'CRM', href: '/crm', icon: Users, group: 'overview', keywords: ['leads', 'customers'], translationKey: 'crm' },
+  { title: 'Pipeline', href: '/pipeline', icon: KanbanSquare, group: 'overview', keywords: ['deals', 'leads', 'sales', 'crm'], translationKey: 'pipelineBoard' },
   { title: 'SaaS', href: '/saas', icon: WalletCards, group: 'overview', keywords: ['subscriptions', 'mrr'], translationKey: 'saas' },
   { title: 'Finance', href: '/finance', icon: CircleDollarSign, group: 'overview', keywords: ['budget', 'expenses', 'cash flow'], translationKey: 'finance' },
   { title: 'Marketing', href: '/marketing', icon: Megaphone, group: 'overview', keywords: ['campaigns', 'ads'], translationKey: 'marketing' },
   { title: 'Project Management', href: '/project-management', icon: FolderKanban, group: 'overview', keywords: ['projects', 'tasks'], translationKey: 'projectManagement' },
   { title: 'Charts', href: '/charts', icon: BarChart3, group: 'overview', keywords: ['graphs', 'visualization'], translationKey: 'charts' },
   { title: 'Orders', href: '/orders', icon: Package, group: 'commerce', keywords: ['purchases', 'transactions'], translationKey: 'orders', badge: '12' },
+  { title: 'Point of Sale', href: '/pos', icon: Store, group: 'commerce', keywords: ['pos', 'cashier', 'register', 'checkout'], translationKey: 'pointOfSale' },
   { title: 'Products', href: '/products', icon: ShoppingCart, group: 'commerce', keywords: ['catalog', 'inventory'], translationKey: 'products' },
   { title: 'Customers', href: '/customers', icon: Users, group: 'commerce', keywords: ['clients', 'accounts'], translationKey: 'customers' },
   { title: 'Invoices', href: '/invoices', icon: FileText, group: 'commerce', keywords: ['billing', 'receipts'], translationKey: 'invoices' },

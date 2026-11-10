@@ -13,7 +13,9 @@ import { BillingPage, CustomerDetailPage, InvoicesPage, OrderDetailPage, OrderFo
 import PricingPage from '@/pages/pricing'
 import ChartsPage from '@/pages/charts'
 import EcommercePage from '@/pages/ecommerce'
+import PosPage from '@/pages/pos'
 import CrmPage from '@/pages/crm'
+import PipelinePage from '@/pages/pipeline'
 import SaasPage from '@/pages/saas'
 import MailPage from '@/pages/mail'
 import ChatPage from '@/pages/chat'
@@ -33,9 +35,10 @@ import MapsPage from '@/pages/maps'
 import SearchPage from '@/pages/search'
 import { LoginV2Page, RegisterV2Page } from '@/pages/auth-v2'
 import FormsPage from '@/pages/forms'
+import ProfilePage from '@/pages/profile'
 import CustomerFormPage from '@/pages/customer-form'
 import InvoiceFormPage from '@/pages/invoice-form'
-import { NotificationsPage, ProfilePage } from '@/pages/workspaces'
+import { NotificationsPage } from '@/pages/workspaces'
 import { ForgotPasswordPage, LockScreenPage, ResetPasswordPage, SignUpPage, TwoFactorPage, VerifyEmailPage } from '@/pages/auth-pages'
 import SettingsAppearancePage from '@/pages/settings/appearance'
 import SettingsProfilePage from '@/pages/settings/profile'
@@ -54,7 +57,7 @@ function AuthRoutes() {
   return <AuthLayout><ScrollToTop /><PageTransition><Outlet /></PageTransition></AuthLayout>
 }
 
-const explicitPaths = new Set(['/analytics', '/orders', '/products', '/customers', '/ecommerce', '/crm', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing'])
+const explicitPaths = new Set(['/analytics', '/orders', '/products', '/customers', '/finance', '/ecommerce', '/crm', '/pipeline', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing', '/editor'])
 const placeholderRoutes = navigationItems.filter((item) => item.href !== '/dashboard' && item.href !== '/login' && !explicitPaths.has(item.href)).map((item) => ({
   path: item.href.slice(1),
   element: <AppPlaceholder title={item.translationKey} route="/dashboard" />,
@@ -70,10 +73,12 @@ const router = createBrowserRouter([
       { path: '/analytics', element: <AnalyticsPage /> },
       { path: '/charts', element: <ChartsPage /> },
       { path: '/orders', element: <OrdersPage /> },
+      { path: '/pos', element: <PosPage /> },
       { path: '/products', element: <ProductsPage /> },
       { path: '/customers', element: <CustomersPage /> },
       { path: '/ecommerce', element: <EcommercePage /> },
       { path: '/crm', element: <CrmPage /> },
+      { path: '/pipeline', element: <PipelinePage /> },
       { path: '/saas', element: <SaasPage /> },
       { path: '/finance', element: <FinancePage /> },
       { path: '/marketing', element: <MarketingPage /> },
