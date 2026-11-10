@@ -54,6 +54,14 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+
+    --text-2xs: 0.625rem;
+    --text-2xs--line-height: 1rem;
+
+    --color-swatch: var(--swatch);
+    --color-status-success: var(--status-success);
+    --color-status-warning: var(--status-warning);
+    --color-status-danger: var(--status-danger);
 }
 
 :root {
@@ -90,6 +98,10 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+    --swatch: oklch(0.556 0 0);
+    --status-success: oklch(0.627 0.169 149.214);
+    --status-warning: oklch(0.681 0.162 75.834);
+    --status-danger: oklch(0.577 0.245 27.325);
 }
 
 .dark {
@@ -125,6 +137,9 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(0.26 0 0);
     --sidebar-ring: oklch(0.556 0 0);
+    --status-success: oklch(0.765 0.177 163.223);
+    --status-warning: oklch(0.795 0.184 86.047);
+    --status-danger: oklch(0.704 0.191 22.216);
 }
 
 [data-color='zinc'] {
@@ -132,6 +147,7 @@
     --primary-foreground: oklch(0.985 0 0);
     --ring: oklch(0.705 0.015 286.067);
     --sidebar-primary: oklch(0.274 0.006 286.033);
+    --swatch: oklch(0.556 0 0);
     --chart-1: oklch(0.488 0.243 264.376);
     --chart-2: oklch(0.696 0.17 162.48);
     --chart-3: oklch(0.769 0.188 70.08);
@@ -144,6 +160,7 @@
     --primary-foreground: oklch(0.985 0 0);
     --ring: oklch(0.623 0.214 259.815);
     --sidebar-primary: oklch(0.546 0.245 262.881);
+    --swatch: oklch(0.623 0.214 259.815);
     --chart-1: oklch(0.546 0.245 262.881);
     --chart-2: oklch(0.6 0.118 184.704);
     --chart-3: oklch(0.398 0.07 227.392);
@@ -156,6 +173,7 @@
     --primary-foreground: oklch(0.985 0 0);
     --ring: oklch(0.606 0.25 292.717);
     --sidebar-primary: oklch(0.541 0.281 293.009);
+    --swatch: oklch(0.606 0.25 292.717);
     --chart-1: oklch(0.541 0.281 293.009);
     --chart-2: oklch(0.627 0.265 303.9);
     --chart-3: oklch(0.6 0.118 184.704);
@@ -168,6 +186,7 @@
     --primary-foreground: oklch(0.985 0 0);
     --ring: oklch(0.645 0.246 16.439);
     --sidebar-primary: oklch(0.586 0.253 17.585);
+    --swatch: oklch(0.645 0.246 16.439);
     --chart-1: oklch(0.586 0.253 17.585);
     --chart-2: oklch(0.769 0.188 70.08);
     --chart-3: oklch(0.6 0.118 184.704);
@@ -180,6 +199,7 @@
     --primary-foreground: oklch(0.985 0 0);
     --ring: oklch(0.705 0.213 47.604);
     --sidebar-primary: oklch(0.646 0.222 41.116);
+    --swatch: oklch(0.705 0.213 47.604);
     --chart-1: oklch(0.646 0.222 41.116);
     --chart-2: oklch(0.769 0.188 70.08);
     --chart-3: oklch(0.6 0.118 184.704);
@@ -217,62 +237,32 @@
     body {
         @apply bg-background text-foreground;
     }
-
-    html {
-        scrollbar-width: thin;
-        scrollbar-color: color-mix(in oklch, var(--foreground) 25%, transparent)
-            transparent;
-    }
-
-    html::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-    }
-
-    html::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    html::-webkit-scrollbar-button,
-    html::-webkit-scrollbar-button:single-button,
-    html::-webkit-scrollbar-button:vertical:decrement,
-    html::-webkit-scrollbar-button:vertical:increment,
-    html::-webkit-scrollbar-button:horizontal:decrement,
-    html::-webkit-scrollbar-button:horizontal:increment {
-        display: none;
-        height: 0;
-        width: 0;
-    }
-
-    html::-webkit-scrollbar-thumb {
-        border-radius: 999px;
-        background: color-mix(in oklch, var(--foreground) 25%, transparent);
-    }
-
-    html::-webkit-scrollbar-thumb:hover {
-        background: color-mix(in oklch, var(--foreground) 35%, transparent);
-    }
 }
 
+html,
 .sidebar-scroll {
     scrollbar-width: thin;
-    scrollbar-color: color-mix(
-            in oklch,
-            var(--sidebar-foreground) 25%,
-            transparent
-        )
+    scrollbar-color: color-mix(in oklch, var(--foreground) 25%, transparent)
         transparent;
 }
 
+html::-webkit-scrollbar,
 .sidebar-scroll::-webkit-scrollbar {
     width: 5px;
     height: 5px;
 }
 
+html::-webkit-scrollbar-track,
 .sidebar-scroll::-webkit-scrollbar-track {
     background: transparent;
 }
 
+html::-webkit-scrollbar-button,
+html::-webkit-scrollbar-button:single-button,
+html::-webkit-scrollbar-button:vertical:decrement,
+html::-webkit-scrollbar-button:vertical:increment,
+html::-webkit-scrollbar-button:horizontal:decrement,
+html::-webkit-scrollbar-button:horizontal:increment,
 .sidebar-scroll::-webkit-scrollbar-button,
 .sidebar-scroll::-webkit-scrollbar-button:single-button,
 .sidebar-scroll::-webkit-scrollbar-button:vertical:decrement,
@@ -284,11 +274,100 @@
     width: 0;
 }
 
+html::-webkit-scrollbar-thumb,
 .sidebar-scroll::-webkit-scrollbar-thumb {
     border-radius: 999px;
+    background: color-mix(in oklch, var(--foreground) 25%, transparent);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklch, var(--foreground) 35%, transparent);
+}
+
+.sidebar-scroll {
+    scrollbar-color: color-mix(
+            in oklch,
+            var(--sidebar-foreground) 25%,
+            transparent
+        )
+        transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
     background: color-mix(in oklch, var(--sidebar-foreground) 25%, transparent);
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
     background: color-mix(in oklch, var(--sidebar-foreground) 35%, transparent);
+}
+
+/* Editor page (tiptap) */
+.editor-content {
+    padding: 0.75rem 1rem;
+}
+
+.editor-content .ProseMirror {
+    min-height: 360px;
+    outline: none;
+}
+
+.editor-content p {
+    margin: 0.5em 0;
+    line-height: 1.7;
+}
+
+.editor-content h1,
+.editor-content h2,
+.editor-content h3 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 1.25em 0 0.5em;
+}
+
+.editor-content h1 {
+    font-size: 1.875rem;
+}
+
+.editor-content h2 {
+    font-size: 1.5rem;
+}
+
+.editor-content h3 {
+    font-size: 1.25rem;
+}
+
+.editor-content ul,
+.editor-content ol {
+    padding-inline-start: 1.5rem;
+    margin: 0.5em 0;
+}
+
+.editor-content ul {
+    list-style: disc;
+}
+
+.editor-content ol {
+    list-style: decimal;
+}
+
+.editor-content blockquote {
+    border-inline-start: 3px solid var(--border);
+    padding-inline-start: 1rem;
+    color: var(--muted-foreground);
+    margin: 0.75em 0;
+}
+
+.editor-content a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.editor-content p.is-editor-empty:first-child::before {
+    color: var(--muted-foreground);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
 }
