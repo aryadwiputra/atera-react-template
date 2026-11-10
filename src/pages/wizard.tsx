@@ -8,6 +8,7 @@ import { PageTransition } from '@/components/shared/page-transition'
 import { useToast } from '@/components/shared/toast'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
@@ -137,13 +138,12 @@ export default function WizardPage() {
                   </SelectContent>
                 </Select>
                 <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    className="size-4 accent-primary"
+                  <Checkbox
+                    id="notificationsEnabled"
                     checked={values.notificationsEnabled}
-                    onChange={(event) => form.setValue('notificationsEnabled', event.target.checked)}
+                    onCheckedChange={(checked) => form.setValue('notificationsEnabled', checked === true)}
                   />
-                  <label className="text-sm font-medium">{t('notificationsEnabled')}</label>
+                  <label htmlFor="notificationsEnabled" className="text-sm font-medium">{t('notificationsEnabled')}</label>
                 </div>
               </div>
             )}

@@ -4,6 +4,7 @@ import { listMail, markMailRead, sendMail } from '@/lib/data/mail'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { PageHeader } from '@/components/shared/page-header'
@@ -71,8 +72,8 @@ export default function MailPage() {
               </div>
               <div className="grid gap-1.5">
                 <label className="text-sm font-medium">{t('message')}</label>
-                <textarea
-                  className="min-h-32 w-full rounded-md border bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                <Textarea
+                  className="min-h-32"
                   value={body}
                   onChange={(event) => setBody(event.target.value)}
                   placeholder={t('messagePlaceholder')}

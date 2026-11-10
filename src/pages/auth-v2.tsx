@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { SocialAuthButtons } from '@/components/shared/auth-controls'
 import AppLogo from '@/components/app-logo'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { notifyAuthChanged, useAuth } from '@/hooks/use-auth'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
@@ -36,6 +37,7 @@ export function LoginV2Page() {
   const [email, setEmail] = useState(getDemoCredentials().email)
   const [password, setPassword] = useState(getDemoCredentials().password)
   const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -97,7 +99,7 @@ export function LoginV2Page() {
             </label>
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 text-sm font-medium">
-                <input type="checkbox" className="size-4 accent-primary" />
+                <Checkbox checked={rememberMe} onCheckedChange={(checked) => setRememberMe(checked === true)} />
                 {t('rememberMe')}
               </label>
               <Link

@@ -5,6 +5,8 @@ import { PageTransition } from '@/components/shared/page-transition'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
 
@@ -30,15 +32,18 @@ export default function SupportPage() {
                 </div>
                 <div className="grid gap-2">
                   <label htmlFor="category" className="text-sm font-medium">{t('category')}</label>
-                  <select id="category" className="h-10 w-full rounded-md border bg-background px-3 text-sm">
-                    <option value="general">{t('general')}</option>
-                    <option value="billing">{t('billing')}</option>
-                    <option value="technical">{t('technical')}</option>
-                  </select>
+                  <Select defaultValue="general">
+                    <SelectTrigger id="category"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="general">{t('general')}</SelectItem>
+                      <SelectItem value="billing">{t('billing')}</SelectItem>
+                      <SelectItem value="technical">{t('technical')}</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="grid gap-2 sm:col-span-2">
                   <label htmlFor="message" className="text-sm font-medium">{t('message')}</label>
-                  <textarea id="message" value={message} onChange={(event) => setMessage(event.target.value)} className="min-h-[120px] w-full rounded-md border bg-background px-3 py-2 text-sm" />
+                  <Textarea id="message" value={message} onChange={(event) => setMessage(event.target.value)} className="min-h-[120px]" />
                 </div>
               </div>
               <Button className="mt-4" type="submit"><Send className="size-4" />{t('send')}</Button>
