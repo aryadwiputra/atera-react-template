@@ -137,7 +137,7 @@ export default function AssetsPage() {
         />
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map((card) => (
-            <StatCard key={card.title} title={card.title} value={card.value} change={card.change} icon={card.icon} description={card.description} />
+            <StatCard key={card.title} title={card.title} value={card.value} change={card.change ?? ''} icon={card.icon} description={card.description} />
           ))}
         </div>
         <DataTable columns={columns} data={items} filterPlaceholder={t('filterTransactions')} />

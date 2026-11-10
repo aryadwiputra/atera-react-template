@@ -132,7 +132,7 @@ export default function HrPage() {
         />
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {summary.map((card) => (
-            <StatCard key={card.title} title={card.title} value={card.value} icon={card.icon} description={card.description} change={card.change} />
+            <StatCard key={card.title} title={card.title} value={card.value} icon={card.icon} description={card.description} change={card.change ?? ''} />
           ))}
         </div>
         <DataTable columns={columns} data={employees} filterPlaceholder={t('search')} />

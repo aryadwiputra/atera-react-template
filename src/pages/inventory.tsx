@@ -6,7 +6,7 @@ import { StatCard } from '@/components/shared/stat-card'
 import { Badge } from '@/components/ui/badge'
 import { Boxes, PackageCheck, Warehouse } from 'lucide-react'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
-import { useTranslations } from '@/i18n'
+import { useTranslations, type TranslationKey } from '@/i18n'
 import { listInventory } from '@/lib/data/inventory'
 import type { InventoryItem } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
@@ -24,7 +24,7 @@ const statusClassMap: Record<string, string> = {
   Out: 'bg-destructive/15 text-destructive',
 }
 
-const statusKeyMap: Record<string, string> = { OK: 'stockOk', Low: 'stockLow', Out: 'stockOut' }
+const statusKeyMap: Record<string, TranslationKey> = { OK: 'stockOk', Low: 'stockLow', Out: 'stockOut' }
 
 export default function InventoryPage() {
   const { language } = useCustomizePreferences()
@@ -57,9 +57,9 @@ export default function InventoryPage() {
           breadcrumbs={[{ title: t('enterprise'), href: '/inventory' }, { title: t('inventory'), href: '/inventory' }]}
         />
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          <StatCard title={t('totalSkus')} value={String(items.length)} icon={Boxes} />
-          <StatCard title={t('lowStockCount')} value={String(lowStockCount)} icon={PackageCheck} description={t('inventoryDescription')} />
-          <StatCard title={t('totalUnits')} value={totalUnits.toLocaleString('en-US')} icon={Warehouse} />
+          <StatCard title={t('totalSkus')} value={String(items.length)} change="" icon={Boxes} />
+          <StatCard title={t('lowStockCount')} value={String(lowStockCount)} change="" changePositive={false} icon={PackageCheck} description={t('inventoryDescription')} />
+          <StatCard title={t('totalUnits')} value={totalUnits.toLocaleString('en-US')} change="" icon={Warehouse} />
         </div>
         <DataTable data={items} columns={columns} filterPlaceholder={t('inventory')} />
       </main>
