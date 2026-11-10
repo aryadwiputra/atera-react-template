@@ -12,7 +12,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { listProducts, removeProduct } from '@/lib/data/products'
+import { productService } from '@/services/product-service'
 import type { Product } from '@/lib/data/types'
 
 const helper = createAppColumnHelper<Product>()
@@ -21,7 +21,7 @@ export default function ProductsPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
   const { toast } = useToast()
-  const [items, setItems] = useState(listProducts())
+  const [items, setItems] = useState(productService.list())
   const [pendingDelete, setPendingDelete] = useState<Product | null>(null)
 
   const columns: ColumnDef<typeof tableFeaturesConfig, Product, any>[] = [
@@ -53,8 +53,8 @@ export default function ProductsPage() {
       trigger={<span />}
       onConfirm={() => {
         if (!pendingDelete) return
-        removeProduct(pendingDelete.id)
-        setItems(listProducts())
+        productService.remove(pendingDelete.id)
+        setItems(productService.list())
         toast({ title: t('productDeleted'), variant: 'success' })
       }}
     />
