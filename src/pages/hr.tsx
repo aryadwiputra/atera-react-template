@@ -15,7 +15,7 @@ import { Pencil, Plus, Users } from 'lucide-react'
 import { useState } from 'react'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { createEmployee, listEmployees, listOpenPositions, updateEmployee } from '@/lib/data/hr'
+import { hrService } from '@/services/hr-service'
 import type { Employee, EmployeeStatus } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
 
@@ -44,13 +44,13 @@ export default function HrPage() {
   const t = useTranslations(language)
   const { toast } = useToast()
 
-  const [employees, setEmployees] = useState(listEmployees)
-  const [openPositions] = useState(listOpenPositions)
+  const [employees, setEmployees] = useState(hrService.listEmployees)
+  const [openPositions] = useState(hrService.listOpenPositions)
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Employee | null>(null)
   const [form, setForm] = useState<FormState>(emptyForm)
 
-  const refresh = () => setEmployees(listEmployees())
+  const refresh = () => setEmployees(hrService.listEmployees())
 
   const headcount = employees.filter((employee) => employee.status !== 'Offboarded').length
   const onLeave = employees.filter((employee) => employee.status === 'On Leave').length
@@ -72,9 +72,9 @@ export default function HrPage() {
     event.preventDefault()
     if (form.name.trim() === '' || form.email.trim() === '') return
     if (editing) {
-      updateEmployee(editing.id, form)
+      hrService.updateEmployee(editing.id, form)
     } else {
-      createEmployee(form)
+      hrService.createEmployee(form)
     }
     toast({ title: t('employeeSaved'), description: form.name, variant: 'success' })
     refresh()
