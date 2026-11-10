@@ -1,6 +1,6 @@
 import { Mail, MailOpen, Plus, Search, Star } from 'lucide-react'
 import { useState } from 'react'
-import { listMail, markMailRead, sendMail } from '@/lib/data/mail'
+import { mailService } from '@/services/mail-service'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -15,7 +15,7 @@ import { useTranslations } from '@/i18n'
 export default function MailPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
-  const [mails, setMails] = useState(listMail)
+  const [mails, setMails] = useState(mailService.list)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [compose, setCompose] = useState(false)
   const [search, setSearch] = useState('')
@@ -28,15 +28,15 @@ export default function MailPage() {
   const filtered = mails.filter((mail) => mail.subject.toLowerCase().includes(search.toLowerCase()) || mail.sender.toLowerCase().includes(search.toLowerCase()))
 
   const openMail = (id: string) => {
-    markMailRead(id)
-    setMails(listMail())
+    mailService.markRead(id)
+    setMails(mailService.list())
     setSelectedId(id)
   }
 
   const submit = () => {
     if (!to || !subject || !body) return
-    sendMail({ to, subject, body })
-    setMails(listMail())
+    mailService.send({ to, subject, body })
+    setMails(mailService.list())
     setCompose(false)
     setTo('')
     setSubject('')
