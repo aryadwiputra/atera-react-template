@@ -3,6 +3,7 @@ import AuthLayout from '@/layouts/auth-layout'
 import ProtectedLayout from '@/layouts/protected-layout'
 import HomePage from '@/pages/home'
 import { PrivacyPage, TermsPage } from '@/pages/legal'
+import DocsPage from '@/pages/docs'
 import LoginPage from '@/pages/login'
 import DashboardPage from '@/pages/dashboard'
 import AnalyticsPage from '@/pages/analytics'
@@ -73,6 +74,7 @@ const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
   { path: '/terms', element: <TermsPage /> },
   { path: '/privacy', element: <PrivacyPage /> },
+  { path: '/docs', element: <DocsPage /> },
   { element: <AuthRoutes />, children: [{ path: '/login', element: <LoginPage /> }, { path: '/sign-in', element: <LoginPage /> }, { path: '/sign-up', element: <SignUpPage /> }, { path: '/forgot-password', element: <ForgotPasswordPage /> }, { path: '/reset-password', element: <ResetPasswordPage /> }, { path: '/two-factor', element: <TwoFactorPage /> }, { path: '/verify-email', element: <VerifyEmailPage /> }, { path: '/lock-screen', element: <LockScreenPage /> }, { path: '/login-v2', element: <LoginV2Page /> }, { path: '/register-v2', element: <RegisterV2Page /> }] },
   {
     element: <ProtectedLayout />,
