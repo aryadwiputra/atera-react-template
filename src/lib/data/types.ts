@@ -41,6 +41,47 @@ export type Invoice = {
   status: 'Paid' | 'Pending' | 'Overdue'
 }
 
+export type PosItem = {
+  id: string
+  name: string
+  category: 'Coffee' | 'Tea' | 'Food'
+  price: number
+  stock: number
+}
+
+export type PosCartLine = {
+  item: PosItem
+  quantity: number
+}
+
+export type PosPaymentMethod = 'Cash' | 'Card' | 'QRIS'
+
+export type TransactionStatus = 'Cleared' | 'Pending'
+export type TransactionType = 'Income' | 'Expense'
+
+export type FinanceTransaction = {
+  id: string
+  date: string
+  description: string
+  category: string
+  type: TransactionType
+  amount: number
+  status: TransactionStatus
+}
+
+export type DealStage = 'new' | 'contacted' | 'qualified' | 'won' | 'lost'
+
+export type Deal = {
+  id: string
+  company: string
+  contact: string
+  email: string
+  value: number
+  stage: DealStage
+  owner: string
+  createdAt: string
+}
+
 export type User = {
   id: string
   name: string
@@ -58,6 +99,13 @@ export type FileItem = {
   size?: string
   updated: string
   owner: string
+}
+
+export type EditorDocument = {
+  id: string
+  title: string
+  content: string
+  updatedAt: string
 }
 
 export type Notification = {
