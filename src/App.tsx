@@ -26,6 +26,11 @@ import WizardPage from '@/pages/wizard'
 import UsersPage from '@/pages/users'
 import SupportPage from '@/pages/support'
 import FinancePage from '@/pages/finance'
+import AssetsPage from '@/pages/assets'
+import ProcurementPage from '@/pages/procurement'
+import InventoryPage from '@/pages/inventory'
+import SuppliersPage from '@/pages/suppliers'
+import HrPage from '@/pages/hr'
 import MarketingPage from '@/pages/marketing'
 import ProjectManagementPage from '@/pages/project-management'
 import AiChatPage from '@/pages/ai-chat'
@@ -57,7 +62,7 @@ function AuthRoutes() {
   return <AuthLayout><ScrollToTop /><PageTransition><Outlet /></PageTransition></AuthLayout>
 }
 
-const explicitPaths = new Set(['/analytics', '/orders', '/products', '/customers', '/finance', '/ecommerce', '/crm', '/pipeline', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing', '/editor'])
+const explicitPaths = new Set(['/analytics', '/orders', '/products', '/customers', '/finance', '/assets', '/procurement', '/inventory', '/suppliers', '/hr', '/ecommerce', '/crm', '/pipeline', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing', '/editor'])
 const placeholderRoutes = navigationItems.filter((item) => item.href !== '/dashboard' && item.href !== '/login' && !explicitPaths.has(item.href)).map((item) => ({
   path: item.href.slice(1),
   element: <AppPlaceholder title={item.translationKey} route="/dashboard" />,
@@ -81,6 +86,11 @@ const router = createBrowserRouter([
       { path: '/pipeline', element: <PipelinePage /> },
       { path: '/saas', element: <SaasPage /> },
       { path: '/finance', element: <FinancePage /> },
+      { path: '/assets', element: <AssetsPage /> },
+      { path: '/procurement', element: <ProcurementPage /> },
+      { path: '/inventory', element: <InventoryPage /> },
+      { path: '/suppliers', element: <SuppliersPage /> },
+      { path: '/hr', element: <HrPage /> },
       { path: '/marketing', element: <MarketingPage /> },
       { path: '/project-management', element: <ProjectManagementPage /> },
       { path: '/ai-chat', element: <AiChatPage /> },

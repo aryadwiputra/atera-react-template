@@ -1,12 +1,12 @@
 import {
-  BarChart3, Bell, CalendarDays, ChartNoAxesCombined, CircleDollarSign, CreditCard, FilePenLine, FileText, Folder, FolderKanban, FormInput,
+  BarChart3, Bell, Boxes, CalendarDays, ChartNoAxesCombined, CircleDollarSign, ClipboardList, Contact, CreditCard, FilePenLine, FileText, Folder, FolderKanban, FormInput,
   HelpCircle, KanbanSquare, LayoutGrid, LayoutPanelTop, Mail, MapPin, Megaphone, MessageSquare, Package, Settings, ShoppingCart, Store,
-  Sparkles, Users, WalletCards, UserCircle, Wand2,
+  Sparkles, Truck, Users, Warehouse, WalletCards, UserCircle, Wand2,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { TranslationKey } from '@/i18n'
 
-export type NavigationGroup = 'overview' | 'commerce' | 'apps' | 'system'
+export type NavigationGroup = 'overview' | 'enterprise' | 'commerce' | 'apps' | 'system'
 export type NavigationItem = {
   title: string
   href: string
@@ -28,6 +28,11 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Marketing', href: '/marketing', icon: Megaphone, group: 'overview', keywords: ['campaigns', 'ads'], translationKey: 'marketing' },
   { title: 'Project Management', href: '/project-management', icon: FolderKanban, group: 'overview', keywords: ['projects', 'tasks'], translationKey: 'projectManagement' },
   { title: 'Charts', href: '/charts', icon: BarChart3, group: 'overview', keywords: ['graphs', 'visualization'], translationKey: 'charts' },
+  { title: 'Assets', href: '/assets', icon: Boxes, group: 'enterprise', keywords: ['equipment', 'registry'], translationKey: 'assets' },
+  { title: 'Procurement', href: '/procurement', icon: ClipboardList, group: 'enterprise', keywords: ['purchase orders', 'po'], translationKey: 'procurement' },
+  { title: 'Inventory', href: '/inventory', icon: Warehouse, group: 'enterprise', keywords: ['stock', 'warehouse'], translationKey: 'inventory' },
+  { title: 'Suppliers', href: '/suppliers', icon: Truck, group: 'enterprise', keywords: ['vendors', 'partners'], translationKey: 'suppliers' },
+  { title: 'HR', href: '/hr', icon: Contact, group: 'enterprise', keywords: ['employees', 'people', 'human resources'], translationKey: 'hr' },
   { title: 'Orders', href: '/orders', icon: Package, group: 'commerce', keywords: ['purchases', 'transactions'], translationKey: 'orders', badge: '12' },
   { title: 'Point of Sale', href: '/pos', icon: Store, group: 'commerce', keywords: ['pos', 'cashier', 'register', 'checkout'], translationKey: 'pointOfSale' },
   { title: 'Products', href: '/products', icon: ShoppingCart, group: 'commerce', keywords: ['catalog', 'inventory'], translationKey: 'products' },
@@ -53,4 +58,4 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Support', href: '/support', icon: HelpCircle, group: 'system', keywords: ['help', 'contact'], translationKey: 'helpSupport' },
 ]
 
-export const navigationGroups = ['overview', 'commerce', 'apps', 'system'] as const
+export const navigationGroups = ['overview', 'enterprise', 'commerce', 'apps', 'system'] as const

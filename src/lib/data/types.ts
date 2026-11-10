@@ -126,3 +126,70 @@ export type AuthSession = {
 export type AuthResult =
   | { ok: true; session?: AuthSession }
   | { ok: false; message: 'invalidCredentials' | 'accountExists' | 'invalidEmail' }
+
+export type AssetStatus = 'In Use' | 'Available' | 'Maintenance' | 'Retired'
+export type Asset = {
+  id: string
+  tag: string
+  name: string
+  category: string
+  assignedTo: string
+  location: string
+  purchaseDate: string
+  warrantyEnd: string
+  value: number
+  status: AssetStatus
+}
+
+export type POStatus = 'Draft' | 'Pending' | 'Approved' | 'Received' | 'Cancelled'
+export type PurchaseOrder = {
+  id: string
+  number: string
+  supplier: string
+  items: { name: string; qty: number; price: number }[]
+  date: string
+  expectedDelivery: string
+  status: POStatus
+}
+
+export type InventoryItem = {
+  id: string
+  sku: string
+  name: string
+  warehouse: string
+  onHand: number
+  reserved: number
+  reorderPoint: number
+}
+
+export type SupplierStatus = 'Active' | 'On Hold'
+export type Supplier = {
+  id: string
+  name: string
+  contact: string
+  email: string
+  phone: string
+  country: string
+  rating: number
+  onTimeRate: number
+  status: SupplierStatus
+}
+
+export type EmployeeStatus = 'Active' | 'On Leave' | 'Remote' | 'Offboarded'
+export type Employee = {
+  id: string
+  name: string
+  position: string
+  department: string
+  email: string
+  startDate: string
+  status: EmployeeStatus
+}
+
+export type OpenPosition = {
+  id: string
+  title: string
+  department: string
+  applicants: number
+  postedAt: string
+}
