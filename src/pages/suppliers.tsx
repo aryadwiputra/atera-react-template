@@ -13,7 +13,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { createSupplier, listSuppliers, updateSupplier } from '@/lib/data/suppliers'
+import { supplierService } from '@/services/supplier-service'
 import type { Supplier } from '@/lib/data/types'
 
 const helper = createAppColumnHelper<Supplier>()
@@ -31,7 +31,7 @@ export default function SuppliersPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
   const { toast } = useToast()
-  const [items, setItems] = useState(listSuppliers())
+  const [items, setItems] = useState(supplierService.list())
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Supplier | null>(null)
   const [form, setForm] = useState<SupplierForm>(emptyForm)
@@ -48,9 +48,9 @@ export default function SuppliersPage() {
   }
   const submit = () => {
     const payload = { name: form.name, contact: form.contact, email: form.email, phone: form.phone, country: form.country, rating: Number(form.rating), onTimeRate: Number(form.onTimeRate), status: form.status }
-    if (editing) updateSupplier(editing.id, payload)
-    else createSupplier(payload)
-    setItems(listSuppliers())
+    if (editing) supplierService.update(editing.id, payload)
+    else supplierService.create(payload)
+    setItems(supplierService.list())
     setFormOpen(false)
     toast({ title: t('supplierSaved'), variant: 'success' })
   }
