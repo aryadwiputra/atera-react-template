@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Boxes, PackageCheck, Warehouse } from 'lucide-react'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations, type TranslationKey } from '@/i18n'
-import { listInventory } from '@/lib/data/inventory'
+import { inventoryService } from '@/services/inventory-service'
 import type { InventoryItem } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
 
@@ -30,7 +30,7 @@ export default function InventoryPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
 
-  const items = listInventory()
+  const items = inventoryService.list()
   const lowStockCount = items.filter((item) => stockStatus(item) !== 'OK').length
   const totalUnits = items.reduce((sum, item) => sum + item.onHand, 0)
 
