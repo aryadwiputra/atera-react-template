@@ -1,3 +1,4 @@
+import { DatePicker } from '@/components/shared/date-picker'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft, Save } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -36,7 +37,7 @@ export default function CustomerFormPage() {
     <Field label={t('company')} error={form.formState.errors.company?.message}><Input {...form.register('company')} /></Field>
     <Field label={t('orders')} error={form.formState.errors.orders?.message}><Input type="number" {...form.register('orders')} /></Field>
     <Field label={t('totalSpent')} error={form.formState.errors.spent?.message}><Input type="number" step="0.01" {...form.register('spent')} /></Field>
-    <Field label={t('date')} error={form.formState.errors.joined?.message}><Input type="date" {...form.register('joined')} /></Field>
+    <Field label={t('date')} error={form.formState.errors.joined?.message}><DatePicker value={form.watch('joined')} onChange={(value) => form.setValue('joined', value)} /></Field>
     <div className="flex justify-end gap-2 sm:col-span-2"><Button type="button" variant="outline" asChild><Link to="/customers">{t('cancel')}</Link></Button><Button type="submit"><Save className="size-4" />{t('create')}</Button></div>
   </form></CardContent></Card></div></main></PageTransition>
 }

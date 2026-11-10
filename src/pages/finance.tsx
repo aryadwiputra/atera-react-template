@@ -1,3 +1,4 @@
+import { DatePicker } from '@/components/shared/date-picker'
 import type { ColumnDef } from '@tanstack/react-table'
 import { createAppColumnHelper, DataTable, tableFeaturesConfig } from '@/components/shared/data-table'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -247,7 +248,7 @@ export default function FinancePage() {
             </div>
             <label className="grid gap-2 text-sm font-medium">
               {t('date')}
-              <Input type="date" value={form.date} onChange={(event) => setForm({ ...form, date: event.target.value })} required />
+              <DatePicker value={form.date} onChange={(value) => setForm({ ...form, date: value })} required ariaLabel={t('date')} />
             </label>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setFormOpen(false)}>{t('cancel')}</Button>

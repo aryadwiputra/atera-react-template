@@ -1,3 +1,4 @@
+import { DatePicker } from '@/components/shared/date-picker'
 import type { ColumnDef } from '@tanstack/react-table'
 import { createAppColumnHelper, DataTable, tableFeaturesConfig } from '@/components/shared/data-table'
 import { useToast } from '@/components/shared/toast'
@@ -193,7 +194,7 @@ export default function HrPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="grid gap-2 text-sm font-medium">
                 {t('startDate')}
-                <Input type="date" value={form.startDate} onChange={(event) => setForm({ ...form, startDate: event.target.value })} required />
+                <DatePicker value={form.startDate} onChange={(value) => setForm({ ...form, startDate: value })} required ariaLabel={t('startDate')} />
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 {t('employeeStatus')}

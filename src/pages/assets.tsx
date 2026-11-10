@@ -1,3 +1,4 @@
+import { DatePicker } from '@/components/shared/date-picker'
 import type { ColumnDef } from '@tanstack/react-table'
 import { createAppColumnHelper, DataTable, tableFeaturesConfig } from '@/components/shared/data-table'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -215,11 +216,11 @@ export default function AssetsPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="grid gap-2 text-sm font-medium">
                 {t('purchaseDate')}
-                <Input type="date" value={form.purchaseDate} onChange={(event) => setForm({ ...form, purchaseDate: event.target.value })} required />
+                <DatePicker value={form.purchaseDate} onChange={(value) => setForm({ ...form, purchaseDate: value })} required ariaLabel={t('purchaseDate')} />
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 {t('warrantyEnd')}
-                <Input type="date" value={form.warrantyEnd} onChange={(event) => setForm({ ...form, warrantyEnd: event.target.value })} required />
+                <DatePicker value={form.warrantyEnd} onChange={(value) => setForm({ ...form, warrantyEnd: value })} required ariaLabel={t('warrantyEnd')} />
               </label>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
