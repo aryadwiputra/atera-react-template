@@ -30,6 +30,7 @@ import AiChatPage from '@/pages/ai-chat'
 import WidgetsPage from '@/pages/widgets'
 import EditorPage from '@/pages/editor'
 import MapsPage from '@/pages/maps'
+import SearchPage from '@/pages/search'
 import { LoginV2Page, RegisterV2Page } from '@/pages/auth-v2'
 import FormsPage from '@/pages/forms'
 import CustomerFormPage from '@/pages/customer-form'
@@ -53,7 +54,7 @@ function AuthRoutes() {
   return <AuthLayout><ScrollToTop /><PageTransition><Outlet /></PageTransition></AuthLayout>
 }
 
-const explicitPaths = new Set(['/analytics', '/orders', '/products', '/customers', '/ecommerce', '/crm', '/saas', '/charts', '/invoices', '/billing', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing'])
+const explicitPaths = new Set(['/analytics', '/orders', '/products', '/customers', '/ecommerce', '/crm', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing'])
 const placeholderRoutes = navigationItems.filter((item) => item.href !== '/dashboard' && item.href !== '/login' && !explicitPaths.has(item.href)).map((item) => ({
   path: item.href.slice(1),
   element: <AppPlaceholder title={item.translationKey} route="/dashboard" />,
@@ -107,6 +108,7 @@ const router = createBrowserRouter([
       { path: '/notifications', element: <NotificationsPage /> },
       { path: '/support', element: <SupportPage /> },
       ...placeholderRoutes.filter((item) => !explicitPaths.has(`/${item.path}`)),
+      { path: '/search', element: <SearchPage /> },
       { path: '/settings', element: <Navigate to="/settings/appearance" replace /> },
       { path: '/settings/profile', element: <SettingsProfilePage /> },
       { path: '/settings/appearance', element: <SettingsAppearancePage /> },

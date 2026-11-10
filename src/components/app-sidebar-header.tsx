@@ -48,6 +48,7 @@ import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 
 import { useNavigate } from 'react-router';
 import { navigationItems } from '@/lib/navigation';
+import { buildSearchSections } from '@/pages/search';
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
 
 
@@ -72,6 +73,7 @@ export function AppSidebarHeader({
     const t = useTranslations(preferences.language);
     const isCollapsed = !isMobile && state === 'collapsed';
     const [searchOpen, setSearchOpen] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
     const navigate = useNavigate();
     const [customizeOpen, setCustomizeOpen] = useState(false);
 
@@ -126,8 +128,18 @@ export function AppSidebarHeader({
                         ⌘ K
                     </kbd>
                 </Button>
-                <CommandDialog open={searchOpen} onOpenChange={setSearchOpen}>
-                    <CommandInput placeholder={t('searchPages')} />
+                <CommandDialog
+                    open={searchOpen}
+                    onOpenChange={(open) => {
+                        setSearchOpen(open);
+                        if (!open) setSearchValue('');
+                    }}
+                >
+                    <CommandInput
+                        value={searchValue}
+                        onValueChange={setSearchValue}
+                        placeholder={t('searchPages')}
+                    />
                     <CommandList>
                         <CommandEmpty>{t('noResults')}</CommandEmpty>
                         {navigationItems.map((item) => (
@@ -143,6 +155,25 @@ export function AppSidebarHeader({
                                 {t(item.translationKey)}
                             </CommandItem>
                         ))}
+                        {searchValue.trim() &&
+                            buildSearchSections(searchValue).map(
+                                (section) => (
+                                    <CommandItem
+                                        key={section.key}
+                                        value={`data-${section.key}-${section.items[0]?.title ?? ''}`}
+                                        onSelect={() => {
+                                            setSearchOpen(false);
+                                            navigate(
+                                                `/search?q=${encodeURIComponent(searchValue)}`,
+                                            );
+                                        }}
+                                    >
+                                        <Search className="size-4" />
+                                        {t('searchResultsForLabel')}: “
+                                        {searchValue}” · {section.label}
+                                    </CommandItem>
+                                ),
+                            )}
                     </CommandList>
                 </CommandDialog>
                 <div className="ml-auto flex items-center gap-1">
