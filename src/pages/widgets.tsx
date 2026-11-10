@@ -4,12 +4,18 @@ import { ChartBar } from '@/components/charts/chart-bar'
 import { ChartPie, PieLegend } from '@/components/charts/chart-pie'
 import { ChartCard } from '@/components/charts/chart-config'
 import { StatCard } from '@/components/shared/stat-card'
+import { ProgressRingCard, SparklineCard, KpiDeltaCard } from '@/components/widgets/mini-widgets'
 import { PageHeader } from '@/components/shared/page-header'
 import { PageTransition } from '@/components/shared/page-transition'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations, type TranslationKey } from '@/i18n'
+
+const sparkData = [
+  { value: 12 }, { value: 18 }, { value: 15 }, { value: 24 },
+  { value: 21 }, { value: 32 }, { value: 29 }, { value: 38 },
+]
 
 const badgeVariants = ['default', 'secondary', 'destructive', 'outline'] as const
 
@@ -67,6 +73,15 @@ export default function WidgetsPage() {
             <StatCard title={t('activeUsers')} value="2,847" change="+8.2%" icon={Users} />
             <StatCard title={t('engagementRate')} value="68.4%" change="+4.6%" icon={Activity} />
             <StatCard title={t('serverUptime')} value="99.9%" change="-0.1%" changePositive={false} icon={Server} />
+          </div>
+        </section>
+        <section className="space-y-3">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{t('miniWidgets')}</h2>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <SparklineCard title={t('weeklyVisitors')} value="12,847" data={sparkData} />
+            <SparklineCard title={t('newSignups')} value="1,204" data={[...sparkData].reverse()} colorIndex={1} />
+            <ProgressRingCard title={t('storageUsed')} value={72} label="840 GB / 1 TB" colorIndex={2} />
+            <KpiDeltaCard title={t('conversionRate')} value="4.6%" delta={12.5} />
           </div>
         </section>
         <section className="space-y-3">
