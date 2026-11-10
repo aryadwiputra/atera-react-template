@@ -16,7 +16,7 @@ import { Boxes, Eye, Pencil, Plus, Trash2, Wrench, Wallet, Cpu } from 'lucide-re
 import { useState } from 'react'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { createAsset, listAssets, removeAsset, updateAsset } from '@/lib/data/assets'
+import { assetService } from '@/services/asset-service'
 import type { Asset, AssetStatus } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
 
@@ -50,14 +50,14 @@ export default function AssetsPage() {
   const t = useTranslations(language)
   const { toast } = useToast()
 
-  const [items, setItems] = useState(listAssets)
+  const [items, setItems] = useState(assetService.list)
   const [detail, setDetail] = useState<Asset | null>(null)
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Asset | null>(null)
   const [form, setForm] = useState<FormState>(emptyForm)
   const [pendingDelete, setPendingDelete] = useState<Asset | null>(null)
 
-  const refresh = () => setItems(listAssets())
+  const refresh = () => setItems(assetService.list())
 
   const inUseCount = items.filter((item) => item.status === 'In Use').length
   const maintenanceCount = items.filter((item) => item.status === 'Maintenance').length
@@ -80,9 +80,9 @@ export default function AssetsPage() {
     event.preventDefault()
     if (form.tag.trim() === '' || form.name.trim() === '') return
     if (editing) {
-      updateAsset(editing.id, form)
+      assetService.update(editing.id, form)
     } else {
-      createAsset(form)
+      assetService.create(form)
     }
     refresh()
     setFormOpen(false)
@@ -258,7 +258,7 @@ export default function AssetsPage() {
         trigger={<span />}
         onConfirm={() => {
           if (!pendingDelete) return
-          removeAsset(pendingDelete.id)
+          assetService.remove(pendingDelete.id)
           refresh()
           toast({ title: t('assetDeleted'), variant: 'success' })
         }}
