@@ -2,7 +2,7 @@ import type { AuthResult, AuthSession } from './data/types'
 
 const sessionKey = 'atera_session'
 const accountsKey = 'atera_accounts'
-const demoAccount = { email: 'demo@example.com', password: 'ZenithDemo2026!', name: 'Demo User' }
+const demoAccount = { email: 'demo@example.com', password: 'AteraDemo2026!', name: 'Demo User' }
 
 type Account = typeof demoAccount
 let sessionCache: AuthSession | null | undefined

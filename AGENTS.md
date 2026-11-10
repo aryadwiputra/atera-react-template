@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Atera is a mock-data admin dashboard SPA — a Zenith Dashboard parity project built on React 19, TypeScript 7, and Vite 8. It is frontend-only: no backend, no network calls, and no data-fetching layer. All data is in-memory mock modules; auth is localStorage-based.
+Atera is a mock-data admin dashboard SPA — a Atera admin dashboard template built on React 19, TypeScript 7, and Vite 8. It is frontend-only: no backend, no network calls, and no data-fetching layer. All data is in-memory mock modules; auth is localStorage-based.
 
 ## Architecture & Data Flow
 
@@ -15,7 +15,7 @@ Atera is a mock-data admin dashboard SPA — a Zenith Dashboard parity project b
 
 **State** — no Redux/Zustand/Context. Hand-rolled external stores consumed via `useSyncExternalStore`:
 
-- Session: `src/hooks/use-auth.ts` + `src/lib/auth.ts` (localStorage; demo account `demo@example.com` / `ZenithDemo2026!`)
+- Session: `src/hooks/use-auth.ts` + `src/lib/auth.ts` (localStorage; demo account `demo@example.com` / `AteraDemo2026!`)
 - Appearance: `src/hooks/use-appearance.tsx` (light/dark/system; localStorage + cookie; toggles `.dark` class)
 - Preferences: `src/hooks/use-customize-preferences.tsx` (color/density/layout/container/language; `customize_*` cookies; applied as `data-*` attributes on `<html>` plus `--density-space` CSS var)
 
@@ -38,7 +38,7 @@ Atera is a mock-data admin dashboard SPA — a Zenith Dashboard parity project b
 | `src/hooks/` | Custom hooks (auth, appearance, preferences, mobile, navigation) |
 | `src/lib/` | `utils.ts` (`cn()`, `toUrl()`), `auth.ts`, `navigation.ts` (nav item tree), `data/` (mock repositories) |
 | `src/i18n/` | Translation dictionary + `useTranslations` |
-| `docs/superpowers/` | Design spec and implementation plan (Zenith parity) |
+| `docs/superpowers/` | Design spec and implementation plan Atera |
 
 ## Development Commands
 
@@ -91,4 +91,4 @@ No test framework is configured — do not invent a test command. Verification o
 1. `bun run lint`
 2. `bun run build`
 
-For route changes, manually verify `/`, `/login`, and `/dashboard` with the Vite dev server when practical. Demo login: `demo@example.com` / `ZenithDemo2026!`.
+For route changes, manually verify `/`, `/login`, and `/dashboard` with the Vite dev server when practical. Demo login: `demo@example.com` / `AteraDemo2026!`.

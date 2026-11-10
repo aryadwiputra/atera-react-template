@@ -1,8 +1,8 @@
-# Atera Zenith Parity Implementation Plan
+# Atera Atera Parity Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Build Atera into a functional mock-data React admin SPA with Zenith Dashboard page coverage, responsive interactions, complete auth flows, and full EN/DE/FR localization.
+**Goal:** Build Atera into a functional mock-data React admin SPA with Atera Dashboard page coverage, responsive interactions, complete auth flows, and full EN/DE/FR localization.
 
 **Architecture:** Keep Vite, React, TypeScript, and React Router. Add an authenticated dashboard route shell and standalone auth shell, centralize navigation and mock repositories, and compose focused route pages from shared primitives, charts, tables, forms, and feedback components.
 
@@ -58,7 +58,7 @@
 - [ ] Define stable domain types for Order, Product, Customer, Invoice, User, FileItem, Notification, and AuthSession.
 - [ ] Move all navigation groups from `app-sidebar.tsx` into `navigation.ts`; include every approved route and no disabled placeholder item.
 - [ ] Seed deterministic mock data with IDs, statuses, amounts, dates, and relationships used by dashboards and CRUD pages.
-- [ ] Implement the demo account `demo@example.com` / `ZenithDemo2026!`, localStorage-backed session, mock account registration, and deterministic auth errors.
+- [ ] Implement the demo account `demo@example.com` / `AteraDemo2026!`, localStorage-backed session, mock account registration, and deterministic auth errors.
 - [ ] Run lint/build.
 
 ### Task 3: Rework shell, routing, navigation, transitions, and localization foundation

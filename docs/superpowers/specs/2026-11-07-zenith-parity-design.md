@@ -1,4 +1,4 @@
-# Atera Zenith Parity Design
+# Atera Atera Parity Design
 
 **Date:** 2026-11-07
 **Status:** Approved
@@ -6,7 +6,7 @@
 
 ## Goal
 
-Expand the current Atera Vite + React SPA into a functional mock-data admin template with the page coverage and interaction patterns of Zenith Dashboard, while preserving Atera branding and the existing React Router architecture.
+Expand the current Atera Vite + React SPA into a functional mock-data admin template with the page coverage and interaction patterns of Atera Dashboard, while preserving Atera branding and the existing React Router architecture.
 
 ## Scope
 
@@ -56,7 +56,7 @@ Continue using the existing Radix-based primitives, Tailwind CSS v4, `cn`, Lucid
 
 ## Functional Requirements
 
-1. **Mock authentication:** sign-in validates a demo account (`demo@example.com` / `ZenithDemo2026!`) and accepts a registered mock account, stores a session flag, redirects to `/dashboard`, and protects dashboard routes. Sign-up validates and creates a mock account. Forgot/reset, two-factor, verification, and lock-screen flows are functional UI simulations with deterministic success states.
+1. **Mock authentication:** sign-in validates a demo account (`demo@example.com` / `AteraDemo2026!`) and accepts a registered mock account, stores a session flag, redirects to `/dashboard`, and protects dashboard routes. Sign-up validates and creates a mock account. Forgot/reset, two-factor, verification, and lock-screen flows are functional UI simulations with deterministic success states.
 2. **CRUD:** orders and products support list, detail, create, edit, delete, search, filtering, sorting, pagination, and status feedback using typed mock repositories.
 3. **Tables:** shared TanStack Table wrapper supports column definitions, sorting, filtering, pagination, row selection where needed, CSV export, and responsive mobile cards.
 4. **Forms:** shared React Hook Form + Zod patterns provide field validation, errors, submit/loading states, and success feedback.
