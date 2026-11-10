@@ -1,0 +1,207 @@
+- main [ref=f6e3]:
+  - navigation "Main" [ref=f6e5]:
+    - link "Atera home" [ref=f6e6] [cursor=pointer]:
+      - /url: /
+      - generic [ref=f6e22]:
+        - generic [ref=f6e23]: Atera
+        - generic [ref=f6e24]: Dashboard
+    - button "Toggle navigation menu" [ref=f6e25]
+  - generic [ref=f6e28]:
+    - generic [ref=f6e29]: Built with React 19, TypeScript, and Tailwind CSS v4
+    - heading "A React dashboard template that ships fast" [level=1] [ref=f6e33]
+    - paragraph [ref=f6e34]: Atera is a fully typed React 19 admin dashboard template with 55+ ready routes, 15 shadcn style components, dark mode, and theming built in. Skip the setup and ship.
+    - generic [ref=f6e35]:
+      - link [ref=f6e36] [cursor=pointer]:
+        - /url: /sign-up
+        - button "Get the template" [ref=f6e37]
+      - link [ref=f6e38] [cursor=pointer]:
+        - /url: /login
+        - button "Browse the demo" [ref=f6e39]
+    - paragraph [ref=f6e40]: One-time purchase. Free updates for 6 months.
+    - img "Preview of the Atera analytics dashboard" [ref=f6e42]:
+      - generic [ref=f6e43]:
+        - generic [ref=f6e44]: Revenue, last 12 months
+        - generic [ref=f6e47]: Updated 4 min ago
+      - generic [ref=f6e49]:
+        - generic [ref=f6e50]:
+          - paragraph [ref=f6e51]: Revenue
+          - paragraph [ref=f6e52]: $84,310
+        - generic [ref=f6e53]:
+          - paragraph [ref=f6e54]: Orders
+          - paragraph [ref=f6e55]: 1,248
+        - generic [ref=f6e56]:
+          - paragraph [ref=f6e57]: Conversion
+          - paragraph [ref=f6e58]: 3.4%
+  - region "Key numbers" [ref=f6e59]:
+    - generic [ref=f6e60]:
+      - generic [ref=f6e61]:
+        - paragraph [ref=f6e62]: "15"
+        - paragraph [ref=f6e63]: shadcn UI components
+      - generic [ref=f6e64]:
+        - paragraph [ref=f6e65]: 55+
+        - paragraph [ref=f6e66]: ready app routes
+      - generic [ref=f6e67]:
+        - paragraph [ref=f6e68]: "3"
+        - paragraph [ref=f6e69]: languages included
+      - generic [ref=f6e70]:
+        - paragraph [ref=f6e71]: "5"
+        - paragraph [ref=f6e72]: theme color presets
+  - generic [ref=f6e73]:
+    - generic [ref=f6e74]:
+      - heading "Every page your admin panel needs, already built" [level=2] [ref=f6e75]
+      - paragraph [ref=f6e76]: Login flows, dashboard, analytics, commerce, kanban, chat, calendar, settings — each one wired to typed mock data so you can see it working before you write a line.
+    - generic [ref=f6e77]:
+      - generic [ref=f6e79]:
+        - heading "Pages that are already built" [level=3] [ref=f6e83]
+        - paragraph [ref=f6e84]: Analytics, orders, customers, kanban, chat, mail, calendar, invoices and more. Open a route and it is ready.
+      - generic [ref=f6e86]:
+        - heading "Real mock data out of the box" [level=3] [ref=f6e91]
+        - paragraph [ref=f6e92]: In-memory data modules that behave like an API. No backend needed to preview any page before shipping.
+      - generic [ref=f6e94]:
+        - heading "Dark mode, built in and themeable" [level=3] [ref=f6e101]
+        - paragraph [ref=f6e102]: Light, dark and system colors switch in one click. Five color presets and text density tokens included.
+      - generic [ref=f6e104]:
+        - heading "Type safe from the start" [level=3] [ref=f6e108]
+        - paragraph [ref=f6e109]: TypeScript throughout the library, 37 typed data modules, route tables that error before they break.
+      - generic [ref=f6e111]:
+        - heading "15 shadcn style components" [level=3] [ref=f6e115]
+        - paragraph [ref=f6e116]: Button, dialog, dropdown, sheet, command, tooltip, sidebar and more. Swap one of them into your own design.
+      - generic [ref=f6e118]:
+        - heading "i18n with three languages" [level=3] [ref=f6e121]
+        - paragraph [ref=f6e122]: English, German and French translations are already wired in. Add a fourth language in minutes, not days.
+  - generic [ref=f6e124]:
+    - generic [ref=f6e125]:
+      - heading "Open any page and it already works" [level=2] [ref=f6e126]
+      - paragraph [ref=f6e127]: Each route comes with its own mock data module and typed API. Click around the demo and see how it is put together.
+      - list [ref=f6e128]:
+        - listitem [ref=f6e129]: "Full auth flow: login, signup, 2FA, reset, lock screen"
+        - listitem [ref=f6e133]: Dashboard with charts, metrics, and recent activity
+        - listitem [ref=f6e137]: Commerce pages with tables, forms, and invoicing
+      - link [ref=f6e141] [cursor=pointer]:
+        - /url: /login
+        - button "Open the live preview" [ref=f6e142]
+    - img "Preview of the Atera analytics dashboard" [ref=f6e144]:
+      - generic [ref=f6e145]:
+        - generic [ref=f6e146]: Revenue, last 12 months
+        - generic [ref=f6e149]: Updated 4 min ago
+      - generic [ref=f6e151]:
+        - generic [ref=f6e152]:
+          - paragraph [ref=f6e153]: Revenue
+          - paragraph [ref=f6e154]: $84,310
+        - generic [ref=f6e155]:
+          - paragraph [ref=f6e156]: Orders
+          - paragraph [ref=f6e157]: 1,248
+        - generic [ref=f6e158]:
+          - paragraph [ref=f6e159]: Conversion
+          - paragraph [ref=f6e160]: 3.4%
+  - paragraph [ref=f6e162]:
+    - generic [ref=f6e163]: Skip
+    - generic [ref=f6e164]: three
+    - generic [ref=f6e165]: weeks
+    - generic [ref=f6e166]: of
+    - generic [ref=f6e167]: setup.
+    - generic [ref=f6e168]: Start
+    - generic [ref=f6e169]: from
+    - generic [ref=f6e170]: pages
+    - generic [ref=f6e171]: that
+    - generic [ref=f6e172]: already
+    - generic [ref=f6e173]: work.
+  - generic [ref=f6e176]:
+    - blockquote [ref=f6e177]:
+      - paragraph [ref=f6e178]: "\"I have shipped four client dashboards since I bought Atera. The mock data layer alone saved me a week per project.\""
+    - generic [ref=f6e179]:
+      - paragraph [ref=f6e180]: Dara Winata
+      - paragraph [ref=f6e181]: Freelance full-stack developer
+  - generic [ref=f6e182]:
+    - generic [ref=f6e183]:
+      - heading "One purchase, every page included" [level=2] [ref=f6e184]
+      - paragraph [ref=f6e185]: Pay once and use Atera in as many projects as your license allows. No subscriptions, no per-seat pricing.
+    - generic [ref=f6e186]:
+      - generic [ref=f6e188]:
+        - heading "Personal" [level=3] [ref=f6e190]
+        - generic [ref=f6e191]:
+          - generic [ref=f6e192]: $29
+          - generic [ref=f6e193]: one-time
+        - paragraph [ref=f6e194]: For side projects and personal portfolios.
+        - list [ref=f6e195]:
+          - listitem [ref=f6e196]: 1 project
+          - listitem [ref=f6e199]: 6 months of updates
+          - listitem [ref=f6e202]: Community support
+          - listitem [ref=f6e205]: Personal use license
+        - link [ref=f6e208] [cursor=pointer]:
+          - /url: /sign-up
+          - button "Buy Personal license" [ref=f6e209]
+      - generic [ref=f6e211]:
+        - generic [ref=f6e212]:
+          - heading "Commercial" [level=3] [ref=f6e213]
+          - generic [ref=f6e214]: Most popular
+        - generic [ref=f6e215]:
+          - generic [ref=f6e216]: $59
+          - generic [ref=f6e217]: one-time
+        - paragraph [ref=f6e218]: For client work and commercial products.
+        - list [ref=f6e219]:
+          - listitem [ref=f6e220]: Unlimited projects
+          - listitem [ref=f6e223]: 1 year of updates
+          - listitem [ref=f6e226]: Priority email support
+          - listitem [ref=f6e229]: Commercial use license
+        - link [ref=f6e232] [cursor=pointer]:
+          - /url: /sign-up
+          - button "Buy Commercial license" [ref=f6e233]
+      - generic [ref=f6e235]:
+        - heading "Extended" [level=3] [ref=f6e237]
+        - generic [ref=f6e238]:
+          - generic [ref=f6e239]: $149
+          - generic [ref=f6e240]: one-time
+        - paragraph [ref=f6e241]: For SaaS products and resale rights.
+        - list [ref=f6e242]:
+          - listitem [ref=f6e243]: Unlimited projects
+          - listitem [ref=f6e246]: Lifetime updates
+          - listitem [ref=f6e249]: Priority email support
+          - listitem [ref=f6e252]: SaaS and resale license
+        - link [ref=f6e255] [cursor=pointer]:
+          - /url: /sign-up
+          - button "Buy Extended license" [ref=f6e256]
+  - generic [ref=f6e259]:
+    - heading "Your next admin panel starts here" [level=2] [ref=f6e260]
+    - paragraph [ref=f6e261]: Clone the repo, run bun install, and you have a working dashboard in under five minutes.
+    - generic [ref=f6e262]:
+      - link [ref=f6e263] [cursor=pointer]:
+        - /url: /sign-up
+        - button "Get the template" [ref=f6e264]
+      - link [ref=f6e265] [cursor=pointer]:
+        - /url: /login
+        - button "Browse the demo" [ref=f6e266]
+  - generic [ref=f6e267]:
+    - generic [ref=f6e268]:
+      - generic [ref=f6e269]:
+        - link "Atera home" [ref=f6e270] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f6e286]:
+            - generic [ref=f6e287]: Atera
+            - generic [ref=f6e288]: Dashboard
+        - paragraph [ref=f6e289]: A React admin dashboard template with every page already built.
+      - navigation "Template" [ref=f6e290]:
+        - paragraph [ref=f6e291]: Template
+        - list [ref=f6e292]:
+          - listitem [ref=f6e293]:
+            - link "Features" [ref=f6e294] [cursor=pointer]:
+              - /url: /#features
+          - listitem [ref=f6e295]:
+            - link "Pages" [ref=f6e296] [cursor=pointer]:
+              - /url: /#analytics
+          - listitem [ref=f6e297]:
+            - link "Pricing" [ref=f6e298] [cursor=pointer]:
+              - /url: /#pricing
+          - listitem [ref=f6e299]:
+            - link "Live preview" [ref=f6e300] [cursor=pointer]:
+              - /url: /login
+      - navigation "Account" [ref=f6e301]:
+        - paragraph [ref=f6e302]: Account
+        - list [ref=f6e303]:
+          - listitem [ref=f6e304]:
+            - link "Log in" [ref=f6e305] [cursor=pointer]:
+              - /url: /login
+          - listitem [ref=f6e306]:
+            - link "Sign up" [ref=f6e307] [cursor=pointer]:
+              - /url: /sign-up
+    - paragraph [ref=f6e309]: © 2026 Atera. All rights reserved.

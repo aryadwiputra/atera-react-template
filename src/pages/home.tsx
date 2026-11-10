@@ -32,68 +32,68 @@ const navLinks = [
 ]
 
 const metrics = [
-  { value: '4,218', label: 'active workspaces' },
-  { value: '38%', label: 'faster weekly reporting' },
-  { value: '12.4M', label: 'orders processed' },
-  { value: '99.98%', label: 'uptime over the last year' },
+  { value: '15', label: 'shadcn UI components' },
+  { value: '55+', label: 'ready app routes' },
+  { value: '3', label: 'languages included' },
+  { value: '5', label: 'theme color presets' },
 ]
 
 const features = [
   {
     icon: BarChart3,
-    title: 'Analytics that answer questions',
-    description: 'Revenue, traffic, and conversion on one screen. Drill from a headline number down to the order behind it in two clicks.',
+    title: 'Pages that are already built',
+    description: 'Analytics, orders, customers, kanban, chat, mail, calendar, invoices and more. Open a route and it is ready.',
   },
   {
     icon: ShoppingBag,
-    title: 'Orders without the spreadsheet',
-    description: 'Track every order from payment to refund. Status changes surface instantly, so nothing slips past your team.',
+    title: 'Real mock data out of the box',
+    description: 'In-memory data modules that behave like an API. No backend needed to preview any page before shipping.',
   },
   {
     icon: Users,
-    title: 'A customer record that keeps itself',
-    description: 'Contact details, order history, and notes live together. You stop digging through inboxes to find the last conversation.',
+    title: 'Dark mode, built in and themeable',
+    description: 'Light, dark and system colors switch in one click. Five color presets and text density tokens included.',
   },
   {
     icon: MessageSquare,
-    title: 'Team chat inside the work',
-    description: 'Discuss an order without leaving the order. Channels keep each project outside the general noise.',
+    title: 'Type safe from the start',
+    description: 'TypeScript throughout the library, 37 typed data modules, route tables that error before they break.',
   },
   {
     icon: FolderOpen,
-    title: 'Files where the work happens',
-    description: 'Contracts, exports, and screenshots sit next to the record they belong to, searchable in one place.',
+    title: '15 shadcn style components',
+    description: 'Button, dialog, dropdown, sheet, command, tooltip, sidebar and more. Swap one of them into your own design.',
   },
   {
     icon: Kanban,
-    title: 'Plans the team actually follows',
-    description: 'A kanban board tied to real orders and customers. Move a card and the status follows it everywhere.',
+    title: 'i18n with three languages',
+    description: 'English, German and French translations are already wired in. Add a fourth language in minutes, not days.',
   },
 ]
 
 const pricingPlans = [
   {
-    name: 'Starter',
-    price: '$12',
-    period: '/month',
-    description: 'For a solo operator getting their numbers in one place.',
-    features: ['3 seats', 'Analytics and orders', '10GB file storage', 'Email support'],
+    name: 'Personal',
+    price: '$29',
+    period: 'one-time',
+    description: 'For side projects and personal portfolios.',
+    features: ['1 project', '6 months of updates', 'Community support', 'Personal use license'],
     highlighted: false,
   },
   {
-    name: 'Growth',
-    price: '$29',
-    period: '/month',
-    description: 'For small teams running orders, customers, and reporting together.',
-    features: ['10 seats', 'Everything in Starter', 'Team chat and kanban', 'Priority support'],
+    name: 'Commercial',
+    price: '$59',
+    period: 'one-time',
+    description: 'For client work and commercial products.',
+    features: ['Unlimited projects', '1 year of updates', 'Priority email support', 'Commercial use license'],
     highlighted: true,
   },
   {
-    name: 'Scale',
-    price: '$79',
-    period: '/month',
-    description: 'For operations that need roles, exports, and a longer history.',
-    features: ['Unlimited seats', 'Everything in Growth', 'Role-based access', 'CSV export for every table'],
+    name: 'Extended',
+    price: '$149',
+    period: 'one-time',
+    description: 'For SaaS products and resale rights.',
+    features: ['Unlimited projects', 'Lifetime updates', 'Priority email support', 'SaaS and resale license'],
     highlighted: false,
   },
 ]
@@ -142,7 +142,7 @@ function Navbar() {
           </Link>
           <Link to="/sign-up">
             <Button size="sm">
-              Start free trial
+              Get the template
             </Button>
           </Link>
         </div>
@@ -184,7 +184,7 @@ function Navbar() {
                 <Button variant="outline" className="w-full">Log in</Button>
               </Link>
               <Link to="/sign-up" className="flex-1">
-                <Button className="w-full">Start free trial</Button>
+                <Button className="w-full">Get the template</Button>
               </Link>
             </div>
           </motion.div>
@@ -248,7 +248,7 @@ function Hero() {
           className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground"
         >
           <Sparkles className="size-3" />
-          New: ask your dashboard questions in plain language
+          Built with React 19, TypeScript, and Tailwind CSS v4
         </motion.div>
         <motion.h1
           initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
@@ -256,7 +256,7 @@ function Hero() {
           transition={{ duration: 0.6, ease: EASE, delay: 0.08 }}
           className="mt-6 bg-linear-to-r from-black to-[#666666] bg-clip-text text-transparent dark:from-white dark:to-[#9B9B9B] text-4xl font-bold tracking-tight text-balance sm:text-5xl"
         >
-          Turn your data into decisions
+          A React dashboard template that ships fast
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
@@ -264,7 +264,7 @@ function Hero() {
           transition={{ duration: 0.6, ease: EASE, delay: 0.16 }}
           className="mt-5 text-lg text-pretty text-muted-foreground"
         >
-          Atera brings analytics, orders, customers, and billing into one workspace, so your team acts on numbers instead of guessing.
+          Atera is a fully typed React 19 admin dashboard template with 55+ ready routes, 15 shadcn style components, dark mode, and theming built in. Skip the setup and ship.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
@@ -274,12 +274,12 @@ function Hero() {
         >
           <Link to="/sign-up">
             <Button size="lg">
-              Start free trial
+              Get the template
               <ArrowRight className="size-4" />
             </Button>
           </Link>
           <Link to="/login">
-            <Button variant="outline" size="lg">View live demo</Button>
+            <Button variant="outline" size="lg">Browse the demo</Button>
           </Link>
         </motion.div>
         <motion.p
@@ -288,7 +288,7 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mt-4 text-sm text-muted-foreground"
         >
-          No credit card required. Cancel anytime.
+          One-time purchase. Free updates for 6 months.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: reduceMotion ? 0 : 32 }}
@@ -323,10 +323,10 @@ function Features() {
     <section id="features" className="mx-auto w-full max-w-6xl scroll-mt-24 px-6 py-24">
       <Reveal className="mx-auto max-w-[680px] text-center">
         <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-          Everything your team runs on, in one place
+          Every page your admin panel needs, already built
         </h2>
         <p className="mt-4 text-pretty text-muted-foreground">
-          Six workspaces that share one customer record, so data flows between them without copies or exports.
+          Login flows, dashboard, analytics, commerce, kanban, chat, calendar, settings — each one wired to typed mock data so you can see it working before you write a line.
         </p>
       </Reveal>
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -352,13 +352,13 @@ function Showcase() {
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 py-24 lg:grid-cols-2">
         <Reveal>
           <h2 className="max-w-[680px] text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-            See the whole month in one glance
+            Open any page and it already works
           </h2>
           <p className="mt-4 max-w-[680px] text-pretty text-muted-foreground">
-            The dashboard starts where your attention goes: revenue, orders, and conversion. Everything else is one drill down away.
+            Each route comes with its own mock data module and typed API. Click around the demo and see how it is put together.
           </p>
           <ul className="mt-6 space-y-3">
-            {['Revenue, profit, and orders on a single screen', 'Traffic sources broken down by channel', 'Monthly goals with live progress bars'].map((item) => (
+            {['Full auth flow: login, signup, 2FA, reset, lock screen', 'Dashboard with charts, metrics, and recent activity', 'Commerce pages with tables, forms, and invoicing'].map((item) => (
               <li key={item} className="flex items-start gap-3 text-sm">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <Check className="size-3" />
@@ -369,7 +369,7 @@ function Showcase() {
           </ul>
           <Link to="/login" className="mt-8 inline-block">
             <Button variant="link" className="px-0">
-              Open the demo workspace
+              Open the live preview
               <ArrowRight className="size-4" />
             </Button>
           </Link>
@@ -386,7 +386,7 @@ function Tagline() {
   return (
     <section className="mx-auto w-full max-w-4xl px-6 py-28">
       <TaglineReveal
-        text="Every number tells a story. Atera makes sure your team never misses one."
+        text="Skip three weeks of setup. Start from pages that already work."
         className="text-center text-4xl font-bold tracking-tight text-pretty sm:text-5xl"
       />
     </section>
@@ -400,12 +400,12 @@ function Testimonial() {
         <Reveal>
           <blockquote>
             <p className="text-xl leading-8 text-pretty sm:text-2xl">
-              "We used to spend a full morning pulling last month's numbers for the Monday review. Now it's a link I send before coffee."
+              "I have shipped four client dashboards since I bought Atera. The mock data layer alone saved me a week per project."
             </p>
           </blockquote>
           <figcaption className="mt-6">
             <p className="text-sm font-semibold">Dara Winata</p>
-            <p className="text-sm text-muted-foreground">Operations lead, Kirana Logistics</p>
+            <p className="text-sm text-muted-foreground">Freelance full-stack developer</p>
           </figcaption>
         </Reveal>
       </div>
@@ -418,10 +418,10 @@ function Pricing() {
     <section id="pricing" className="mx-auto w-full max-w-6xl scroll-mt-24 px-6 py-24">
       <Reveal className="mx-auto max-w-[680px] text-center">
         <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-          Pricing that scales with the team, not against it
+          One purchase, every page included
         </h2>
         <p className="mt-4 text-pretty text-muted-foreground">
-          Start free for 14 days on any plan. Downgrade or cancel whenever the numbers say so.
+          Pay once and use Atera in as many projects as your license allows. No subscriptions, no per-seat pricing.
         </p>
       </Reveal>
       <div className="mt-14 grid gap-5 lg:grid-cols-3">
@@ -456,7 +456,7 @@ function Pricing() {
               </ul>
               <Link to="/sign-up" className="mt-8">
                 <Button variant={plan.highlighted ? 'default' : 'outline'} className="w-full">
-                  Start 14 day trial
+                  Buy {plan.name} license
                 </Button>
               </Link>
             </div>
@@ -473,21 +473,21 @@ function FinalCta() {
       <Reveal>
         <div className="flex flex-col items-center gap-6 rounded-xl border bg-primary px-8 py-16 text-center text-primary-foreground">
           <h2 className="max-w-[680px] text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-            Your data is already there. Put it to work.
+            Your next admin panel starts here
           </h2>
           <p className="max-w-[520px] text-pretty opacity-80">
-            Set up a workspace in under five minutes. Your first dashboard is ready the moment you log in.
+            Clone the repo, run bun install, and you have a working dashboard in under five minutes.
           </p>
           <div className="flex flex-col items-center gap-3 sm:flex-row">
             <Link to="/sign-up">
               <Button size="lg" variant="secondary" className="bg-background text-foreground hover:bg-background/90">
-                Start free trial
+                Get the template
                 <ArrowRight className="size-4" />
               </Button>
             </Link>
             <Link to="/login">
               <Button size="lg" variant="ghost" className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
-                View live demo
+                Browse the demo
               </Button>
             </Link>
           </div>
@@ -500,12 +500,12 @@ function FinalCta() {
 function Footer() {
   const columns = [
     {
-      title: 'Product',
+      title: 'Template',
       links: [
         { label: 'Features', href: '#features' },
-        { label: 'Analytics', href: '#analytics' },
+        { label: 'Pages', href: '#analytics' },
         { label: 'Pricing', href: '#pricing' },
-        { label: 'Live demo', href: '/login' },
+        { label: 'Live preview', href: '/login' },
       ],
     },
     {
@@ -513,7 +513,6 @@ function Footer() {
       links: [
         { label: 'Log in', href: '/login' },
         { label: 'Sign up', href: '/sign-up' },
-        { label: 'Create account', href: '/sign-up' },
       ],
     },
   ]
@@ -525,7 +524,7 @@ function Footer() {
             <AppLogo />
           </Link>
           <p className="mt-4 max-w-xs text-sm text-pretty text-muted-foreground">
-            The analytics dashboard that turns data into decisions.
+            A React admin dashboard template with every page already built.
           </p>
         </div>
         {columns.map((column) => (
