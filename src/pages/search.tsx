@@ -7,11 +7,11 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations } from '@/i18n'
-import { listOrders } from '@/lib/data/orders'
-import { listProducts } from '@/lib/data/products'
-import { listCustomers } from '@/lib/data/customers'
-import { listInvoices } from '@/lib/data/invoices'
-import { listUsers } from '@/lib/data/users'
+import { orderService } from '@/services/order-service'
+import { productService } from '@/services/product-service'
+import { customerService } from '@/services/customer-service'
+import { invoiceService } from '@/services/invoice-service'
+import { userService } from '@/services/user-service'
 
 const MAX_PER_SECTION = 5
 
@@ -35,7 +35,7 @@ export function buildSearchSections(query: string): SearchSection[] {
       key: 'orders',
       label: 'Orders',
       href: '/orders',
-      items: listOrders()
+      items: orderService.list()
         .filter((o) => matches(q, [o.id, o.customer, o.product, o.status]))
         .slice(0, MAX_PER_SECTION)
         .map((o) => ({ id: o.id, title: `${o.id} — ${o.customer}`, subtitle: `${o.product} · $${o.amount}`, href: `/orders/${o.id}` })),
@@ -44,7 +44,7 @@ export function buildSearchSections(query: string): SearchSection[] {
       key: 'products',
       label: 'Products',
       href: '/products',
-      items: listProducts()
+      items: productService.list()
         .filter((p) => matches(q, [p.name, p.category, p.status]))
         .slice(0, MAX_PER_SECTION)
         .map((p) => ({ id: p.id, title: p.name, subtitle: p.category, href: `/products/${p.id}` })),
@@ -53,7 +53,7 @@ export function buildSearchSections(query: string): SearchSection[] {
       key: 'customers',
       label: 'Customers',
       href: '/customers',
-      items: listCustomers()
+      items: customerService.list()
         .filter((c) => matches(q, [c.name, c.email, c.company]))
         .slice(0, MAX_PER_SECTION)
         .map((c) => ({ id: c.id, title: c.name, subtitle: c.company, href: `/customers/${c.id}` })),
@@ -62,7 +62,7 @@ export function buildSearchSections(query: string): SearchSection[] {
       key: 'invoices',
       label: 'Invoices',
       href: '/invoices',
-      items: listInvoices()
+      items: invoiceService.list()
         .filter((i) => matches(q, [i.id, i.customer]))
         .slice(0, MAX_PER_SECTION)
         .map((i) => ({ id: i.id, title: i.id, subtitle: `${i.customer} · $${i.amount}`, href: '/invoices' })),
@@ -71,7 +71,7 @@ export function buildSearchSections(query: string): SearchSection[] {
       key: 'users',
       label: 'Users',
       href: '/users',
-      items: listUsers()
+      items: userService.list()
         .filter((u) => matches(q, [u.name, u.email]))
         .slice(0, MAX_PER_SECTION)
         .map((u) => ({ id: u.id, title: u.name, subtitle: u.email, href: '/users' })),
