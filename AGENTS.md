@@ -19,7 +19,7 @@ Atera is a mock-data admin dashboard SPA — a Atera admin dashboard template bu
 - Appearance: `src/hooks/use-appearance.tsx` (light/dark/system; localStorage + cookie; toggles `.dark` class)
 - Preferences: `src/hooks/use-customize-preferences.tsx` (color/density/layout/container/language; `customize_*` cookies; applied as `data-*` attributes on `<html>` plus `--density-space` CSS var)
 
-**Data flow** — pages import CRUD functions directly from `src/lib/data/*` (in-memory arrays: orders, products, customers, invoices, users, files, notifications). No React Query, SWR, or axios.
+**Data flow** — pages import from typed service interfaces in `src/services/*` (thin wrappers over `src/lib/data/*`). Backend swap = write one new service per domain; no page changes.
 
 **Theme/customization** — `src/main.tsx` calls `initializeTheme()` and `initializeCustomizePreferences()` before render. Design tokens live in `src/app.css` as a Tailwind v4 `@theme` block (oklch CSS vars, shadcn palette) plus `[data-color='zinc'|'blue'|...]` presets and `.dark` variants. Layout preference (sidebar vs top-nav) selects the component in `src/layouts/app-layout.tsx`.
 
@@ -31,12 +31,13 @@ Atera is a mock-data admin dashboard SPA — a Atera admin dashboard template bu
 |---|---|
 | `src/pages/` | Route screens (default-export pages; `commerce.tsx`, `workspaces.tsx`, `auth-pages.tsx` are multi-page files with named exports) |
 | `src/layouts/` | Shells: `protected-layout`, `auth-layout`, `app-layout` (picks header vs sidebar layout) |
-| `src/components/ui/` | shadcn-style Radix primitives — button, card, dialog, select, input, sheet, sidebar, command, dropdown-menu, tooltip, avatar, badge, breadcrumb, separator, skeleton |
-| `src/components/shared/` | Cross-cutting pieces: `data-table.tsx` (generic TanStack table with filter/sort/paginate/CSV export), `page-header.tsx`, `page-transition.tsx`, `scroll-to-top.tsx` |
+| `src/components/ui/` | shadcn-style Radix primitives (49 components) — button, card, dialog, select, input, sheet, sidebar, command, dropdown-menu, tooltip, avatar, badge, breadcrumb, separator, skeleton, checkbox, table, tabs, accordion, alert, etc. |
+| `src/components/shared/` | Cross-cutting pieces: `data-table.tsx`, `page-header.tsx`, `page-transition.tsx`, `scroll-to-top.tsx`, `stat-card.tsx`, `auth-controls.tsx`, `date-picker.tsx`, `empty-state.tsx` |
 | `src/components/dashboard/` | Dashboard widgets (metric-card, overview-chart, traffic-sources, goals-card, activity-card, recent-orders) |
 | `src/components/` (root) | App chrome: sidebar, header, breadcrumbs, nav, logo |
 | `src/hooks/` | Custom hooks (auth, appearance, preferences, mobile, navigation) |
-| `src/lib/` | `utils.ts` (`cn()`, `toUrl()`), `auth.ts`, `navigation.ts` (nav item tree), `data/` (mock repositories) |
+| `src/lib/` | `utils.ts`, `auth.ts`, `navigation.ts`, `data/` (mock repositories) |
+| `src/services/` | Thin typed service layer over `src/lib/data/*` — 20 services for easy backend integration |
 | `src/i18n/` | Translation dictionary + `useTranslations` |
 | `docs/superpowers/` | Design spec and implementation plan Atera |
 
@@ -60,7 +61,7 @@ bun run preview    # preview the production build
 - **Forms**: react-hook-form + zod schemas with `zodResolver` (see `src/pages/commerce.tsx` for the pattern). Simple cases use plain controlled inputs.
 - **Pages**: default-export the route component; wrap content in `PageTransition` + `PageHeader` (with `breadcrumbs` prop).
 - **State**: `useState` locally; shared state via a `useSyncExternalStore` store (copy the `use-auth.ts`/`lib/auth.ts` pattern). No global state library.
-- **Data**: add or extend modules in `src/lib/data/` — export typed in-memory arrays plus `list/get/create/update/remove` functions.
+- **Data**: prefer importing from `src/services/*`; add new modules in `src/lib/data/*` and corresponding services.
 - **Hooks**: rules-of-hooks enforced as an error by oxlint; colocate shared hooks in `src/hooks/`.
 
 ## Important Files
@@ -71,10 +72,12 @@ bun run preview    # preview the production build
 | `src/App.tsx` | Full route table + 404 |
 | `src/app.css` | Tailwind v4 `@theme` tokens, color presets, density vars (source of truth for theming) |
 | `src/lib/navigation.ts` | Navigation item tree (group, icon, href, translationKey, badge) |
+| `src/services/` | **Service layer** — typed interfaces for backend swap (order-service, product-service, etc.) |
 | `vite.config.ts` | `react()` + `tailwindcss()` plugins, `@` alias |
 | `tsconfig.app.json` | Strict app config (`src/` only, `noUnusedLocals`/`noUnusedParameters`, `verbatimModuleSyntax`) |
 | `.oxlintrc.json` | Lint rules |
 | `docs/superpowers/specs/`, `docs/superpowers/plans/` | Design spec + implementation plan |
+| `/docs` | In-app documentation page (architecture, data layer, components, theming, i18n, adding pages) |
 
 ## Runtime/Tooling Preferences
 
