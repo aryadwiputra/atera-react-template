@@ -41,16 +41,21 @@ const serviceInventory: [name: string, description: string][] = [
 export default function DocsPage() {
   return (
     <main className="min-h-svh bg-background text-foreground">
-      <header className="border-b">
+<header className="border-b">
         <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-4">
           <Link to="/dashboard" aria-label="Back to Atera">
             <AppLogo />
           </Link>
+          <nav className="hidden md:flex items-center gap-6 text-sm">
+            <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">Dashboard</Link>
+            <Link to="/docs" className="text-foreground font-medium">Documentation</Link>
+          </nav>
           <Button asChild variant="ghost" size="sm">
             <Link to="/dashboard">Back to app</Link>
           </Button>
         </div>
       </header>
+
       <div className="mx-auto w-full max-w-4xl px-6 py-10">
         <h1 className="text-3xl font-medium tracking-tight">Atera Documentation</h1>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -58,13 +63,13 @@ export default function DocsPage() {
           theming, i18n and the recipe for adding a new page.
         </p>
         <Tabs defaultValue="architecture" className="mt-8 gap-6">
-          <TabsList>
+          <TabsList className="flex flex-wrap gap-2">
             <TabsTrigger value="architecture">Architecture</TabsTrigger>
-            <TabsTrigger value="data">Data</TabsTrigger>
-            <TabsTrigger value="components">Components</TabsTrigger>
+            <TabsTrigger value="data">Data Layer</TabsTrigger>
+            <TabsTrigger value="components">UI Components</TabsTrigger>
             <TabsTrigger value="theming">Theming</TabsTrigger>
             <TabsTrigger value="i18n">i18n</TabsTrigger>
-            <TabsTrigger value="pages">Adding a page</TabsTrigger>
+            <TabsTrigger value="pages">Adding a Page</TabsTrigger>
           </TabsList>
 
           <TabsContent value="architecture" className="space-y-6">
