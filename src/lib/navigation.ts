@@ -6,7 +6,7 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import type { TranslationKey } from '@/i18n'
 
-export type NavigationGroup = 'overview' | 'enterprise' | 'commerce' | 'apps' | 'system'
+export type NavigationGroup = 'overview' | 'reports' | 'enterprise' | 'commerce' | 'apps' | 'system'
 export type NavigationItem = {
   title: string
   href: string
@@ -20,6 +20,12 @@ export type NavigationItem = {
 export const navigationItems: NavigationItem[] = [
   { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid, group: 'overview', keywords: ['home', 'overview'], translationKey: 'dashboard' },
   { title: 'Analytics', href: '/analytics', icon: ChartNoAxesCombined, group: 'overview', keywords: ['metrics', 'reports'], translationKey: 'analytics' },
+  { title: 'Sales Report', href: '/reports/sales', icon: ShoppingCart, group: 'reports', keywords: ['sales', 'revenue', 'orders'], translationKey: 'salesReport' },
+  { title: 'Finance Report', href: '/reports/finance', icon: CircleDollarSign, group: 'reports', keywords: ['finance', 'income', 'expenses'], translationKey: 'financeReport' },
+  { title: 'Inventory Report', href: '/reports/inventory', icon: Warehouse, group: 'reports', keywords: ['stock', 'inventory', 'warehouse'], translationKey: 'inventoryReport' },
+  { title: 'Customer Report', href: '/reports/customers', icon: Users, group: 'reports', keywords: ['customers', 'clients'], translationKey: 'customerReport' },
+  { title: 'HR Report', href: '/reports/hr', icon: Contact, group: 'reports', keywords: ['employees', 'hr', 'people'], translationKey: 'hrReport' },
+  { title: 'Procurement Report', href: '/reports/procurement', icon: Truck, group: 'reports', keywords: ['purchase', 'procurement', 'suppliers'], translationKey: 'procurementReport' },
   { title: 'eCommerce', href: '/ecommerce', icon: ShoppingCart, group: 'overview', keywords: ['sales', 'shop'], translationKey: 'ecommerce' },
   { title: 'CRM', href: '/crm', icon: Users, group: 'overview', keywords: ['leads', 'customers'], translationKey: 'crm' },
   { title: 'Pipeline', href: '/pipeline', icon: KanbanSquare, group: 'overview', keywords: ['deals', 'leads', 'sales', 'crm'], translationKey: 'pipelineBoard' },
@@ -58,4 +64,4 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Support', href: '/support', icon: HelpCircle, group: 'system', keywords: ['help', 'contact'], translationKey: 'helpSupport' },
 ]
 
-export const navigationGroups = ['overview', 'enterprise', 'commerce', 'apps', 'system'] as const
+export const navigationGroups = ['overview', 'reports', 'enterprise', 'commerce', 'apps', 'system'] as const
