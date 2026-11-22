@@ -1,12 +1,12 @@
 import {
   BarChart3, Bell, Boxes, CalendarDays, ChartNoAxesCombined, CircleDollarSign, ClipboardList, Contact, CreditCard, FilePenLine, FileText, Folder, FolderKanban, FormInput,
-  HelpCircle, KanbanSquare, LayoutGrid, LayoutPanelTop, Mail, MapPin, Megaphone, MessageSquare, Package, Settings, ShoppingCart, Store,
+  HelpCircle, KanbanSquare, LayoutGrid, LayoutPanelTop, Mail, MapPin, Megaphone, MessageCircle, MessageSquare, MessagesSquare, Package, Settings, ShoppingCart, Store,
   Sparkles, Truck, Users, Warehouse, WalletCards, UserCircle, Wand2,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { TranslationKey } from '@/i18n'
 
-export type NavigationGroup = 'overview' | 'reports' | 'enterprise' | 'commerce' | 'apps' | 'system'
+export type NavigationGroup = 'overview' | 'reports' | 'enterprise' | 'commerce' | 'contact-center' | 'apps' | 'system'
 export type NavigationItem = {
   title: string
   href: string
@@ -46,6 +46,8 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Invoices', href: '/invoices', icon: FileText, group: 'commerce', keywords: ['billing', 'receipts'], translationKey: 'invoices' },
   { title: 'Billing', href: '/billing', icon: CreditCard, group: 'commerce', keywords: ['payments', 'plans'], translationKey: 'billing' },
   { title: 'Pricing', href: '/pricing', icon: CircleDollarSign, group: 'commerce', keywords: ['plans', 'upgrade'], translationKey: 'pricing' },
+  { title: 'Live Chat', href: '/contact-center/live-chat', icon: MessageCircle, group: 'contact-center', keywords: ['chat', 'inbox', 'agent'], translationKey: 'liveChat' },
+  { title: 'Social Comments', href: '/contact-center/social-comments', icon: MessagesSquare, group: 'contact-center', keywords: ['social', 'comments', 'instagram', 'facebook'], translationKey: 'socialComments' },
   { title: 'Mail', href: '/mail', icon: Mail, group: 'apps', keywords: ['email', 'inbox'], translationKey: 'mail' },
   { title: 'Chat', href: '/chat', icon: MessageSquare, group: 'apps', keywords: ['messages', 'conversation'], translationKey: 'chat' },
   { title: 'Files', href: '/files', icon: Folder, group: 'apps', keywords: ['documents', 'storage'], translationKey: 'files' },
@@ -64,4 +66,4 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Support', href: '/support', icon: HelpCircle, group: 'system', keywords: ['help', 'contact'], translationKey: 'helpSupport' },
 ]
 
-export const navigationGroups = ['overview', 'reports', 'enterprise', 'commerce', 'apps', 'system'] as const
+export const navigationGroups = ['overview', 'reports', 'enterprise', 'commerce', 'contact-center', 'apps', 'system'] as const

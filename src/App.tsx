@@ -51,6 +51,14 @@ import SettingsAppearancePage from '@/pages/settings/appearance'
 import SettingsProfilePage from '@/pages/settings/profile'
 import SettingsNotificationsPage from '@/pages/settings/notifications'
 import SettingsBillingPage from '@/pages/settings/billing'
+import SalesReportPage from '@/pages/reports/sales'
+import FinanceReportPage from '@/pages/reports/finance'
+import InventoryReportPage from '@/pages/reports/inventory'
+import CustomersReportPage from '@/pages/reports/customers'
+import HrReportPage from '@/pages/reports/hr'
+import ProcurementReportPage from '@/pages/reports/procurement'
+import LiveChatPage from '@/pages/contact-center/live-chat'
+import SocialCommentsPage from '@/pages/contact-center/social-comments'
 import { PageTransition } from '@/components/shared/page-transition'
 import { ScrollToTop } from '@/components/shared/scroll-to-top'
 import { navigationItems } from '@/lib/navigation'
@@ -64,7 +72,7 @@ function AuthRoutes() {
   return <AuthLayout><ScrollToTop /><PageTransition><Outlet /></PageTransition></AuthLayout>
 }
 
-const explicitPaths = new Set(['/analytics', '/orders', '/products', '/customers', '/finance', '/assets', '/procurement', '/inventory', '/suppliers', '/hr', '/ecommerce', '/crm', '/pipeline', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing', '/editor'])
+const explicitPaths = new Set(['/reports/sales', '/reports/finance', '/reports/inventory', '/reports/customers', '/reports/hr', '/reports/procurement', '/analytics', '/orders', '/products', '/customers', '/finance', '/assets', '/procurement', '/inventory', '/suppliers', '/hr', '/ecommerce', '/crm', '/pipeline', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing', '/editor', '/contact-center/live-chat', '/contact-center/social-comments'])
 const placeholderRoutes = navigationItems.filter((item) => item.href !== '/dashboard' && item.href !== '/login' && !explicitPaths.has(item.href)).map((item) => ({
   path: item.href.slice(1),
   element: <AppPlaceholder title={item.translationKey} route="/dashboard" />,
@@ -80,6 +88,14 @@ const router = createBrowserRouter([
     element: <ProtectedLayout />,
     children: [
       { path: '/dashboard', element: <DashboardPage /> },
+      { path: '/reports/sales', element: <SalesReportPage /> },
+      { path: '/reports/finance', element: <FinanceReportPage /> },
+      { path: '/reports/inventory', element: <InventoryReportPage /> },
+      { path: '/reports/customers', element: <CustomersReportPage /> },
+      { path: '/reports/hr', element: <HrReportPage /> },
+      { path: '/reports/procurement', element: <ProcurementReportPage /> },
+      { path: '/contact-center/live-chat', element: <LiveChatPage /> },
+      { path: '/contact-center/social-comments', element: <SocialCommentsPage /> },
       { path: '/analytics', element: <AnalyticsPage /> },
       { path: '/charts', element: <ChartsPage /> },
       { path: '/orders', element: <OrdersPage /> },
