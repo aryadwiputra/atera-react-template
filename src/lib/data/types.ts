@@ -193,3 +193,33 @@ export type OpenPosition = {
   applicants: number
   postedAt: string
 }
+export type ConversationChannel = 'whatsapp' | 'webchat' | 'email' | 'messenger'
+export type ConversationStatus = 'open' | 'pending' | 'resolved'
+export type ChatMessage = {
+  id: string
+  sender: 'customer' | 'agent'
+  body: string
+  time: string
+}
+export type Conversation = {
+  id: string
+  customer: string
+  initials: string
+  channel: ConversationChannel
+  status: ConversationStatus
+  unread: boolean
+  messages: ChatMessage[]
+}
+export type SocialPlatform = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube'
+export type CommentStatus = 'new' | 'replied' | 'hidden'
+export type SocialComment = {
+  id: string
+  platform: SocialPlatform
+  username: string
+  initials: string
+  text: string
+  time: string
+  likes: number
+  status: CommentStatus
+  reply?: { username: string; text: string; time: string }
+}
