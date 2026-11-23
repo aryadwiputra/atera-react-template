@@ -193,6 +193,15 @@ export type OpenPosition = {
   applicants: number
   postedAt: string
 }
+
+export type Department = {
+  id: string
+  name: string
+  description: string
+  head: string
+  memberCount: number
+  createdAt: string
+}
 export type ConversationChannel = 'whatsapp' | 'webchat' | 'email' | 'messenger'
 export type ConversationStatus = 'open' | 'pending' | 'resolved'
 export type ChatMessage = {
