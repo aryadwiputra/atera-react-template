@@ -315,13 +315,13 @@ export function CustomizeDialog({
         key: K,
         value: PreferencesReturn[K],
     ) => preferences.updatePreferences({ [key]: value });
-    const colorClasses: Record<ColorPreset, string> = {
-        neutral: 'bg-foreground',
-        zinc: 'bg-swatch',
-        blue: 'bg-swatch',
-        violet: 'bg-swatch',
-        rose: 'bg-swatch',
-        orange: 'bg-swatch',
+    const colorSwatches: Record<ColorPreset, string> = {
+        neutral: 'oklch(0.205 0 0)',
+        zinc: 'oklch(0.274 0.006 286.033)',
+        blue: 'oklch(0.546 0.245 262.881)',
+        violet: 'oklch(0.541 0.281 293.009)',
+        rose: 'oklch(0.586 0.253 17.585)',
+        orange: 'oklch(0.646 0.222 41.116)',
     };
     const labels: Record<ColorPreset, string> = {
         neutral: 'Neutral',
@@ -377,7 +377,11 @@ export function CustomizeDialog({
                                     onClick={() => update('color', color)}
                                 >
                                     <span
-                                        className={`size-3 rounded-full ${colorClasses[color]}`}
+                                        className="size-3 rounded-full"
+                                        style={{
+                                            backgroundColor:
+                                                colorSwatches[color],
+                                        }}
                                     />
                                     {labels[color]}
                                 </Button>
