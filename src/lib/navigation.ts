@@ -63,7 +63,7 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Profile', href: '/profile', icon: UserCircle, group: 'system', keywords: ['account', 'personal'], translationKey: 'profile' },
   { title: 'Users', href: '/users', icon: Users, group: 'system', keywords: ['team', 'roles'], translationKey: 'users' },
   { title: 'Notifications', href: '/notifications', icon: Bell, group: 'system', keywords: ['alerts'], translationKey: 'notifications', badge: '3' },
-  { title: 'Settings', href: '/settings/appearance', icon: Settings, group: 'system', keywords: ['preferences', 'configuration'], translationKey: 'settings' },
+  { title: 'Settings', href: '/settings', icon: Settings, group: 'system', keywords: ['preferences', 'configuration'], translationKey: 'settings' },
   { title: 'Support', href: '/support', icon: HelpCircle, group: 'system', keywords: ['help', 'contact'], translationKey: 'helpSupport' },
 ]
 
