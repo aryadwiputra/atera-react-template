@@ -209,6 +209,30 @@ export type Conversation = {
   status: ConversationStatus
   unread: boolean
   messages: ChatMessage[]
+  customerId: string
+  email: string
+  phone: string
+  location: string
+  segment: string
+  joined: string
+  totalChats: number
+  ticketId?: string
+  ticketSubject?: string
+  ticketPriority?: string
+  ticketCreated?: string
+  ticketDescription?: string
+  ticketCategory?: string
+  ticketType?: string
+  assignee: string
+}
+
+export type TicketInput = {
+  subject: string
+  category: string
+  type: string
+  priority: string
+  description: string
+  escalated: boolean
 }
 export type SocialPlatform = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube'
 export type CommentStatus = 'new' | 'replied' | 'hidden'
@@ -222,4 +246,28 @@ export type SocialComment = {
   likes: number
   status: CommentStatus
   reply?: { username: string; text: string; time: string }
+  location: string
+  followers: string
+  joined: string
+}
+
+export type EmailFolder = 'inbox' | 'drafts' | 'sent' | 'archive' | 'trash'
+export type EmailView = EmailFolder | 'starred'
+export type EmailLabel = 'billing' | 'technical' | 'general' | 'orders'
+export type EmailAttachment = { name: string; size: string }
+export type EmailReply = { id: string; body: string; time: string }
+export type Email = {
+  id: string
+  from: { name: string; email: string; initials: string }
+  to: string
+  subject: string
+  preview: string
+  body: string[]
+  time: string
+  folder: EmailFolder
+  labels: EmailLabel[]
+  unread: boolean
+  starred: boolean
+  attachments?: EmailAttachment[]
+  replies?: EmailReply[]
 }
