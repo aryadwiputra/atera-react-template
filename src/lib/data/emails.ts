@@ -1,6 +1,21 @@
 import type { Email, EmailFolder } from './types'
 
-const seed: Email[] = [
+type SeedEmail = Omit<Email, 'body' | 'replies'> & {
+  body: string[]
+  replies?: { id: string; body: string; time: string }[]
+}
+
+export function htmlToText(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+const paragraphsToHtml = (paragraphs: string[]) => paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join('')
+
+const rawSeed: SeedEmail[] = [
   {
     id: 'E-001',
     from: { name: 'Amelia Hart', email: 'amelia.hart@example.com', initials: 'AH' },
@@ -210,6 +225,12 @@ const seed: Email[] = [
   },
 ]
 
+const seed: Email[] = rawSeed.map(({ body, replies, ...rest }) => ({
+  ...rest,
+  body: paragraphsToHtml(body),
+  replies: replies?.map((reply) => ({ ...reply, body: `<p>${reply.body}</p>` })),
+}))
+
 let emails: Email[] = [...seed]
 
 export function listEmails(): Email[] {
@@ -242,16 +263,18 @@ export function replyToEmail(id: string, body: string): void {
   )
 }
 
-export function sendEmail(input: { to: string; subject: string; body: string }): void {
+export function sendEmail(input: { to: string; cc?: string; bcc?: string; subject: string; body: string }): void {
   const now = new Date()
   emails = [
     {
       id: `E-${now.getTime()}`,
       from: { name: 'Test User', email: 'demo@example.com', initials: 'TU' },
       to: input.to,
+      cc: input.cc,
+      bcc: input.bcc,
       subject: input.subject,
-      preview: input.body.slice(0, 90),
-      body: input.body.split('\n').filter(Boolean),
+      preview: htmlToText(input.body).slice(0, 90),
+      body: input.body,
       time: now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
       folder: 'sent',
       labels: [],

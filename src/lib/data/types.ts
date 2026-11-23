@@ -260,9 +260,11 @@ export type Email = {
   id: string
   from: { name: string; email: string; initials: string }
   to: string
+  cc?: string
+  bcc?: string
   subject: string
   preview: string
-  body: string[]
+  body: string
   time: string
   folder: EmailFolder
   labels: EmailLabel[]

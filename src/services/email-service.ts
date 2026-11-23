@@ -16,7 +16,7 @@ export interface EmailService {
   toggleStar(id: string): void
   move(id: string, folder: EmailFolder): void
   reply(id: string, body: string): void
-  send(input: { to: string; subject: string; body: string }): void
+  send(input: { to: string; cc?: string; bcc?: string; subject: string; body: string }): void
 }
 
 export const emailService: EmailService = {

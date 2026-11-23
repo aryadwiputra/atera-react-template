@@ -98,7 +98,7 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
                                                 disabled={item.disabled}
                                                 isActive={
                                                     !item.disabled &&
-                                                    isCurrentUrl(item.href)
+                                                    isCurrentUrl(item.href, undefined, true)
                                                 }
                                                 tooltip={{
                                                     children: item.title,

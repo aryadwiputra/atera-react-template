@@ -1,19 +1,18 @@
 import { useMemo, useReducer, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
 import { Archive, ArrowLeft, FileText, Inbox as InboxIcon, Mail, MailOpen, PenLine, Search, Send, Star, StarOff, Trash2, X, type LucideIcon } from 'lucide-react'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { RichTextEditor } from '@/components/shared/rich-text-editor'
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations, type Translator } from '@/i18n'
 import type { Email, EmailLabel, EmailView } from '@/lib/data/types'
 import { cn } from '@/lib/utils'
 import { emailService } from '@/services/email-service'
 import { PageTransition } from '@/components/shared/page-transition'
-import { useToast } from '@/components/shared/toast'
 
 const folderViews: { value: EmailView; label: 'inbox' | 'starred' | 'drafts' | 'sentFolder' | 'archive' | 'trash'; icon: LucideIcon }[] = [
   { value: 'inbox', label: 'inbox', icon: InboxIcon },
@@ -143,7 +142,7 @@ function EmailList({
   const activeLabel = folderViews.find((item) => item.value === view)?.label ?? 'inbox'
 
   return (
-    <section className={cn('flex min-h-0 flex-col border-b md:border-b-0', className)}>
+    <section className={cn('flex min-h-0 flex-col border-b md:border-r md:border-b-0', className)}>
       <div className="flex h-14 shrink-0 items-center justify-between gap-2 border-b px-3">
         <div className="flex items-center gap-2">
           <h2 className="text-sm font-semibold">{t(activeLabel)}</h2>
@@ -192,7 +191,7 @@ function EmailList({
           })}
         </div>
       </div>
-      <div className="chat-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
+      <div className="chat-scroll no-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-2 p-6 text-center">
             <Mail className="text-muted-foreground/50 size-8" />
@@ -309,13 +308,7 @@ function ReadingPane({
           </div>
         </div>
         <h2 className="text-lg font-semibold">{email.subject}</h2>
-        <div className="mt-3 space-y-3">
-          {email.body.map((paragraph, index) => (
-            <p key={index} className="text-sm leading-relaxed text-foreground/90">
-              {paragraph}
-            </p>
-          ))}
-        </div>
+        <div className="email-content mt-3 text-foreground/90" dangerouslySetInnerHTML={{ __html: email.body }} />
         {email.attachments && email.attachments.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {email.attachments.map((attachment) => (
@@ -335,7 +328,7 @@ function ReadingPane({
             <div className="mt-2 space-y-3">
               {email.replies.map((replyItem) => (
                 <div key={replyItem.id}>
-                  <p className="text-sm leading-relaxed text-foreground/90">{replyItem.body}</p>
+                  <div className="email-content text-foreground/90" dangerouslySetInnerHTML={{ __html: replyItem.body }} />
                   <p className="text-muted-foreground mt-1 text-xs">{replyItem.time}</p>
                 </div>
               ))}
@@ -345,20 +338,16 @@ function ReadingPane({
       </div>
       <div className="border-t p-3">
         <div className="flex items-end gap-2">
-          <Textarea
+          <RichTextEditor
+            compact
             value={replyDraft}
-            rows={2}
-            onChange={(e) => onReplyDraftChange(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault()
-                onReply()
-              }
-            }}
+            onChange={onReplyDraftChange}
             placeholder={t('messagePlaceholder')}
-            className="min-h-16 flex-1 resize-none"
+            ariaLabel={t('message')}
+            className="min-w-0 flex-1"
+            contentClassName="chat-scroll max-h-40 overflow-y-auto"
           />
-          <Button type="button" size="sm" disabled={!replyDraft.trim()} onClick={onReply}>
+          <Button type="button" size="sm" disabled={!replyDraft.trim() || replyDraft === '<p></p>'} onClick={onReply}>
             <Send className="size-4" />
             {t('send')}
           </Button>
@@ -380,16 +369,16 @@ function EmptyReadingPane({ t }: { t: Translator }) {
 export default function EmailsPage() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [, force] = useReducer((x) => x + 1, 0)
-  const [view, setView] = useState<EmailView>('inbox')
-  const [labelFilter, setLabelFilter] = useState<EmailLabel | 'all'>('all')
+  const rawView = searchParams.get('view')
+  const view: EmailView = folderViews.some((item) => item.value === rawView) ? (rawView as EmailView) : 'inbox'
+  const rawLabel = searchParams.get('label')
+  const labelFilter: EmailLabel | 'all' = labelOptions.some((item) => item.value === rawLabel) ? (rawLabel as EmailLabel) : 'all'
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [replyDraft, setReplyDraft] = useState('')
-  const [composeOpen, setComposeOpen] = useState(false)
-  const [compose, setCompose] = useState({ to: '', subject: '', body: '' })
-  const { toast } = useToast()
-  const canSend = compose.to.trim() !== '' && compose.subject.trim() !== '' && compose.body.trim() !== ''
 
   const emails = emailService.list()
   const selected = selectedId ? emailService.get(selectedId) ?? null : null
@@ -412,7 +401,7 @@ export default function EmailsPage() {
 
   const viewTotal = folderCount(emails, view)
   const unreadCount = emails.filter((email) => email.unread && email.folder === 'inbox').length
-  const hasActiveFilters = query !== '' || labelFilter !== 'all' || view !== 'inbox'
+  const hasActiveFilters = query !== '' || labelFilter !== 'all'
 
   const selectEmail = (id: string) => {
     setSelectedId(id)
@@ -422,8 +411,8 @@ export default function EmailsPage() {
   }
 
   const reply = () => {
-    if (!selected || !replyDraft.trim()) return
-    emailService.reply(selected.id, replyDraft.trim())
+    if (!selected || replyDraft === '' || replyDraft === '<p></p>') return
+    emailService.reply(selected.id, replyDraft)
     setReplyDraft('')
     force()
   }
@@ -455,25 +444,32 @@ export default function EmailsPage() {
   }
 
   const changeView = (next: EmailView) => {
-    setView(next)
     setSelectedId(null)
+    setSearchParams((current) => {
+      const params = new URLSearchParams(current)
+      if (next === 'inbox') params.delete('view')
+      else params.set('view', next)
+      return params
+    }, { replace: true })
   }
 
-  const sendCompose = () => {
-    if (!canSend) return
-    emailService.send({ to: compose.to.trim(), subject: compose.subject.trim(), body: compose.body.trim() })
-    setCompose({ to: '', subject: '', body: '' })
-    setComposeOpen(false)
-    setView('sent')
+  const changeLabel = (next: EmailLabel | 'all') => {
     setSelectedId(null)
-    force()
-    toast({ title: t('emailSent'), variant: 'success' })
+    setSearchParams((current) => {
+      const params = new URLSearchParams(current)
+      if (next === 'all') params.delete('label')
+      else params.set('label', next)
+      return params
+    }, { replace: true })
   }
 
   const resetFilters = () => {
     setSearch('')
-    setLabelFilter('all')
-    setView('inbox')
+    setSearchParams((current) => {
+      const params = new URLSearchParams(current)
+      params.delete('label')
+      return params
+    }, { replace: true })
   }
 
   return (
@@ -487,7 +483,7 @@ export default function EmailsPage() {
               labelFilter={labelFilter}
               unreadCount={unreadCount}
               onViewChange={changeView}
-              onLabelChange={setLabelFilter}
+              onLabelChange={changeLabel}
               t={t}
             />
             <EmailList
@@ -503,7 +499,7 @@ export default function EmailsPage() {
               onSearchChange={setSearch}
               onSelect={selectEmail}
               onReset={resetFilters}
-              onCompose={() => setComposeOpen(true)}
+              onCompose={() => navigate('/contact-center/emails/compose')}
               t={t}
             />
             {selected ? (
@@ -524,59 +520,6 @@ export default function EmailsPage() {
             )}
           </div>
         </Card>
-        <Dialog open={composeOpen} onOpenChange={setComposeOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{t('composeEmail')}</DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4">
-              <div className="grid gap-1.5">
-                <label className="text-sm font-medium" htmlFor="compose-to">
-                  {t('to')}
-                </label>
-                <Input
-                  id="compose-to"
-                  value={compose.to}
-                  onChange={(event) => setCompose((current) => ({ ...current, to: event.target.value }))}
-                  placeholder="name@example.com"
-                />
-              </div>
-              <div className="grid gap-1.5">
-                <label className="text-sm font-medium" htmlFor="compose-subject">
-                  {t('subject')}
-                </label>
-                <Input
-                  id="compose-subject"
-                  value={compose.subject}
-                  onChange={(event) => setCompose((current) => ({ ...current, subject: event.target.value }))}
-                  placeholder={t('subjectPlaceholder')}
-                />
-              </div>
-              <div className="grid gap-1.5">
-                <label className="text-sm font-medium" htmlFor="compose-body">
-                  {t('message')}
-                </label>
-                <Textarea
-                  id="compose-body"
-                  rows={5}
-                  className="resize-none"
-                  value={compose.body}
-                  onChange={(event) => setCompose((current) => ({ ...current, body: event.target.value }))}
-                  placeholder={t('messagePlaceholder')}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setComposeOpen(false)}>
-                {t('cancel')}
-              </Button>
-              <Button disabled={!canSend} onClick={sendCompose}>
-                <Send className="size-4" />
-                {t('send')}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </main>
     </PageTransition>
   )
