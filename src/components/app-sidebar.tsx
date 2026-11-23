@@ -5,11 +5,15 @@ import { useCustomizePreferences } from '@/hooks/use-customize-preferences'
 import { useTranslations, type TranslationKey } from '@/i18n'
 import { navigationGroups, navigationItems } from '@/lib/navigation'
 
+const groupTranslationKey: Record<string, TranslationKey> = {
+  'contact-center': 'contactCenter',
+}
+
 export function AppSidebar() {
   const { language } = useCustomizePreferences()
   const t = useTranslations(language)
   const groups = navigationGroups.map((group) => ({
-    label: t(group as TranslationKey),
+    label: t(groupTranslationKey[group] ?? (group as TranslationKey)),
     items: navigationItems.filter((item) => item.group === group).map((item) => ({
       title: t(item.translationKey as TranslationKey),
       href: item.href,
