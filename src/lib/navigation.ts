@@ -48,6 +48,7 @@ export const navigationItems: NavigationItem[] = [
   { title: 'Pricing', href: '/pricing', icon: CircleDollarSign, group: 'commerce', keywords: ['plans', 'upgrade'], translationKey: 'pricing' },
   { title: 'Live Chat', href: '/contact-center/live-chat', icon: MessageCircle, group: 'contact-center', keywords: ['chat', 'inbox', 'agent'], translationKey: 'liveChat' },
   { title: 'Social Comments', href: '/contact-center/social-comments', icon: MessagesSquare, group: 'contact-center', keywords: ['social', 'comments', 'instagram', 'facebook'], translationKey: 'socialComments' },
+  { title: 'Emails', href: '/contact-center/emails', icon: Mail, group: 'contact-center', keywords: ['email', 'inbox', 'emails', 'post'], translationKey: 'emails' },
   { title: 'Mail', href: '/mail', icon: Mail, group: 'apps', keywords: ['email', 'inbox'], translationKey: 'mail' },
   { title: 'Chat', href: '/chat', icon: MessageSquare, group: 'apps', keywords: ['messages', 'conversation'], translationKey: 'chat' },
   { title: 'Files', href: '/files', icon: Folder, group: 'apps', keywords: ['documents', 'storage'], translationKey: 'files' },
