@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router'
 import AuthLayout from '@/layouts/auth-layout'
 import ProtectedLayout from '@/layouts/protected-layout'
 import HomePage from '@/pages/home'
@@ -47,10 +47,13 @@ import CustomerFormPage from '@/pages/customer-form'
 import InvoiceFormPage from '@/pages/invoice-form'
 import { NotificationsPage } from '@/pages/workspaces'
 import { ForgotPasswordPage, LockScreenPage, ResetPasswordPage, SignUpPage, TwoFactorPage, VerifyEmailPage } from '@/pages/auth-pages'
+import SettingsLayout from '@/pages/settings/layout'
+import SettingsHome from '@/pages/settings/home'
 import SettingsAppearancePage from '@/pages/settings/appearance'
 import SettingsProfilePage from '@/pages/settings/profile'
 import SettingsNotificationsPage from '@/pages/settings/notifications'
 import SettingsBillingPage from '@/pages/settings/billing'
+import SettingsDepartmentsPage from '@/pages/settings/departments'
 import SalesReportPage from '@/pages/reports/sales'
 import FinanceReportPage from '@/pages/reports/finance'
 import InventoryReportPage from '@/pages/reports/inventory'
@@ -74,7 +77,7 @@ function AuthRoutes() {
   return <AuthLayout><ScrollToTop /><PageTransition><Outlet /></PageTransition></AuthLayout>
 }
 
-const explicitPaths = new Set(['/reports/sales', '/reports/finance', '/reports/inventory', '/reports/customers', '/reports/hr', '/reports/procurement', '/analytics', '/orders', '/products', '/customers', '/finance', '/assets', '/procurement', '/inventory', '/suppliers', '/hr', '/ecommerce', '/crm', '/pipeline', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing', '/editor', '/contact-center/live-chat', '/contact-center/social-comments', '/contact-center/emails', '/contact-center/emails/compose'])
+const explicitPaths = new Set(['/reports/sales', '/reports/finance', '/reports/inventory', '/reports/customers', '/reports/hr', '/reports/procurement', '/analytics', '/orders', '/products', '/customers', '/finance', '/assets', '/procurement', '/inventory', '/suppliers', '/hr', '/ecommerce', '/crm', '/pipeline', '/saas', '/charts', '/invoices', '/billing', '/search', '/pricing', '/mail', '/chat', '/files', '/kanban', '/calendar', '/wizard', '/profile', '/users', '/notifications', '/support', '/settings', '/settings/profile', '/settings/appearance', '/settings/notifications', '/settings/billing', '/settings/departments', '/editor', '/contact-center/live-chat', '/contact-center/social-comments', '/contact-center/emails', '/contact-center/emails/compose'])
 const placeholderRoutes = navigationItems.filter((item) => item.href !== '/dashboard' && item.href !== '/login' && !explicitPaths.has(item.href)).map((item) => ({
   path: item.href.slice(1),
   element: <AppPlaceholder title={item.translationKey} route="/dashboard" />,
@@ -149,11 +152,18 @@ const router = createBrowserRouter([
       { path: '/support', element: <SupportPage /> },
       ...placeholderRoutes.filter((item) => !explicitPaths.has(`/${item.path}`)),
       { path: '/search', element: <SearchPage /> },
-      { path: '/settings', element: <Navigate to="/settings/appearance" replace /> },
-      { path: '/settings/profile', element: <SettingsProfilePage /> },
-      { path: '/settings/appearance', element: <SettingsAppearancePage /> },
-      { path: '/settings/notifications', element: <SettingsNotificationsPage /> },
-      { path: '/settings/billing', element: <SettingsBillingPage /> },
+      {
+        path: '/settings',
+        element: <SettingsLayout />,
+        children: [
+          { index: true, element: <SettingsHome /> },
+          { path: 'profile', element: <SettingsProfilePage /> },
+          { path: 'appearance', element: <SettingsAppearancePage /> },
+          { path: 'notifications', element: <SettingsNotificationsPage /> },
+          { path: 'billing', element: <SettingsBillingPage /> },
+          { path: 'departments', element: <SettingsDepartmentsPage /> },
+        ],
+      },
       { path: '/403', element: <ForbiddenPage /> },
       { path: '/404', element: <NotFoundPage /> },
       { path: '/500', element: <ServerErrorPage /> },
