@@ -6,6 +6,7 @@ test('shows an offline banner when the connection drops', async ({ page }) => {
     await page.fill('input[type="password"]', 'AteraDemo2026!');
     await page.locator('form button[data-slot="button"]').click();
     await expect(page).toHaveURL(/\/dashboard/);
+    await expect(page.getByRole('heading', { name: 'Dashboard', exact: true })).toBeVisible();
 
     await page.context().setOffline(true);
     await expect(
