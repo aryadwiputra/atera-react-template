@@ -46,6 +46,8 @@ const EditorPage = lazy(() => import('@/pages/editor'));
 const MapsPage = lazy(() => import('@/pages/maps'));
 const SearchPage = lazy(() => import('@/pages/search'));
 const FormsPage = lazy(() => import('@/pages/forms'));
+const DataTableClientPage = lazy(() => import('@/pages/data-table/client'));
+const DataTableServerPage = lazy(() => import('@/pages/data-table/server'));
 const ProfilePage = lazy(() => import('@/pages/profile'));
 const CustomerFormPage = lazy(() => import('@/pages/customer-form'));
 const InvoiceFormPage = lazy(() => import('@/pages/invoice-form'));
@@ -196,6 +198,8 @@ const explicitPaths = new Set([
     '/widgets',
     '/maps',
     '/forms',
+    '/data-table/client',
+    '/data-table/server',
 ]);
 const placeholderRoutes = navigationItems
     .filter(
@@ -265,6 +269,8 @@ const router = createBrowserRouter([
             { path: '/editor', element: suspend(<EditorPage />) },
             { path: '/maps', element: suspend(<MapsPage />) },
             { path: '/forms', element: suspend(<FormsPage />) },
+            { path: '/data-table/client', element: suspend(<DataTableClientPage />) },
+            { path: '/data-table/server', element: suspend(<DataTableServerPage />) },
             { path: '/orders/new', element: suspend(<OrderFormPage />) },
             { path: '/orders/:id/edit', element: suspend(<OrderFormPage />) },
             { path: '/orders/:id', element: suspend(<OrderDetailPage />) },
