@@ -33,7 +33,10 @@ const WizardPage = lazy(() => import('@/pages/wizard'));
 const UsersPage = lazy(() => import('@/pages/users'));
 const SupportPage = lazy(() => import('@/pages/support'));
 const FinancePage = lazy(() => import('@/pages/finance'));
-const AssetsPage = lazy(() => import('@/pages/assets'));
+const AssetsPage = lazy(() => import('@/pages/assets/registry'));
+const AssetAssignmentsPage = lazy(() => import('@/pages/assets/assignments'));
+const AssetMaintenancePage = lazy(() => import('@/pages/assets/maintenance'));
+const AssetWarrantiesPage = lazy(() => import('@/pages/assets/warranties'));
 const ProcurementPage = lazy(() => import('@/pages/procurement'));
 const InventoryPage = lazy(() => import('@/pages/inventory'));
 const SuppliersPage = lazy(() => import('@/pages/suppliers'));
@@ -157,6 +160,9 @@ const explicitPaths = new Set([
     '/customers',
     '/finance',
     '/assets',
+    '/assets/assignments',
+    '/assets/maintenance',
+    '/assets/warranties',
     '/procurement',
     '/inventory',
     '/suppliers',
@@ -258,6 +264,9 @@ const router = createBrowserRouter([
             { path: '/saas', element: suspend(<SaasPage />) },
             { path: '/finance', element: suspend(<FinancePage />) },
             { path: '/assets', element: suspend(<AssetsPage />) },
+            { path: '/assets/assignments', element: suspend(<AssetAssignmentsPage />) },
+            { path: '/assets/maintenance', element: suspend(<AssetMaintenancePage />) },
+            { path: '/assets/warranties', element: suspend(<AssetWarrantiesPage />) },
             { path: '/procurement', element: suspend(<ProcurementPage />) },
             { path: '/inventory', element: suspend(<InventoryPage />) },
             { path: '/suppliers', element: suspend(<SuppliersPage />) },

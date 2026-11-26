@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 
 export type StatCardProps = {
     title: string;
-    value: string;
-    change: string;
+    value: string | number;
+    change?: string;
     changePositive?: boolean;
     icon?: LucideIcon;
     description?: string;
@@ -29,17 +29,21 @@ export function StatCard({
             </CardHeader>
             <CardContent>
                 <p className="text-2xl font-semibold tracking-tight">{value}</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                    <span
-                        className={cn(
-                            'font-medium',
-                            changePositive ? 'text-foreground' : 'text-destructive',
-                        )}
-                    >
-                        {change}
-                    </span>
-                    <span className="ml-1">{description ?? 'vs last month'}</span>
-                </p>
+                {change ? (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                        <span
+                            className={cn(
+                                'font-medium',
+                                changePositive ? 'text-foreground' : 'text-destructive',
+                            )}
+                        >
+                            {change}
+                        </span>
+                        <span className="ml-1">{description ?? 'vs last month'}</span>
+                    </p>
+                ) : description ? (
+                    <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+                ) : null}
             </CardContent>
         </Card>
     );

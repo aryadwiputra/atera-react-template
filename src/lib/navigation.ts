@@ -26,6 +26,7 @@ import {
     Package,
     Server,
     Settings,
+    ShieldCheck,
     ShoppingCart,
     Store,
     Table2,
@@ -36,12 +37,20 @@ import {
     WalletCards,
     UserCircle,
     Wand2,
+    Wrench,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { TranslationKey } from '@/i18n';
 
 export type NavigationGroup =
-    'overview' | 'reports' | 'enterprise' | 'commerce' | 'contact-center' | 'apps' | 'system';
+    | 'overview'
+    | 'reports'
+    | 'enterprise'
+    | 'assets'
+    | 'commerce'
+    | 'contact-center'
+    | 'apps'
+    | 'system';
 export type NavigationItem = {
     title: string;
     href: string;
@@ -182,12 +191,36 @@ export const navigationItems: NavigationItem[] = [
         translationKey: 'charts',
     },
     {
-        title: 'Assets',
+        title: 'All assets',
         href: '/assets',
         icon: Boxes,
-        group: 'enterprise',
-        keywords: ['equipment', 'registry'],
-        translationKey: 'assets',
+        group: 'assets',
+        keywords: ['equipment', 'registry', 'assets'],
+        translationKey: 'assetRegistry',
+    },
+    {
+        title: 'Assignments',
+        href: '/assets/assignments',
+        icon: Users,
+        group: 'assets',
+        keywords: ['assigned', 'employees', 'equipment'],
+        translationKey: 'assetAssignments',
+    },
+    {
+        title: 'Maintenance',
+        href: '/assets/maintenance',
+        icon: Wrench,
+        group: 'assets',
+        keywords: ['repair', 'maintenance', 'equipment'],
+        translationKey: 'assetMaintenance',
+    },
+    {
+        title: 'Warranties',
+        href: '/assets/warranties',
+        icon: ShieldCheck,
+        group: 'assets',
+        keywords: ['warranty', 'expiry', 'equipment'],
+        translationKey: 'assetWarranties',
     },
     {
         title: 'Procurement',
@@ -453,6 +486,7 @@ export const navigationGroups = [
     'overview',
     'reports',
     'enterprise',
+    'assets',
     'commerce',
     'contact-center',
     'apps',

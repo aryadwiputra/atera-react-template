@@ -7,6 +7,7 @@ import { navigationGroups, navigationItems } from '@/lib/navigation';
 
 const groupTranslationKey: Record<string, TranslationKey> = {
     'contact-center': 'contactCenter',
+    assets: 'assets',
 };
 
 export function AppSidebar() {

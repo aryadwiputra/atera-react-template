@@ -64,6 +64,25 @@ test.describe('accessibility', () => {
         expect(await wcagViolations(page)).toEqual([]);
     });
 
+    test('assets has no serious or critical WCAG violations', async ({ page }) => {
+        await signInAsDemo(page);
+        await page.goto('/assets');
+        await expect(page.locator('#main-content')).toBeVisible();
+        await settleAnimations(page);
+        expect(await wcagViolations(page, '#main-content')).toEqual([]);
+    });
+
+    test('assets module pages have no serious or critical WCAG violations', async ({ page }) => {
+        await signInAsDemo(page);
+
+        for (const path of ['/assets/assignments', '/assets/maintenance', '/assets/warranties']) {
+            await page.goto(path);
+            await expect(page.locator('#main-content')).toBeVisible();
+            await settleAnimations(page);
+            expect(await wcagViolations(page, '#main-content')).toEqual([]);
+        }
+    });
+
     test('users page status chips meet contrast', async ({ page }) => {
         await signInAsDemo(page);
         await page.goto('/users');
