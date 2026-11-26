@@ -26,9 +26,9 @@ import { cn } from '@/lib/utils';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = '260px';
-const SIDEBAR_WIDTH_MOBILE = '260px';
-const SIDEBAR_WIDTH_ICON = '68px';
+const SIDEBAR_WIDTH = 'var(--app-sidebar-width, 260px)';
+const SIDEBAR_WIDTH_MOBILE = 'var(--app-sidebar-width, 260px)';
+const SIDEBAR_WIDTH_ICON = 'var(--app-sidebar-icon-width, 68px)';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b';
 
 type SidebarContext = {

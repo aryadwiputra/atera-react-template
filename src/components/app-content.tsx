@@ -18,7 +18,7 @@ export function AppContent({ variant = 'sidebar', children, ...props }: Props) {
     return (
         <main
             id="main-content"
-            className="mx-auto flex h-full w-full flex-1 flex-col gap-4"
+            className="mx-auto flex h-full w-full flex-1 flex-col gap-[var(--page-gap,1.5rem)]"
             {...props}
         >
             {children}

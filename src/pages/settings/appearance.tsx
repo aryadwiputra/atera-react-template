@@ -12,14 +12,23 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAppearance, type Appearance } from '@/hooks/use-appearance';
 import {
     useCustomizePreferences,
-    type ColorPreset,
+    type Accent,
     type Container,
     type Density,
     type Layout,
 } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
 
-const colors: ColorPreset[] = ['neutral', 'zinc', 'blue', 'violet', 'rose', 'orange'];
+const accents: Accent[] = ['mono', 'blue', 'violet', 'orange', 'green', 'rose'];
+
+const accentSwatches: Record<Accent, string> = {
+    mono: 'oklch(0.205 0 0)',
+    blue: 'oklch(0.546 0.245 262.881)',
+    violet: 'oklch(0.541 0.281 293.009)',
+    orange: 'oklch(0.646 0.222 41.116)',
+    green: 'oklch(0.527 0.154 150.069)',
+    rose: 'oklch(0.586 0.253 17.585)',
+};
 
 export default function SettingsAppearancePage() {
     const { language } = useCustomizePreferences();
@@ -156,17 +165,21 @@ export default function SettingsAppearancePage() {
 
                 <Card className="lg:col-span-2">
                     <CardHeader>
-                        <CardTitle>{t('colorPreset')}</CardTitle>
+                        <CardTitle>{t('accent')}</CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-wrap gap-3">
-                        {colors.map((color) => (
+                        {accents.map((accent) => (
                             <Button
-                                key={color}
-                                variant={preferences.color === color ? 'default' : 'outline'}
-                                onClick={() => preferences.updatePreferences({ color })}
+                                key={accent}
+                                variant={preferences.accent === accent ? 'default' : 'outline'}
+                                onClick={() => preferences.updatePreferences({ accent })}
                             >
-                                {preferences.color === color && <Check className="size-4" />}
-                                {color}
+                                {preferences.accent === accent && <Check className="size-4" />}
+                                <span
+                                    className="size-3 rounded-full border"
+                                    style={{ backgroundColor: accentSwatches[accent] }}
+                                />
+                                {accent.charAt(0).toUpperCase() + accent.slice(1)}
                             </Button>
                         ))}
                     </CardContent>

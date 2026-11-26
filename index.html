@@ -23,6 +23,38 @@
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="/dashboard-preview.png" />
+        <script>
+            (function () {
+                try {
+                    var raw = localStorage.getItem('atera_theme');
+                    if (!raw) {
+                        var match = document.cookie.match(/(?:^|; )atera_theme=([^;]*)/);
+                        if (match) raw = decodeURIComponent(match[1]);
+                    }
+                    if (!raw) return;
+                    var parsed = JSON.parse(raw);
+                    var prefs = parsed.preferences || parsed;
+                    var data = document.documentElement.dataset;
+                    [
+                        'accent',
+                        'neutral',
+                        'radius',
+                        'font',
+                        'density',
+                        'layout',
+                        'sidebar',
+                        'sidebarWidth',
+                        'header',
+                        'container',
+                        'chart',
+                        'motion',
+                    ].forEach(function (key) {
+                        if (prefs[key]) data[key] = prefs[key];
+                    });
+                    if (prefs.language) document.documentElement.lang = prefs.language;
+                } catch (error) {}
+            })();
+        </script>
         <title>Atera — a React dashboard template that ships fast</title>
     </head>
     <body>

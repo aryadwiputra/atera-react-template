@@ -10,7 +10,7 @@ const groupTranslationKey: Record<string, TranslationKey> = {
 };
 
 export function AppSidebar() {
-    const { language } = useCustomizePreferences();
+    const { language, sidebar } = useCustomizePreferences();
     const t = useTranslations(language);
     const groups = navigationGroups.map((group) => ({
         id: group,
@@ -26,7 +26,7 @@ export function AppSidebar() {
     }));
 
     return (
-        <Sidebar collapsible="icon" variant="sidebar">
+        <Sidebar collapsible="icon" variant={sidebar === 'plain' ? 'sidebar' : sidebar}>
             <SidebarContent className="px-3 py-4">
                 <NavMain groups={groups} />
             </SidebarContent>
