@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
-import { translations } from '@/i18n';
+import { useTranslations } from '@/i18n';
 import { navigationItems } from '@/lib/navigation';
 
 const siteName = 'Atera';
@@ -98,12 +98,9 @@ function upsertCanonical(href: string) {
 export function usePageMeta() {
     const { pathname } = useLocation();
     const { language } = useCustomizePreferences();
+    const translate = useTranslations(language);
 
     useEffect(() => {
-        const localized = translations[language] as Record<string, string>;
-        const translate = (key: keyof typeof translations.en) =>
-            localized[key] ?? translations.en[key] ?? key;
-
         const navigationItem = navigationItems
             .filter(
                 (item) =>
@@ -142,5 +139,5 @@ export function usePageMeta() {
         upsertMeta('name', 'twitter:description', description);
         upsertMeta('name', 'twitter:image', image);
         upsertCanonical(url);
-    }, [pathname, language]);
+    }, [pathname, language, translate]);
 }
