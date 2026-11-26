@@ -9,7 +9,9 @@ Atera is a modern admin dashboard template built with React 19, TypeScript, and 
 - **Comprehensive Theming System** - 5 color presets, dark/light modes, customizable density and layout
 - **Internationalization** - Built-in support for English, German, and French
 - **Developer-Friendly** - Comprehensive documentation and clear patterns
-- **Production Ready** - TypeScript, testing, linting, and build pipeline included
+- **Production Ready** - Strict TypeScript, linting, unit tests, and a verified build pipeline
+- **Mock Data Only** - No backend required; data lives in memory and resets on refresh (see the service layer for the swap point)
+- **Demo Authentication** - Demo accounts live in `localStorage`; passwords are salted and SHA-256 hashed, but this is not production auth (no server, tokens, or authorization). Replace it before shipping.
 
 ## Quick Start
 
@@ -25,6 +27,9 @@ bun run build
 
 # Run lint checks
 bun run lint
+
+# Run unit tests
+bun run test
 ```
 
 ## Key Features
@@ -49,7 +54,7 @@ bun run lint
 ### 🔧 Developer Experience
 - **TypeScript First** - Full type safety with strict mode
 - **Service Layer** - Easy backend integration
-- **Component System** - 49 UI components built with Radix primitives
+- **Component System** - 48 UI components built with Radix primitives
 - **Comprehensive i18n** - English, German, French support
 - **Documentation** - In-app documentation and comprehensive guides
 
@@ -63,9 +68,9 @@ bun run lint
 │   ├── ui/            # shadcn/ui components
 │   └── shared/        # Shared components
 ├── hooks/              # Custom hooks
-├── lib/                # Utilities and services
-│   ├── data/          # Data modules
-│   └── services/      # Service layer (easy backend integration)
+├── lib/                # Utilities and data modules
+│   └── data/          # In-memory mock repositories
+├── services/           # Typed service layer (easy backend integration)
 ├── i18n/               # Internationalization
 ├── app.css             # TailwindCSS theme and tokens
 └── main.tsx           # App entry point
@@ -75,7 +80,7 @@ bun run lint
 
 1. **Clone the repository**
    ```bash
-   git clone https
+   git clone <repository-url>
    ```
 
 2. **Install dependencies**
@@ -118,13 +123,54 @@ bun run build
 
 ### Type Checking
 ```bash
-tsc -b
+bun run typecheck
+```
+
+### Formatting
+```bash
+bun run format        # write with Prettier
+bun run format:check  # verify without writing
 ```
 
 ### Testing
 ```bash
-# Tests are not configured in this template
+bun run test        # Vitest unit tests
+bun run test:watch  # Vitest in watch mode
+bun run test:e2e    # Playwright smoke + critical a11y checks
 ```
+
+The first Playwright run needs a browser:
+
+```bash
+bunx playwright install chromium
+```
+
+### Deployment
+
+Atera is a static SPA. Build it with `bun run build` and serve the `dist/` folder.
+Because the router uses `createBrowserRouter`, the host must rewrite unknown
+paths to `index.html`.
+
+Included configurations:
+
+- `public/_redirects` - Netlify and Cloudflare Pages fallback (`/* /index.html 200`)
+- `vercel.json` - Vercel rewrite to `/index.html`
+
+For nginx, add:
+
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
+
+SEO files live in `public/`: `robots.txt` and `sitemap.xml`. Both use
+`https://atera.example.com` as a placeholder; replace it with your real domain
+before deploying. `index.html` references `/dashboard-preview.png` for social
+previews - use an absolute URL if your host does not serve it from the root.
+
+The app requires no environment variables. If you add integrations, expose them
+through Vite (`VITE_*`) and read them with `import.meta.env.VITE_*`.
 
 ## Customization
 

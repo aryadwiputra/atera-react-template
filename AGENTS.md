@@ -89,9 +89,14 @@ bun run preview    # preview the production build
 
 ## Testing & QA
 
-No test framework is configured — do not invent a test command. Verification order:
+Vitest + Testing Library and Playwright (E2E + critical a11y via axe) are configured. Verification order:
 
 1. `bun run lint`
-2. `bun run build`
+2. `bun run typecheck`
+3. `bun run test`
+4. `bun run build`
+5. `bun run test:e2e` (install once with `bunx playwright install chromium`)
+
+The a11y suite fails on **critical** WCAG A/AA violations for `/`, `/login`, and `/dashboard`. Run `bun run format:check` before committing formatting changes. CI runs the same checks in `.github/workflows/ci.yml`.
 
 For route changes, manually verify `/`, `/login`, and `/dashboard` with the Vite dev server when practical. Demo login: `demo@example.com` / `AteraDemo2026!`.
