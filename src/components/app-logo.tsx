@@ -6,9 +6,7 @@ export default function AppLogo({ compact = false }: { compact?: boolean }) {
             <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
                 <AppLogoIcon className="size-5 fill-current text-sidebar-primary-foreground" />
             </div>
-            <div
-                className={`ml-3 text-left text-sm leading-none ${compact ? 'hidden' : ''}`}
-            >
+            <div className={`ml-3 text-left text-sm leading-none ${compact ? 'hidden' : ''}`}>
                 <span className="truncate font-semibold">Atera</span>
                 <span className="mt-1 block truncate text-2xs text-muted-foreground">
                     Dashboard

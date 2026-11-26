@@ -12,15 +12,12 @@ export function useCurrentUrl() {
     ): boolean => {
         const urlToCompare = currentUrl ?? currentUrlPath;
         const urlString = toUrl(urlToCheck);
-        return startsWith
-            ? urlToCompare.startsWith(urlString)
-            : urlString === urlToCompare;
+        return startsWith ? urlToCompare.startsWith(urlString) : urlString === urlToCompare;
     };
 
     return {
         currentUrl: currentUrlPath,
         isCurrentUrl,
-        isCurrentOrParentUrl: (url: string | { url: string }) =>
-            isCurrentUrl(url, undefined, true),
+        isCurrentOrParentUrl: (url: string | { url: string }) => isCurrentUrl(url, undefined, true),
     };
 }

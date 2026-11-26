@@ -38,10 +38,7 @@ export function UserMenuContent({ user }: Props) {
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-                className="block w-full cursor-pointer"
-                onClick={cleanup}
-            >
+            <DropdownMenuItem className="block w-full cursor-pointer" onClick={cleanup}>
                 <LogOut className="mr-2" />
                 Log out
             </DropdownMenuItem>

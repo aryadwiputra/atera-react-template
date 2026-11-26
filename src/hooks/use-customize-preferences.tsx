@@ -1,12 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-export type ColorPreset =
-    | 'neutral'
-    | 'zinc'
-    | 'blue'
-    | 'violet'
-    | 'rose'
-    | 'orange';
+export type ColorPreset = 'neutral' | 'zinc' | 'blue' | 'violet' | 'rose' | 'orange';
 export type Density = 'compact' | 'comfortable' | 'spacious';
 export type Layout = 'sidebar' | 'top-nav';
 export type Container = 'fluid' | 'boxed';
@@ -21,9 +15,7 @@ export type CustomizePreferences = {
 };
 
 export type PreferencesReturn = CustomizePreferences & {
-    readonly updatePreferences: (
-        updates: Partial<CustomizePreferences>,
-    ) => void;
+    readonly updatePreferences: (updates: Partial<CustomizePreferences>) => void;
     readonly resetPreferences: () => void;
 };
 
@@ -125,9 +117,7 @@ export function useCustomizePreferences(): PreferencesReturn {
         () => defaultPreferences,
     );
 
-    const updatePreferences = (
-        updates: Partial<CustomizePreferences>,
-    ): void => {
+    const updatePreferences = (updates: Partial<CustomizePreferences>): void => {
         currentPreferences = { ...currentPreferences, ...updates };
 
         Object.entries(updates).forEach(([key, value]) => {
@@ -143,10 +133,7 @@ export function useCustomizePreferences(): PreferencesReturn {
     const resetPreferences = (): void => {
         currentPreferences = defaultPreferences;
         Object.keys(defaultPreferences).forEach((key) => {
-            setCookie(
-                `customize_${key}`,
-                defaultPreferences[key as keyof CustomizePreferences],
-            );
+            setCookie(`customize_${key}`, defaultPreferences[key as keyof CustomizePreferences]);
         });
         applyPreferences(currentPreferences);
         notify();

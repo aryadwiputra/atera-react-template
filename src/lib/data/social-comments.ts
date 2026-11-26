@@ -1,41 +1,230 @@
-import type { SocialComment } from './types'
+import type { SocialComment } from './types';
 
 const seed: SocialComment[] = [
-  { id: 'SOC-001', platform: 'instagram', username: 'luna.creates', initials: 'LC', text: 'Just got the new drop, the packaging is gorgeous! 😍', time: '2h ago', likes: 42, status: 'new', location: 'Los Angeles, US', followers: '18.4K', joined: 'Jan 2024' },
-  { id: 'SOC-002', platform: 'facebook', username: 'Marcus T.', initials: 'MT', text: 'Does the Pro plan include the analytics module?', time: '3h ago', likes: 7, status: 'new', location: 'Austin, US', followers: '312', joined: 'Sep 2023' },
-  { id: 'SOC-003', platform: 'x', username: 'dev_ana', initials: 'DA', text: 'Loving the new API docs, way cleaner than before.', time: '4h ago', likes: 19, status: 'new', location: 'Lisbon, PT', followers: '2.1K', joined: 'Apr 2022' },
-  { id: 'SOC-004', platform: 'tiktok', username: 'sam.hikes', initials: 'SH', text: 'That tutorial was exactly what I needed, thanks!', time: '6h ago', likes: 88, status: 'new', location: 'Vancouver, CA', followers: '46.7K', joined: 'Jul 2023' },
-  { id: 'SOC-005', platform: 'youtube', username: 'PixelPete', initials: 'PP', text: 'Can you make a video on the automation recipes?', time: '8h ago', likes: 23, status: 'new', location: 'Manchester, UK', followers: '9.8K', joined: 'Nov 2021' },
-  { id: 'SOC-006', platform: 'instagram', username: 'nora.designs', initials: 'ND', text: 'The dark mode update is chef\'s kiss.', time: '9h ago', likes: 64, status: 'new', location: 'Copenhagen, DK', followers: '12.3K', joined: 'Feb 2024' },
-  { id: 'SOC-007', platform: 'instagram', username: 'fed.inbox', initials: 'FI', text: 'Any chance of a student discount?', time: '1d ago', likes: 11, status: 'replied', reply: { username: 'Atera', text: 'Yes! Email support@atera.com from your student address for a 30% code.', time: '1d ago' }, location: 'Bandung, ID', followers: '1.4K', joined: 'Aug 2025' },
-  { id: 'SOC-008', platform: 'facebook', username: 'Julia W.', initials: 'JW', text: 'My team switched from the old tool last month, no regrets.', time: '1d ago', likes: 31, status: 'replied', reply: { username: 'Atera', text: 'Welcome aboard, Julia! 🎉', time: '1d ago' }, location: 'Vienna, AT', followers: '684', joined: 'Mar 2023' },
-  { id: 'SOC-009', platform: 'x', username: 'buildwithzoe', initials: 'BZ', text: 'Is there a webhook for comment events?', time: '1d ago', likes: 5, status: 'replied', reply: { username: 'Atera', text: 'Webhooks ship on the Scale plan, see docs → integrations.', time: '22h ago' }, location: 'Toronto, CA', followers: '5.6K', joined: 'Dec 2022' },
-  { id: 'SOC-010', platform: 'tiktok', username: 'milo.plays', initials: 'MP', text: 'The onboarding flow took me under 5 minutes, impressive.', time: '2d ago', likes: 57, status: 'replied', reply: { username: 'Atera', text: 'Thanks Milo, glad it was smooth!', time: '2d ago' }, location: 'Melbourne, AU', followers: '31.2K', joined: 'May 2024' },
-  { id: 'SOC-011', platform: 'youtube', username: 'CreativeCorner', initials: 'CC', text: 'Subscribed after the workflow video. Great content!', time: '2d ago', likes: 40, status: 'replied', reply: { username: 'Atera', text: 'More workflow deep-dives coming soon!', time: '2d ago' }, location: 'Dublin, IE', followers: '7.9K', joined: 'Oct 2022' },
-  { id: 'SOC-012', platform: 'instagram', username: 'spam.bot.99', initials: 'S9', text: 'GET FREE FOLLOWERS NOW!!! click my profile', time: '3d ago', likes: 0, status: 'hidden', location: 'Unknown', followers: '12', joined: 'Nov 2026' },
-  { id: 'SOC-013', platform: 'facebook', username: 'RageReply', initials: 'RR', text: 'This product is garbage and everyone involved should feel bad.', time: '3d ago', likes: 2, status: 'hidden', location: 'Unknown', followers: '48', joined: 'Nov 2026' },
-  { id: 'SOC-014', platform: 'x', username: 'coin.promo.x', initials: 'CP', text: 'Double your money in 24h, DM me for details', time: '4d ago', likes: 0, status: 'hidden', location: 'Unknown', followers: '203', joined: 'Oct 2026' },
-]
+    {
+        id: 'SOC-001',
+        platform: 'instagram',
+        username: 'luna.creates',
+        initials: 'LC',
+        text: 'Just got the new drop, the packaging is gorgeous! 😍',
+        time: '2h ago',
+        likes: 42,
+        status: 'new',
+        location: 'Los Angeles, US',
+        followers: '18.4K',
+        joined: 'Jan 2024',
+    },
+    {
+        id: 'SOC-002',
+        platform: 'facebook',
+        username: 'Marcus T.',
+        initials: 'MT',
+        text: 'Does the Pro plan include the analytics module?',
+        time: '3h ago',
+        likes: 7,
+        status: 'new',
+        location: 'Austin, US',
+        followers: '312',
+        joined: 'Sep 2023',
+    },
+    {
+        id: 'SOC-003',
+        platform: 'x',
+        username: 'dev_ana',
+        initials: 'DA',
+        text: 'Loving the new API docs, way cleaner than before.',
+        time: '4h ago',
+        likes: 19,
+        status: 'new',
+        location: 'Lisbon, PT',
+        followers: '2.1K',
+        joined: 'Apr 2022',
+    },
+    {
+        id: 'SOC-004',
+        platform: 'tiktok',
+        username: 'sam.hikes',
+        initials: 'SH',
+        text: 'That tutorial was exactly what I needed, thanks!',
+        time: '6h ago',
+        likes: 88,
+        status: 'new',
+        location: 'Vancouver, CA',
+        followers: '46.7K',
+        joined: 'Jul 2023',
+    },
+    {
+        id: 'SOC-005',
+        platform: 'youtube',
+        username: 'PixelPete',
+        initials: 'PP',
+        text: 'Can you make a video on the automation recipes?',
+        time: '8h ago',
+        likes: 23,
+        status: 'new',
+        location: 'Manchester, UK',
+        followers: '9.8K',
+        joined: 'Nov 2021',
+    },
+    {
+        id: 'SOC-006',
+        platform: 'instagram',
+        username: 'nora.designs',
+        initials: 'ND',
+        text: "The dark mode update is chef's kiss.",
+        time: '9h ago',
+        likes: 64,
+        status: 'new',
+        location: 'Copenhagen, DK',
+        followers: '12.3K',
+        joined: 'Feb 2024',
+    },
+    {
+        id: 'SOC-007',
+        platform: 'instagram',
+        username: 'fed.inbox',
+        initials: 'FI',
+        text: 'Any chance of a student discount?',
+        time: '1d ago',
+        likes: 11,
+        status: 'replied',
+        reply: {
+            username: 'Atera',
+            text: 'Yes! Email support@atera.com from your student address for a 30% code.',
+            time: '1d ago',
+        },
+        location: 'Bandung, ID',
+        followers: '1.4K',
+        joined: 'Aug 2025',
+    },
+    {
+        id: 'SOC-008',
+        platform: 'facebook',
+        username: 'Julia W.',
+        initials: 'JW',
+        text: 'My team switched from the old tool last month, no regrets.',
+        time: '1d ago',
+        likes: 31,
+        status: 'replied',
+        reply: { username: 'Atera', text: 'Welcome aboard, Julia! 🎉', time: '1d ago' },
+        location: 'Vienna, AT',
+        followers: '684',
+        joined: 'Mar 2023',
+    },
+    {
+        id: 'SOC-009',
+        platform: 'x',
+        username: 'buildwithzoe',
+        initials: 'BZ',
+        text: 'Is there a webhook for comment events?',
+        time: '1d ago',
+        likes: 5,
+        status: 'replied',
+        reply: {
+            username: 'Atera',
+            text: 'Webhooks ship on the Scale plan, see docs → integrations.',
+            time: '22h ago',
+        },
+        location: 'Toronto, CA',
+        followers: '5.6K',
+        joined: 'Dec 2022',
+    },
+    {
+        id: 'SOC-010',
+        platform: 'tiktok',
+        username: 'milo.plays',
+        initials: 'MP',
+        text: 'The onboarding flow took me under 5 minutes, impressive.',
+        time: '2d ago',
+        likes: 57,
+        status: 'replied',
+        reply: { username: 'Atera', text: 'Thanks Milo, glad it was smooth!', time: '2d ago' },
+        location: 'Melbourne, AU',
+        followers: '31.2K',
+        joined: 'May 2024',
+    },
+    {
+        id: 'SOC-011',
+        platform: 'youtube',
+        username: 'CreativeCorner',
+        initials: 'CC',
+        text: 'Subscribed after the workflow video. Great content!',
+        time: '2d ago',
+        likes: 40,
+        status: 'replied',
+        reply: { username: 'Atera', text: 'More workflow deep-dives coming soon!', time: '2d ago' },
+        location: 'Dublin, IE',
+        followers: '7.9K',
+        joined: 'Oct 2022',
+    },
+    {
+        id: 'SOC-012',
+        platform: 'instagram',
+        username: 'spam.bot.99',
+        initials: 'S9',
+        text: 'GET FREE FOLLOWERS NOW!!! click my profile',
+        time: '3d ago',
+        likes: 0,
+        status: 'hidden',
+        location: 'Unknown',
+        followers: '12',
+        joined: 'Nov 2026',
+    },
+    {
+        id: 'SOC-013',
+        platform: 'facebook',
+        username: 'RageReply',
+        initials: 'RR',
+        text: 'This product is garbage and everyone involved should feel bad.',
+        time: '3d ago',
+        likes: 2,
+        status: 'hidden',
+        location: 'Unknown',
+        followers: '48',
+        joined: 'Nov 2026',
+    },
+    {
+        id: 'SOC-014',
+        platform: 'x',
+        username: 'coin.promo.x',
+        initials: 'CP',
+        text: 'Double your money in 24h, DM me for details',
+        time: '4d ago',
+        likes: 0,
+        status: 'hidden',
+        location: 'Unknown',
+        followers: '203',
+        joined: 'Oct 2026',
+    },
+];
 
-let comments: SocialComment[] = [...seed]
+let comments: SocialComment[] = [...seed];
 
-export const listSocialComments = () => [...comments]
+export const listSocialComments = () => [...comments];
 export const replyToComment = (id: string, text: string) => {
-  comments = comments.map((comment) => {
-    if (comment.id !== id) return comment
-    return {
-      ...comment,
-      status: 'replied',
-      reply: { username: 'Atera', text, time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) },
-    }
-  })
-}
+    comments = comments.map((comment) => {
+        if (comment.id !== id) return comment;
+        return {
+            ...comment,
+            status: 'replied',
+            reply: {
+                username: 'Atera',
+                text,
+                time: new Date().toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                }),
+            },
+        };
+    });
+};
 export const toggleCommentHidden = (id: string) => {
-  comments = comments.map((comment) => {
-    if (comment.id !== id) return comment
-    if (comment.status === 'hidden') {
-      return { ...comment, status: comment.reply ? 'replied' : 'new' }
-    }
-    return { ...comment, status: 'hidden' }
-  })
-}
+    comments = comments.map((comment) => {
+        if (comment.id !== id) return comment;
+        if (comment.status === 'hidden') {
+            return { ...comment, status: comment.reply ? 'replied' : 'new' };
+        }
+        return { ...comment, status: 'hidden' };
+    });
+};

@@ -1,10 +1,10 @@
-import { type InventoryItem } from '@/lib/data/types'
-import { listInventory } from '@/lib/data/inventory'
+import { type InventoryItem } from '@/lib/data/types';
+import { listInventory } from '@/lib/data/inventory';
 
 export interface InventoryService {
-  list(): InventoryItem[]
+    list(): InventoryItem[];
 }
 
 export const inventoryService: InventoryService = {
-  list: listInventory,
-}
+    list: listInventory,
+};

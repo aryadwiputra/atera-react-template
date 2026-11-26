@@ -1,22 +1,26 @@
-import { Filter, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { DatePicker } from '@/components/shared/date-picker'
+import { Filter, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { DatePicker } from '@/components/shared/date-picker';
 import {
-    Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
-} from '@/components/ui/select'
-import type { ReportFilters } from '@/lib/report-utils'
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import type { ReportFilters } from '@/lib/report-utils';
 
 export function ReportFilterBar({
     filters,
     onFiltersChange,
     statusOptions,
 }: {
-    filters: ReportFilters
-    onFiltersChange: (filters: ReportFilters) => void
-    statusOptions?: string[]
+    filters: ReportFilters;
+    onFiltersChange: (filters: ReportFilters) => void;
+    statusOptions?: string[];
 }) {
-    const set = (patch: Partial<ReportFilters>) => onFiltersChange({ ...filters, ...patch })
+    const set = (patch: Partial<ReportFilters>) => onFiltersChange({ ...filters, ...patch });
     return (
         <div className="flex flex-wrap items-center gap-2 rounded-lg border bg-card p-3">
             <Filter className="size-4 text-muted-foreground" />
@@ -43,7 +47,9 @@ export function ReportFilterBar({
                     <SelectContent>
                         <SelectItem value="all">All statuses</SelectItem>
                         {statusOptions.map((status) => (
-                            <SelectItem key={status} value={status}>{status}</SelectItem>
+                            <SelectItem key={status} value={status}>
+                                {status}
+                            </SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
@@ -56,15 +62,11 @@ export function ReportFilterBar({
                 aria-label="Search report data"
             />
             {Object.values(filters).some(Boolean) && (
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onFiltersChange({})}
-                >
+                <Button variant="ghost" size="sm" onClick={() => onFiltersChange({})}>
                     <X className="size-4" />
                     Clear
                 </Button>
             )}
         </div>
-    )
+    );
 }

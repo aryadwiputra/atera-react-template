@@ -1,16 +1,16 @@
-import { Download } from 'lucide-react'
-import type { ReactNode } from 'react'
-import { Button } from '@/components/ui/button'
-import { downloadCsv } from '@/lib/export-csv'
+import { Download } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Button } from '@/components/ui/button';
+import { downloadCsv } from '@/lib/export-csv';
 
 export type ReportPageHeaderProps = {
-    title: string
-    description: string
-    breadcrumbs: Array<{ title: string; href: string }>
-    exportName: string
-    exportRows: Array<Record<string, unknown>>
-    children?: ReactNode
-}
+    title: string;
+    description: string;
+    breadcrumbs: Array<{ title: string; href: string }>;
+    exportName: string;
+    exportRows: Array<Record<string, unknown>>;
+    children?: ReactNode;
+};
 
 export function ReportPageHeader({
     title,
@@ -44,5 +44,5 @@ export function ReportPageHeader({
                 </div>
             </div>
         </div>
-    )
+    );
 }

@@ -1,12 +1,5 @@
 import { Link, useNavigate } from 'react-router';
-import {
-    Bell,
-    Languages,
-    LayoutGrid,
-    Menu,
-    Search,
-    SlidersHorizontal,
-} from 'lucide-react';
+import { Bell, Languages, LayoutGrid, Menu, Search, SlidersHorizontal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import AppLogo from '@/components/app-logo';
 import AppLogoIcon from '@/components/app-logo-icon';
@@ -27,13 +20,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { CustomizeDialog } from '@/components/app-sidebar-header';
 import { useAppearance } from '@/hooks/use-appearance';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
@@ -44,9 +31,7 @@ import type { BreadcrumbItem, NavItem } from '@/types';
 
 type Props = { breadcrumbs?: BreadcrumbItem[] };
 
-const mainNavItems: NavItem[] = [
-    { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
-];
+const mainNavItems: NavItem[] = [{ title: 'Dashboard', href: '/dashboard', icon: LayoutGrid }];
 
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -99,19 +84,14 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                         onClick={() => setMobileOpen(false)}
                                         className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-sidebar-accent"
                                     >
-                                        {item.icon && (
-                                            <item.icon className="size-4" />
-                                        )}
+                                        {item.icon && <item.icon className="size-4" />}
                                         {t('dashboard')}
                                     </Link>
                                 ))}
                             </nav>
                         </SheetContent>
                     </Sheet>
-                    <Link
-                        to="/dashboard"
-                        className="flex shrink-0 items-center"
-                    >
+                    <Link to="/dashboard" className="flex shrink-0 items-center">
                         <AppLogo />
                     </Link>
                     <nav className="hidden items-center gap-1 lg:flex">
@@ -189,16 +169,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-72">
-                                <DropdownMenuLabel>
-                                    {t('notifications')}
-                                </DropdownMenuLabel>
+                                <DropdownMenuLabel>{t('notifications')}</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    {t('newOrderReceived')}
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    {t('weeklyReport')}
-                                </DropdownMenuItem>
+                                <DropdownMenuItem>{t('newOrderReceived')}</DropdownMenuItem>
+                                <DropdownMenuItem>{t('weeklyReport')}</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>

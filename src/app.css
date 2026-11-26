@@ -2,11 +2,12 @@
 
 @import 'tw-animate-css';
 
-
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -242,8 +243,7 @@
 html,
 .sidebar-scroll {
     scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklch, var(--foreground) 25%, transparent)
-        transparent;
+    scrollbar-color: color-mix(in oklch, var(--foreground) 25%, transparent) transparent;
 }
 
 html::-webkit-scrollbar,
@@ -286,12 +286,7 @@ html::-webkit-scrollbar-thumb:hover,
 }
 
 .sidebar-scroll {
-    scrollbar-color: color-mix(
-            in oklch,
-            var(--sidebar-foreground) 25%,
-            transparent
-        )
-        transparent;
+    scrollbar-color: color-mix(in oklch, var(--sidebar-foreground) 25%, transparent) transparent;
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb {
@@ -304,8 +299,7 @@ html::-webkit-scrollbar-thumb:hover,
 
 .chat-scroll {
     scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklch, var(--foreground) 25%, transparent)
-        transparent;
+    scrollbar-color: color-mix(in oklch, var(--foreground) 25%, transparent) transparent;
 }
 
 .chat-scroll::-webkit-scrollbar {
