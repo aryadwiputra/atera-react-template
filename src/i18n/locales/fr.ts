@@ -908,4 +908,17 @@ export const fr = {
     dataTableServerDescription:
         'Chaque page est demandée à un serveur simulé ; le filtrage, le tri et la pagination arrivent déjà calculés.',
     searchPeople: 'Rechercher des personnes...',
+    localWorkspace: 'Espace de travail local',
+    localWorkspaceDescription: 'Vos données sont stockées dans ce navigateur.',
+    exportWorkspace: 'Exporter',
+    importWorkspace: 'Importer',
+    resetWorkspace: 'Réinitialiser l’espace de travail',
+    resetWorkspaceDescription:
+        'Remplacer toutes les données locales par les données de démonstration d’origine. Cette action est irréversible.',
+    workspaceExported: 'Espace de travail exporté',
+    workspaceImported: 'Espace de travail importé',
+    workspaceImportFailed: 'Ce fichier n’est pas un export d’espace de travail valide.',
+    workspaceReset: 'Espace de travail réinitialisé',
+    workspaceTooLarge: 'Le fichier dépasse 5 Mo.',
+    offlineMessage: 'Vous êtes hors ligne. Les modifications sont enregistrées sur cet appareil.',
 } as const;

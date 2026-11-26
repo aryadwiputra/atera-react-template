@@ -1,0 +1,18 @@
+{
+    "name": "Atera",
+    "short_name": "Atera",
+    "description": "Atera is a fully typed React 19 admin dashboard template with 60+ ready routes, 48 shadcn-style UI components, dark mode, theming, and three languages.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0a0a0a",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
+}

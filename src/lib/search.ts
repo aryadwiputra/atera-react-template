@@ -1,4 +1,4 @@
-import { orderService } from '@/services/order-service';
+import type { Order } from '@/lib/data/types';
 import { productService } from '@/services/product-service';
 import { customerService } from '@/services/customer-service';
 import { invoiceService } from '@/services/invoice-service';
@@ -18,7 +18,7 @@ export type SearchSection = {
     items: { id: string; title: string; subtitle: string; href: string }[];
 };
 
-export function buildSearchSections(query: string): SearchSection[] {
+export function buildSearchSections(query: string, orders: Order[] = []): SearchSection[] {
     const q = query.trim();
     if (!q) return [];
     const sections: SearchSection[] = [
@@ -26,8 +26,7 @@ export function buildSearchSections(query: string): SearchSection[] {
             key: 'orders',
             label: 'Orders',
             href: '/orders',
-            items: orderService
-                .list()
+            items: orders
                 .filter((o) => matches(q, [o.id, o.customer, o.product, o.status]))
                 .slice(0, MAX_PER_SECTION)
                 .map((o) => ({

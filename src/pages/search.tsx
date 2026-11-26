@@ -8,17 +8,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
 import { buildSearchSections } from '@/lib/search';
+import { useOrders } from '@/features/orders/api';
 
 export default function SearchPage() {
     const { language } = useCustomizePreferences();
     const t = useTranslations(language);
     const [searchParams] = useSearchParams();
+    const ordersQuery = useOrders();
     const query = searchParams.get('q') ?? '';
-    const sections = buildSearchSections(query);
+    const sections = buildSearchSections(query, ordersQuery.data ?? []);
     const total = sections.reduce((sum, section) => sum + section.items.length, 0);
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('searchResults')}
                     description={

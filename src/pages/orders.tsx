@@ -10,9 +10,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { PageHeader } from '@/components/shared/page-header';
 import { PageTransition } from '@/components/shared/page-transition';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
-import { orderService } from '@/services/order-service';
+import { useDeleteOrder, useOrders } from '@/features/orders/api';
 import type { Order } from '@/lib/data/types';
 
 const helper = createAppColumnHelper<Order>();
@@ -21,7 +22,9 @@ export default function OrdersPage() {
     const { language } = useCustomizePreferences();
     const t = useTranslations(language);
     const { toast } = useToast();
-    const [items, setItems] = useState(orderService.list());
+    const { data, isLoading, isError, refetch } = useOrders();
+    const deleteOrder = useDeleteOrder();
+    const orders = data ?? [];
     const [pendingDelete, setPendingDelete] = useState<Order | null>(null);
 
     const columns: ColumnDef<typeof tableFeaturesConfig, Order, any>[] = [
@@ -87,7 +90,7 @@ export default function OrdersPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('orders')}
                     description={t('ordersDescription')}
@@ -100,7 +103,28 @@ export default function OrdersPage() {
                         </Button>
                     }
                 />
-                <DataTable columns={columns} data={items} filterPlaceholder={t('filterOrders')} />
+                {isLoading ? (
+                    <div role="status" aria-label="Loading orders" className="flex flex-col gap-2">
+                        <Skeleton className="h-10 w-full" />
+                        <Skeleton className="h-14 w-full" />
+                        <Skeleton className="h-14 w-full" />
+                        <Skeleton className="h-14 w-full" />
+                        <Skeleton className="h-14 w-full" />
+                    </div>
+                ) : isError ? (
+                    <div className="flex flex-col items-center gap-3 rounded-lg border border-destructive/30 p-8 text-center">
+                        <p className="text-sm text-muted-foreground">{t('somethingWentWrong')}</p>
+                        <Button variant="outline" size="sm" onClick={() => refetch()}>
+                            {t('retry')}
+                        </Button>
+                    </div>
+                ) : (
+                    <DataTable
+                        columns={columns}
+                        data={orders}
+                        filterPlaceholder={t('filterOrders')}
+                    />
+                )}
                 <ConfirmDialog
                     open={pendingDelete !== null}
                     onOpenChange={(open) => !open && setPendingDelete(null)}
@@ -108,12 +132,15 @@ export default function OrdersPage() {
                     description={t('deleteOrderDescription')}
                     confirmLabel={t('delete')}
                     cancelLabel={t('cancel')}
-                    trigger={<span />}
-                    onConfirm={() => {
-                        if (!pendingDelete) return;
-                        orderService.remove(pendingDelete.id);
-                        setItems(orderService.list());
-                        toast({ title: t('orderDeleted'), variant: 'success' });
+                    onConfirm={async () => {
+                        const target = pendingDelete;
+                        if (!target) return;
+                        try {
+                            await deleteOrder.mutateAsync(target.id);
+                            toast({ title: t('orderDeleted'), variant: 'success' });
+                        } catch {
+                            toast({ title: t('somethingWentWrong'), variant: 'error' });
+                        }
                     }}
                 />
             </main>

@@ -14,7 +14,7 @@ import { StatCard } from '@/components/shared/stat-card';
 import { Badge } from '@/components/ui/badge';
 import type { ColumnDef } from '@tanstack/react-table';
 import { DollarSign, ShoppingCart, TrendingUp, Undo2 } from 'lucide-react';
-import { orderService } from '@/services/order-service';
+import { useOrders } from '@/features/orders/api';
 import type { Order, OrderStatus } from '@/lib/data/types';
 import {
     applyFilters,
@@ -53,7 +53,8 @@ const columns = [
 
 export default function SalesReportPage() {
     const [filters, setFilters] = useState<ReportFilters>({});
-    const orders = useMemo(() => orderService.list(), []);
+    const ordersQuery = useOrders();
+    const orders = ordersQuery.data ?? [];
     const filtered = useMemo(
         () => applyFilters(orders, filters, (o) => `${o.id} ${o.customer} ${o.product}`),
         [orders, filters],
@@ -78,7 +79,7 @@ export default function SalesReportPage() {
 
     return (
         <PageTransition>
-            <main className="dashboard-content flex min-h-full flex-col p-4 md:p-6">
+            <main className="dashboard-content flex min-h-full flex-col app-page">
                 <ReportToolbar
                     title="Sales Report"
                     filters={filters}

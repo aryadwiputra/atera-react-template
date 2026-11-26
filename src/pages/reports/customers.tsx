@@ -14,7 +14,7 @@ import { StatCard } from '@/components/shared/stat-card';
 import type { ColumnDef } from '@tanstack/react-table';
 import { Building2, Users, UserPlus, Repeat2 } from 'lucide-react';
 import { customerService } from '@/services/customer-service';
-import { orderService } from '@/services/order-service';
+import { useOrders } from '@/features/orders/api';
 import type { Customer } from '@/lib/data/types';
 import { applyFilters, countBy, formatMoney, groupByMonth, sumBy } from '@/lib/report-utils';
 import type { ReportFilters } from '@/lib/report-utils';
@@ -36,7 +36,8 @@ const columns = [
 export default function CustomersReportPage() {
     const [filters, setFilters] = useState<ReportFilters>({});
     const customers = useMemo(() => customerService.list(), []);
-    const orders = useMemo(() => orderService.list(), []);
+    const ordersQuery = useOrders();
+    const orders = ordersQuery.data ?? [];
 
     const filtered = useMemo(
         () => applyFilters(customers, filters, (c) => `${c.name} ${c.email} ${c.company}`),
@@ -81,7 +82,7 @@ export default function CustomersReportPage() {
 
     return (
         <PageTransition>
-            <main className="dashboard-content flex min-h-full flex-col p-4 md:p-6">
+            <main className="dashboard-content flex min-h-full flex-col app-page">
                 <div className="dashboard-section">
                     <ReportToolbar
                         title="Customer Report"

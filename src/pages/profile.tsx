@@ -29,10 +29,10 @@ import { useAuth } from '@/hooks/use-auth';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
 import { profileService } from '@/services/profile-service';
-import { orderService } from '@/services/order-service';
 import { invoiceService } from '@/services/invoice-service';
 import { fileService } from '@/services/file-service';
 import type { Order } from '@/lib/data/types';
+import { useOrders } from '@/features/orders/api';
 
 const profileSchema = z.object({
     fullName: z.string().min(2, 'Enter at least 2 characters.'),
@@ -67,7 +67,7 @@ export default function ProfilePage() {
     const { email, jobTitle, company, location } = profile;
     const joined = session?.authenticatedAt ? new Date(session.authenticatedAt) : new Date();
 
-    const orders = orderService.list();
+    const orders = useOrders().data ?? [];
     const invoices = invoiceService.list();
     const files = fileService.list();
     const recentOrders = orders.slice(0, 3);
@@ -120,7 +120,7 @@ export default function ProfilePage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('profile')}
                     description={t('profileDescription')}

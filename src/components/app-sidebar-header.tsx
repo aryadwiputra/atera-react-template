@@ -27,6 +27,7 @@ import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 import { useNavigate } from 'react-router';
 import { navigationItems } from '@/lib/navigation';
 import { buildSearchSections } from '@/lib/search';
+import type { Order } from '@/lib/data/types';
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
 
 export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItemType[] }) {
@@ -39,6 +40,21 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
     const [searchValue, setSearchValue] = useState('');
     const navigate = useNavigate();
     const [customizeOpen, setCustomizeOpen] = useState(false);
+    const [orders, setOrders] = useState<Order[]>([]);
+
+    useEffect(() => {
+        if (!searchOpen) return;
+        let cancelled = false;
+        import('@/services/order-service')
+            .then(({ orderService }) => orderService.list())
+            .then((rows) => {
+                if (!cancelled) setOrders(rows);
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
+    }, [searchOpen]);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -53,7 +69,10 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
     }, []);
 
     return (
-        <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center border-b bg-background/95 backdrop-blur">
+        <header
+            data-app-header
+            className="sticky top-0 z-40 flex h-16 shrink-0 items-center border-b bg-background/95 backdrop-blur"
+        >
             <div
                 className={`flex h-full shrink-0 items-center border-r border-sidebar-border bg-sidebar transition-[width,padding] duration-200 ease-linear ${
                     isCollapsed ? 'justify-center px-0' : 'px-4 md:px-6'
@@ -119,7 +138,7 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
                             </CommandItem>
                         ))}
                         {searchValue.trim() &&
-                            buildSearchSections(searchValue).map((section) => (
+                            buildSearchSections(searchValue, orders).map((section) => (
                                 <CommandItem
                                     key={section.key}
                                     value={`data-${section.key}-${section.items[0]?.title ?? ''}`}

@@ -5,10 +5,11 @@ import { PageTransition } from '@/components/shared/page-transition';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
+import { useOrder } from '@/features/orders/api';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
 import { customerService } from '@/services/customer-service';
-import { orderService } from '@/services/order-service';
 import { productService } from '@/services/product-service';
 
 export function CustomerDetailPage() {
@@ -19,7 +20,7 @@ export function CustomerDetailPage() {
     if (!customer) return <Navigate to="/customers" replace />;
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={customer.name}
                     description={customer.email}
@@ -65,11 +66,33 @@ export function OrderDetailPage() {
     const { id } = useParams();
     const { language } = useCustomizePreferences();
     const t = useTranslations(language);
-    const order = id ? orderService.get(id) : undefined;
+    const orderQuery = useOrder(id);
+    if (orderQuery.isLoading) {
+        return (
+            <PageTransition>
+                <main className="flex min-h-[40vh] w-full items-center justify-center p-6">
+                    <Spinner className="size-6" />
+                </main>
+            </PageTransition>
+        );
+    }
+    if (orderQuery.isError) {
+        return (
+            <PageTransition>
+                <main className="flex min-h-[40vh] w-full flex-col items-center justify-center gap-3 p-6 text-center">
+                    <p className="text-sm text-muted-foreground">{t('somethingWentWrong')}</p>
+                    <Button variant="outline" size="sm" onClick={() => orderQuery.refetch()}>
+                        {t('retry')}
+                    </Button>
+                </main>
+            </PageTransition>
+        );
+    }
+    const order = orderQuery.data;
     if (!order) return <Navigate to="/orders" replace />;
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={`Order #${order.id}`}
                     description={`${order.customer} · ${order.date}`}
@@ -120,7 +143,7 @@ export function ProductDetailPage() {
     if (!product) return <Navigate to="/products" replace />;
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={product.name}
                     description={product.category}

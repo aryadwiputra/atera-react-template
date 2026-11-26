@@ -1,18 +1,25 @@
-import { type Order } from '@/lib/data/types';
-import { createOrder, getOrder, listOrders, removeOrder, updateOrder } from '@/lib/data/orders';
+import type { Order } from '@/lib/data/types';
+import type { ImportResult, WorkspaceSnapshot } from '@/repositories';
+import { ordersRepository } from '@/repositories';
 
 export interface OrderService {
-    list(): Order[];
-    get(id: string): Order | undefined;
-    create(input: Omit<Order, 'id'>): Order;
-    update(id: string, updates: Partial<Order>): Order | undefined;
-    remove(id: string): void;
+    list(): Promise<Order[]>;
+    get(id: string): Promise<Order | undefined>;
+    create(input: Omit<Order, 'id'>): Promise<Order>;
+    update(id: string, updates: Partial<Order>): Promise<Order | undefined>;
+    remove(id: string): Promise<void>;
+    export(): Promise<WorkspaceSnapshot>;
+    import(payload: unknown): Promise<ImportResult>;
+    reset(): Promise<void>;
 }
 
 export const orderService: OrderService = {
-    list: listOrders,
-    get: getOrder,
-    create: createOrder,
-    update: updateOrder,
-    remove: removeOrder,
+    list: () => ordersRepository.list(),
+    get: (id) => ordersRepository.get(id),
+    create: (input) => ordersRepository.create(input),
+    update: (id, updates) => ordersRepository.update(id, updates),
+    remove: (id) => ordersRepository.remove(id),
+    export: () => ordersRepository.export(),
+    import: (payload) => ordersRepository.import(payload),
+    reset: () => ordersRepository.reset(),
 };

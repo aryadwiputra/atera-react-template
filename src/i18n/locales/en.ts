@@ -900,4 +900,17 @@ export const en = {
     dataTableServerDescription:
         'Each page is requested from a simulated server; filtering, sorting, and paging arrive pre-computed.',
     searchPeople: 'Search people...',
+    localWorkspace: 'Local workspace',
+    localWorkspaceDescription: 'Your data is stored in this browser.',
+    exportWorkspace: 'Export',
+    importWorkspace: 'Import',
+    resetWorkspace: 'Reset workspace',
+    resetWorkspaceDescription:
+        'Replace all local data with the original demo data. This cannot be undone.',
+    workspaceExported: 'Workspace exported',
+    workspaceImported: 'Workspace imported',
+    workspaceImportFailed: 'That file is not a valid workspace export.',
+    workspaceReset: 'Workspace reset',
+    workspaceTooLarge: 'The file is larger than 5 MB.',
+    offlineMessage: 'You are offline. Changes are saved on this device.',
 } as const;

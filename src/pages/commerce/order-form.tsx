@@ -7,9 +7,11 @@ import { Field } from '@/pages/commerce/form-field';
 import { DatePicker } from '@/components/shared/date-picker';
 import { PageHeader } from '@/components/shared/page-header';
 import { PageTransition } from '@/components/shared/page-transition';
+import { useToast } from '@/components/shared/toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import {
     Select,
     SelectContent,
@@ -17,9 +19,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { useCreateOrder, useOrder, useUpdateOrder } from '@/features/orders/api';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
-import { orderService } from '@/services/order-service';
+import type { Order } from '@/lib/data/types';
 
 const orderSchema = z.object({
     customer: z.string().min(2),
@@ -34,10 +37,55 @@ type OrderSubmitValues = z.output<typeof orderSchema>;
 
 export function OrderFormPage() {
     const { id } = useParams();
+    const { language } = useCustomizePreferences();
+    const t = useTranslations(language);
+    const orderQuery = useOrder(id);
+
+    if (id && orderQuery.isLoading) {
+        return (
+            <PageTransition>
+                <main className="flex min-h-[40vh] w-full items-center justify-center p-6">
+                    <Spinner className="size-6" />
+                </main>
+            </PageTransition>
+        );
+    }
+
+    if (id && orderQuery.isError) {
+        return (
+            <PageTransition>
+                <main className="flex min-h-[40vh] w-full flex-col items-center justify-center gap-3 p-6 text-center">
+                    <p className="text-sm text-muted-foreground">{t('somethingWentWrong')}</p>
+                    <Button variant="outline" size="sm" onClick={() => orderQuery.refetch()}>
+                        {t('retry')}
+                    </Button>
+                </main>
+            </PageTransition>
+        );
+    }
+
+    if (id && !orderQuery.data) {
+        return (
+            <PageTransition>
+                <main className="flex min-h-[40vh] w-full items-center justify-center p-6">
+                    <p className="text-sm font-medium">{t('pageNotFound')}</p>
+                </main>
+            </PageTransition>
+        );
+    }
+
+    return <OrderForm key={orderQuery.data?.id ?? 'new'} existing={orderQuery.data} />;
+}
+
+function OrderForm({ existing }: { existing?: Order }) {
     const navigate = useNavigate();
     const { language } = useCustomizePreferences();
     const t = useTranslations(language);
-    const existing = id ? orderService.get(id) : undefined;
+    const { toast } = useToast();
+    const createOrder = useCreateOrder();
+    const updateOrder = useUpdateOrder();
+    const isEditing = Boolean(existing);
+    const formHref = existing ? `/orders/${existing.id}/edit` : '/orders/new';
     const form = useForm<OrderFormValues, unknown, OrderSubmitValues>({
         resolver: zodResolver(orderSchema),
         defaultValues: existing ?? {
@@ -49,23 +97,31 @@ export function OrderFormPage() {
             date: new Date().toISOString().slice(0, 10),
         },
     });
-    const submit = (values: OrderSubmitValues) => {
-        if (id) orderService.update(id, values);
-        else orderService.create(values);
-        navigate('/orders');
+    const submit = async (values: OrderSubmitValues) => {
+        try {
+            if (existing) {
+                await updateOrder.mutateAsync({ id: existing.id, updates: values });
+            } else {
+                await createOrder.mutateAsync(values);
+            }
+            toast({ title: t('saveOrder'), variant: 'success' });
+            navigate('/orders');
+        } catch {
+            toast({ title: t('somethingWentWrong'), variant: 'error' });
+        }
     };
     return (
         <PageTransition>
-            <main className="flex min-h-full w-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full w-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     breadcrumbs={[
                         { title: t('orders'), href: '/orders' },
                         {
-                            title: id ? t('editOrder') : t('newOrder'),
-                            href: id ? `/orders/${id}/edit` : '/orders/new',
+                            title: isEditing ? t('editOrder') : t('newOrder'),
+                            href: formHref,
                         },
                     ]}
-                    title={id ? t('editOrder') : t('newOrder')}
+                    title={isEditing ? t('editOrder') : t('newOrder')}
                     description={t('createOrderDescription')}
                     actions={
                         <Button variant="outline" asChild>

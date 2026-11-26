@@ -1,13 +1,19 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { resetDatabase } from '@/lib/db/database';
 import { orderService } from './order-service';
 
 describe('orderService', () => {
-    it('lists the seeded orders', () => {
-        expect(orderService.list().length).toBeGreaterThan(0);
+    beforeEach(async () => {
+        await resetDatabase();
     });
 
-    it('creates, updates and removes an order', () => {
-        const created = orderService.create({
+    it('lists the seeded orders', async () => {
+        const orders = await orderService.list();
+        expect(orders.length).toBeGreaterThan(0);
+    });
+
+    it('creates, updates and removes an order', async () => {
+        const created = await orderService.create({
             customer: 'Test Customer',
             customerEmail: 'test@example.com',
             product: 'Test plan',
@@ -16,12 +22,55 @@ describe('orderService', () => {
             date: '2026-01-01',
         });
 
-        expect(orderService.get(created.id)?.customer).toBe('Test Customer');
+        expect((await orderService.get(created.id))?.customer).toBe('Test Customer');
 
-        const updated = orderService.update(created.id, { status: 'Paid' });
+        const updated = await orderService.update(created.id, { status: 'Paid' });
         expect(updated?.status).toBe('Paid');
 
-        orderService.remove(created.id);
-        expect(orderService.get(created.id)).toBeUndefined();
+        await orderService.remove(created.id);
+        expect(await orderService.get(created.id)).toBeUndefined();
+    });
+
+    it('exports the seeded workspace', async () => {
+        const snapshot = await orderService.export();
+
+        expect(snapshot.app).toBe('atera');
+        expect(snapshot.version).toBe(1);
+        expect(snapshot.orders).toHaveLength(5);
+    });
+
+    it('imports a snapshot and replaces the current orders', async () => {
+        const created = await orderService.create({
+            customer: 'Imported Customer',
+            customerEmail: 'imported@example.com',
+            product: 'Imported plan',
+            status: 'Paid',
+            amount: 20,
+            date: '2026-02-02',
+        });
+        const snapshot = await orderService.export();
+        expect(snapshot.orders).toHaveLength(6);
+
+        await orderService.reset();
+        expect(await orderService.list()).toHaveLength(5);
+
+        const result = await orderService.import(snapshot);
+        expect(result).toEqual({ ok: true });
+
+        const orders = await orderService.list();
+        expect(orders).toHaveLength(6);
+        expect(orders.some((order) => order.id === created.id)).toBe(true);
+        expect(orders.some((order) => order.customer === 'Imported Customer')).toBe(true);
+    });
+
+    it('rejects an invalid import payload', async () => {
+        const result = await orderService.import({
+            app: 'atera',
+            version: 1,
+            orders: [{ id: '' }],
+        });
+
+        expect(result.ok).toBe(false);
+        expect(await orderService.list()).toHaveLength(5);
     });
 });

@@ -908,4 +908,17 @@ export const de = {
     dataTableServerDescription:
         'Jede Seite wird von einem simulierten Server angefordert; Filter, Sortierung und Seitenwechsel kommen vorberechnet an.',
     searchPeople: 'Personen suchen...',
+    localWorkspace: 'Lokaler Arbeitsbereich',
+    localWorkspaceDescription: 'Deine Daten werden in diesem Browser gespeichert.',
+    exportWorkspace: 'Exportieren',
+    importWorkspace: 'Importieren',
+    resetWorkspace: 'Arbeitsbereich zurücksetzen',
+    resetWorkspaceDescription:
+        'Alle lokalen Daten durch die ursprünglichen Demo-Daten ersetzen. Das kann nicht rückgängig gemacht werden.',
+    workspaceExported: 'Arbeitsbereich exportiert',
+    workspaceImported: 'Arbeitsbereich importiert',
+    workspaceImportFailed: 'Diese Datei ist kein gültiger Arbeitsbereich-Export.',
+    workspaceReset: 'Arbeitsbereich zurückgesetzt',
+    workspaceTooLarge: 'Die Datei ist größer als 5 MB.',
+    offlineMessage: 'Du bist offline. Änderungen werden auf diesem Gerät gespeichert.',
 } as const;
