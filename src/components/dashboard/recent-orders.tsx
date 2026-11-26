@@ -9,8 +9,8 @@ const headings = ['customer', 'orderId', 'product', 'status', 'amount'] as const
 
 export function RecentOrders({ t }: { t: Translator }) {
     return (
-        <Card className="min-w-0 gap-4 py-5 shadow-none">
-            <CardHeader className="flex-row items-center justify-between px-5">
+        <Card className="min-w-0 gap-4 shadow-none">
+            <CardHeader className="flex-row items-center justify-between">
                 <div>
                     <CardTitle className="text-base">{t('recentOrders')}</CardTitle>
                     <CardDescription className="mt-1 text-xs">
@@ -21,7 +21,7 @@ export function RecentOrders({ t }: { t: Translator }) {
                     {t('viewAll')} <ChevronRight className="size-3.5" />
                 </Button>
             </CardHeader>
-            <CardContent className="overflow-x-auto px-5">
+            <CardContent className="overflow-x-auto">
                 <table className="w-full min-w-[560px] text-left text-xs">
                     <thead className="border-b text-2xs tracking-wider text-muted-foreground uppercase">
                         <tr>

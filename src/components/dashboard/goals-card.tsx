@@ -11,8 +11,8 @@ const goals = [
 
 export function GoalsCard({ t }: { t: Translator }) {
     return (
-        <Card className="gap-5 py-5 shadow-none">
-            <CardHeader className="flex-row items-center justify-between px-5">
+        <Card className="gap-[var(--card-p,1.5rem)] shadow-none">
+            <CardHeader className="flex-row items-center justify-between">
                 <div>
                     <CardTitle className="text-base">{t('monthlyGoals')}</CardTitle>
                     <CardDescription className="mt-1 text-xs">{t('trackProgress')}</CardDescription>
@@ -26,7 +26,7 @@ export function GoalsCard({ t }: { t: Translator }) {
                     <MoreHorizontal className="size-4" />
                 </Button>
             </CardHeader>
-            <CardContent className="space-y-5 px-5">
+            <CardContent className="space-y-5">
                 {goals.map(([label, value, progress]) => (
                     <div key={label} className="space-y-2">
                         <div className="flex justify-between text-xs">

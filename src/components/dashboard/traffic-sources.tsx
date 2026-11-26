@@ -11,12 +11,12 @@ const sources = [
 
 export function TrafficSources({ t }: { t: Translator }) {
     return (
-        <Card className="gap-5 py-5 shadow-none">
-            <CardHeader className="px-5">
+        <Card className="gap-[var(--card-p,1.5rem)] shadow-none">
+            <CardHeader>
                 <CardTitle className="text-base">{t('trafficSources')}</CardTitle>
                 <CardDescription className="text-xs">{t('visitorSources')}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-5 px-5">
+            <CardContent className="space-y-5">
                 <div className="text-3xl font-semibold tracking-tight">
                     284K{' '}
                     <span className="text-xs font-normal text-muted-foreground">{t('visits')}</span>

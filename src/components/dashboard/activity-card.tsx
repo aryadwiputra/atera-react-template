@@ -5,8 +5,8 @@ import { activities, type Translator } from './types';
 
 export function ActivityCard({ t }: { t: Translator }) {
     return (
-        <Card className="gap-5 py-5 shadow-none">
-            <CardHeader className="flex-row items-center justify-between px-5">
+        <Card className="gap-[var(--card-p,1.5rem)] shadow-none">
+            <CardHeader className="flex-row items-center justify-between">
                 <div>
                     <CardTitle className="text-base">{t('recentActivity')}</CardTitle>
                     <CardDescription className="mt-1 text-xs">{t('latestUpdates')}</CardDescription>
@@ -15,7 +15,7 @@ export function ActivityCard({ t }: { t: Translator }) {
                     {t('viewAll')}
                 </Button>
             </CardHeader>
-            <CardContent className="space-y-5 px-5">
+            <CardContent className="space-y-5">
                 {activities.map(({ title, description, detail, time }) => (
                     <div key={title} className="flex gap-3">
                         <div className="flex size-7 shrink-0 items-center justify-center rounded-full border bg-muted">

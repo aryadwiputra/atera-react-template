@@ -5,12 +5,12 @@ import type { Metric, Translator } from './types';
 
 export function MetricCard({ metric, t }: { metric: Metric; t: Translator }) {
     return (
-        <Card className="gap-3 py-5 shadow-none">
-            <CardHeader className="gap-0 px-5">
+        <Card className="gap-3 shadow-none">
+            <CardHeader className="gap-0">
                 <CardDescription className="text-xs">{t(metric.label)}</CardDescription>
                 <CardTitle className="mt-2 text-2xl tracking-tight">{metric.value}</CardTitle>
             </CardHeader>
-            <CardContent className="px-5">
+            <CardContent>
                 <div
                     className={cn(
                         'flex items-center gap-1 text-xs font-medium',
