@@ -57,6 +57,47 @@ test('in-page navigation scrolls smoothly to the matching section', async ({ pag
     ).toBeInViewport();
 });
 
+test('navbar marks the section in view and keeps links as links', async ({ page }) => {
+    await page.goto('/');
+
+    const main = page.getByRole('navigation', { name: 'Main', exact: true });
+    const pricing = main.getByRole('link', { name: 'Pricing', exact: true });
+    const features = main.getByRole('link', { name: 'Features', exact: true });
+    const livePreview = main.getByRole('link', { name: 'Live preview', exact: true });
+    const pages = main.getByRole('link', { name: 'Pages', exact: true });
+    const docs = main.getByRole('link', { name: /^Docs/ });
+
+    await expect(main.getByRole('link').first()).toHaveAccessibleName(/^Live preview/);
+    await expect(docs).toHaveAttribute('href', '/docs');
+    await expect(docs).toHaveAttribute('target', '_blank');
+
+    const navBox = await main.boundingBox();
+    expect(navBox).not.toBeNull();
+    expect(navBox!.x).toBeLessThan((page.viewportSize()?.width ?? 1280) / 2);
+
+    await pricing.click();
+    await expect(page).toHaveURL(/#pricing$/);
+    await expect(pricing).toHaveAttribute('aria-current', 'true');
+    await expect(features).not.toHaveAttribute('aria-current', 'true');
+
+    await features.click();
+    await expect(page).toHaveURL(/#features$/);
+    await expect(features).toHaveAttribute('aria-current', 'true');
+
+    await livePreview.click();
+    await expect(page).toHaveURL(/#live-preview$/);
+    await expect(livePreview).toHaveAttribute('aria-current', 'true');
+    await expect(features).not.toHaveAttribute('aria-current', 'true');
+
+    await pages.click();
+    await expect(page).toHaveURL(/#pages$/);
+    await expect(pages).toHaveAttribute('aria-current', 'true');
+
+    await expect(
+        page.getByRole('link', { name: 'Get the template', exact: true }).first(),
+    ).toHaveAttribute('href', '/sign-up');
+});
+
 test('showcase preview switches pages without a login step', async ({ page }) => {
     await page.goto('/');
 
@@ -95,6 +136,32 @@ test('preview route opens a page without a login step', async ({ page }) => {
 
 test.describe('mobile', () => {
     test.use({ viewport: { width: 390, height: 844 } });
+
+    test('menu closes with Escape, outside click, and link selection', async ({ page }) => {
+        await page.goto('/');
+
+        const trigger = page.getByRole('button', { name: 'Toggle navigation menu' });
+        const menu = page.getByRole('navigation', { name: 'Mobile', exact: true });
+
+        await trigger.click();
+        await expect(menu).toBeVisible();
+        await expect(menu.getByRole('link', { name: 'Live preview', exact: true })).toBeFocused();
+
+        await page.keyboard.press('Escape');
+        await expect(menu).toBeHidden();
+        await expect(trigger).toBeFocused();
+
+        await trigger.click();
+        await page.evaluate(() => {
+            document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+        });
+        await expect(menu).toBeHidden();
+
+        await trigger.click();
+        await menu.getByRole('link', { name: 'Pricing', exact: true }).click();
+        await expect(page).toHaveURL(/#pricing$/);
+        await expect(menu).toBeHidden();
+    });
 
     test('shows the compact preview instead of the live frame', async ({ page }) => {
         await page.goto('/');

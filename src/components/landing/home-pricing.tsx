@@ -153,7 +153,7 @@ export function Footer() {
             title: 'Template',
             links: [
                 { label: 'Features', href: '#features' },
-                { label: 'Pages', href: '#analytics' },
+                { label: 'Pages', href: '#pages' },
                 { label: 'Pricing', href: '#pricing' },
                 { label: 'Live preview', href: '#live-preview' },
             ],
