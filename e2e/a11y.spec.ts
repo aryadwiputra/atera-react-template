@@ -42,6 +42,13 @@ test.describe('accessibility', () => {
         expect(await wcagViolations(page)).toEqual([]);
     });
 
+    test('docs has no serious or critical WCAG violations', async ({ page }) => {
+        await page.goto('/docs');
+        await expect(page.getByRole('heading', { name: 'Atera documentation' })).toBeVisible();
+        await settleAnimations(page);
+        expect(await wcagViolations(page)).toEqual([]);
+    });
+
     test('dashboard has no serious or critical WCAG violations', async ({ page }) => {
         await signInAsDemo(page);
         await expect(page.locator('#main-content')).toBeVisible();
