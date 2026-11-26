@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local tooling & runtime artefacts
+.opencode/goals/
+.playwright-mcp/
+landing-dark.png
+landing-light.png
+
+# Test output
+coverage/
+test-results/
+playwright-report/
+blob-report/
