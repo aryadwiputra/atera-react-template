@@ -128,6 +128,7 @@ function DocsSection({
 const docsSections = [
     { id: 'getting-started', label: 'Getting started' },
     { id: 'architecture', label: 'Architecture' },
+    { id: 'dependencies', label: 'Dependencies' },
     { id: 'data', label: 'Data layer' },
     { id: 'components', label: 'UI components' },
     { id: 'theming', label: 'Theming' },
@@ -464,6 +465,140 @@ bun run dev`}</CodeBlock>
                                     unauthenticated users to /login. Navigation items without an
                                     explicit route fall back to AppPlaceholder through the computed
                                     placeholderRoutes spread.
+                                </p>
+                            </div>
+                        </DocsSection>
+
+                        <DocsSection id="dependencies" title="Dependencies">
+                            <div className="space-y-3">
+                                <SectionHeading>Runtime packages</SectionHeading>
+                                <p className="text-sm leading-relaxed text-muted-foreground">
+                                    Everything the shipped app needs is already installed. Start
+                                    here before adding another package.
+                                </p>
+                                <div className="overflow-x-auto rounded-lg border">
+                                    <table className="w-full text-sm">
+                                        <thead className="border-b bg-muted/40 text-left text-xs uppercase text-muted-foreground">
+                                            <tr>
+                                                <th className="px-4 py-2 font-medium">Package</th>
+                                                <th className="px-4 py-2 font-medium">Used for</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {[
+                                                ['react, react-dom', 'UI runtime'],
+                                                ['react-router', 'Routing and navigation'],
+                                                ['@tanstack/react-query', 'Persisted order state'],
+                                                ['@tanstack/react-table', 'DataTable engine'],
+                                                ['dexie', 'IndexedDB persistence'],
+                                                ['radix-ui', 'Accessible UI primitives'],
+                                                ['lucide-react', 'Icons'],
+                                                ['tailwindcss', 'Styling and design tokens'],
+                                                [
+                                                    'clsx, tailwind-merge, class-variance-authority',
+                                                    'Class merging and component variants',
+                                                ],
+                                                [
+                                                    'shadcn, tw-animate-css',
+                                                    'Primitive styles and CSS animations',
+                                                ],
+                                                ['recharts', 'Dashboard charts'],
+                                                ['framer-motion', 'Landing and motion'],
+                                                [
+                                                    'zod, react-hook-form, @hookform/resolvers',
+                                                    'Typed forms and validation',
+                                                ],
+                                                [
+                                                    'date-fns, react-day-picker',
+                                                    'Date helpers and picker',
+                                                ],
+                                                [
+                                                    'xlsx, jspdf, jspdf-autotable',
+                                                    'Excel and PDF exports',
+                                                ],
+                                                ['leaflet, react-leaflet', 'Maps'],
+                                                ['@tiptap/*', 'Rich text editor'],
+                                                [
+                                                    'cmdk, vaul, input-otp',
+                                                    'Command palette, sheets, OTP',
+                                                ],
+                                                ['react-resizable-panels', 'Resizable layouts'],
+                                                ['web-vitals', 'Optional RUM metrics'],
+                                            ].map(([name, purpose]) => (
+                                                <tr key={name} className="border-b last:border-b-0">
+                                                    <td className="px-4 py-2 font-mono text-xs">
+                                                        {name}
+                                                    </td>
+                                                    <td className="px-4 py-2 text-muted-foreground">
+                                                        {purpose}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div className="space-y-3">
+                                <SectionHeading>Development tooling</SectionHeading>
+                                <div className="overflow-x-auto rounded-lg border">
+                                    <table className="w-full text-sm">
+                                        <thead className="border-b bg-muted/40 text-left text-xs uppercase text-muted-foreground">
+                                            <tr>
+                                                <th className="px-4 py-2 font-medium">Package</th>
+                                                <th className="px-4 py-2 font-medium">Used for</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {[
+                                                [
+                                                    'vite, @vitejs/plugin-react',
+                                                    'Dev server and build',
+                                                ],
+                                                [
+                                                    '@tailwindcss/vite',
+                                                    'Tailwind v4 build integration',
+                                                ],
+                                                ['typescript', 'Type checking'],
+                                                ['oxlint', 'Linting'],
+                                                ['prettier', 'Formatting'],
+                                                [
+                                                    'vitest, @testing-library/*, jsdom',
+                                                    'Unit and component tests',
+                                                ],
+                                                ['fake-indexeddb', 'Dexie tests without a browser'],
+                                                [
+                                                    '@playwright/test, @axe-core/playwright',
+                                                    'E2E, visual, and accessibility tests',
+                                                ],
+                                            ].map(([name, purpose]) => (
+                                                <tr key={name} className="border-b last:border-b-0">
+                                                    <td className="px-4 py-2 font-mono text-xs">
+                                                        {name}
+                                                    </td>
+                                                    <td className="px-4 py-2 text-muted-foreground">
+                                                        {purpose}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div className="space-y-3">
+                                <SectionHeading>Adding a dependency</SectionHeading>
+                                <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted-foreground">
+                                    <li>Prefer an existing package or a platform API first.</li>
+                                    <li>Keep UI work on the 48 primitives in src/components/ui.</li>
+                                    <li>
+                                        Run typecheck, lint, unit tests, build, and perf:budget
+                                        after adding a package.
+                                    </li>
+                                    <li>Document the package and its purpose in this section.</li>
+                                </ul>
+                                <p className="text-sm leading-relaxed text-muted-foreground">
+                                    The Assets module needs no new dependency. QR or barcode output
+                                    would add qrcode or jsbarcode; file uploads need a storage
+                                    decision before choosing a package.
                                 </p>
                             </div>
                         </DocsSection>

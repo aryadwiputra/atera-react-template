@@ -23,7 +23,15 @@ test('docs page stacks sections with a persistent section nav', async ({ page, c
     const sectionNav = page
         .locator('aside')
         .getByRole('navigation', { name: 'Documentation sections' });
+    const dependencies = sectionNav.getByRole('link', { name: 'Dependencies', exact: true });
     const theming = sectionNav.getByRole('link', { name: 'Theming', exact: true });
+
+    await dependencies.click();
+    await expect(page).toHaveURL(/#dependencies$/);
+    await expect(dependencies).toHaveAttribute('aria-current', 'location');
+    await expect(
+        page.getByRole('heading', { name: 'Runtime packages', exact: true }),
+    ).toBeInViewport();
 
     await theming.click();
 
