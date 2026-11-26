@@ -21,7 +21,7 @@ import type { ReportFilters } from '@/lib/report-utils';
 
 const statusVariant: Record<POStatus, string> = {
     Pending: 'bg-status-warning/15 text-status-warning',
-    Approved: 'bg-blue-500/15 text-blue-500',
+    Approved: 'bg-primary/15 text-primary',
     Received: 'bg-status-success/15 text-status-success',
     Cancelled: 'bg-destructive/15 text-destructive',
     Draft: 'bg-muted text-muted-foreground',
@@ -77,7 +77,7 @@ export default function ProcurementReportPage() {
 
     return (
         <PageTransition>
-            <main className="dashboard-content flex min-h-full flex-col p-4 md:p-6">
+            <main className="dashboard-content flex min-h-full flex-col app-page">
                 <div className="dashboard-section">
                     <ReportToolbar
                         title="Procurement Report"

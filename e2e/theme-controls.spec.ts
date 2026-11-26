@@ -53,6 +53,9 @@ test('theme controls drive density, shape, layout, header, container, and sideba
     await expect(page.getByRole('dialog')).toHaveCount(0);
     await openStudio();
 
+    await expect(page.locator('[data-app-header]')).toHaveCSS('position', 'static');
+    await expect(page.locator('[data-sidebar-fixed]')).toHaveCSS('position', 'sticky');
+
     await group('Sidebar style').getByRole('button', { name: 'Floating' }).click();
     await expect(html).toHaveAttribute('data-sidebar', 'floating');
 
@@ -65,6 +68,12 @@ test('theme controls drive density, shape, layout, header, container, and sideba
         .first()
         .evaluate((element) => getComputedStyle(element).paddingTop);
     expect(cardPadding).toBe('16px');
+
+    const pagePadding = await page
+        .locator('.app-page')
+        .first()
+        .evaluate((element) => getComputedStyle(element).paddingTop);
+    expect(pagePadding).toBe('16px');
 
     await page.reload();
     await expect(page.locator('html')).toHaveAttribute('data-layout', 'sidebar');

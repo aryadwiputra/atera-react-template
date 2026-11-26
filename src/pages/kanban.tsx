@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { PageHeader } from '@/components/shared/page-header';
 import { PageTransition } from '@/components/shared/page-transition';
+import { ReducedMotionProvider } from '@/components/reduced-motion-provider';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
 import { kanbanService } from '@/services/kanban-service';
@@ -33,92 +34,97 @@ export default function KanbanPage() {
     } as const;
 
     return (
-        <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
-                <PageHeader
-                    title={t('kanban')}
-                    description={t('kanbanDescription')}
-                    actions={
-                        <Button size="sm">
-                            <Plus className="size-4" />
-                            {t('addTask')}
-                        </Button>
-                    }
-                />
-                <div className="grid gap-4 md:grid-cols-3">
-                    {kanbanService.columns.map((column) => {
-                        const columnTasks = tasks.filter((task) => task.columnId === column.id);
-                        return (
-                            <Card key={column.id} className="flex flex-col">
-                                <CardContent className="flex flex-1 flex-col gap-4 p-5">
-                                    <div className="flex items-center justify-between">
-                                        <h2 className="font-semibold">{column.title}</h2>
-                                        <Badge variant="secondary">{columnTasks.length}</Badge>
-                                    </div>
-                                    <div className="space-y-3">
-                                        {columnTasks.map((task) => (
-                                            <motion.div
-                                                key={task.id}
-                                                layout
-                                                initial={{ opacity: 0, y: -8 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                whileDrag={{
-                                                    scale: 1.03,
-                                                    zIndex: 10,
-                                                    boxShadow: '0 8px 24px -8px rgb(0 0 0 / 0.2)',
-                                                }}
-                                                drag
-                                                dragSnapToOrigin
-                                                className="cursor-grab rounded-lg border bg-background p-4 active:cursor-grabbing"
-                                            >
-                                                <div className="flex items-start justify-between gap-2">
-                                                    <p className="text-sm font-medium leading-snug">
-                                                        {task.title}
+        <ReducedMotionProvider>
+            <PageTransition>
+                <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
+                    <PageHeader
+                        title={t('kanban')}
+                        description={t('kanbanDescription')}
+                        actions={
+                            <Button size="sm">
+                                <Plus className="size-4" />
+                                {t('addTask')}
+                            </Button>
+                        }
+                    />
+                    <div className="grid gap-4 md:grid-cols-3">
+                        {kanbanService.columns.map((column) => {
+                            const columnTasks = tasks.filter((task) => task.columnId === column.id);
+                            return (
+                                <Card key={column.id} className="flex flex-col">
+                                    <CardContent className="flex flex-1 flex-col gap-4 p-[var(--panel-p,1.25rem)]">
+                                        <div className="flex items-center justify-between">
+                                            <h2 className="font-semibold">{column.title}</h2>
+                                            <Badge variant="secondary">{columnTasks.length}</Badge>
+                                        </div>
+                                        <div className="space-y-3">
+                                            {columnTasks.map((task) => (
+                                                <motion.div
+                                                    key={task.id}
+                                                    layout
+                                                    initial={{ opacity: 0, y: -8 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    whileDrag={{
+                                                        scale: 1.03,
+                                                        zIndex: 10,
+                                                        boxShadow:
+                                                            '0 8px 24px -8px rgb(0 0 0 / 0.2)',
+                                                    }}
+                                                    drag
+                                                    dragSnapToOrigin
+                                                    className="cursor-grab rounded-lg border bg-background p-4 active:cursor-grabbing"
+                                                >
+                                                    <div className="flex items-start justify-between gap-2">
+                                                        <p className="text-sm font-medium leading-snug">
+                                                            {task.title}
+                                                        </p>
+                                                        <Badge
+                                                            variant="outline"
+                                                            className={cn(
+                                                                'shrink-0 text-2xs',
+                                                                priorityColor[task.priority],
+                                                            )}
+                                                        >
+                                                            {t(priorityLabel[task.priority])}
+                                                        </Badge>
+                                                    </div>
+                                                    <p className="mt-2 text-xs text-muted-foreground">
+                                                        {task.assignee}
                                                     </p>
-                                                    <Badge
-                                                        variant="outline"
-                                                        className={cn(
-                                                            'shrink-0 text-2xs',
-                                                            priorityColor[task.priority],
-                                                        )}
-                                                    >
-                                                        {t(priorityLabel[task.priority])}
-                                                    </Badge>
+                                                    <div className="mt-3 flex gap-1">
+                                                        {kanbanService.columns
+                                                            .filter(
+                                                                (col) => col.id !== task.columnId,
+                                                            )
+                                                            .map((col) => (
+                                                                <button
+                                                                    key={col.id}
+                                                                    type="button"
+                                                                    onClick={() =>
+                                                                        handleDrop(task.id, col.id)
+                                                                    }
+                                                                    className="rounded border px-1.5 py-0.5 text-2xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                                                                    title={col.title}
+                                                                >
+                                                                    {col.title} →
+                                                                </button>
+                                                            ))}
+                                                    </div>
+                                                </motion.div>
+                                            ))}
+                                            {columnTasks.length === 0 && (
+                                                <div className="rounded-lg border border-dashed p-6 text-center text-xs text-muted-foreground">
+                                                    {t('dragHere')}
                                                 </div>
-                                                <p className="mt-2 text-xs text-muted-foreground">
-                                                    {task.assignee}
-                                                </p>
-                                                <div className="mt-3 flex gap-1">
-                                                    {kanbanService.columns
-                                                        .filter((col) => col.id !== task.columnId)
-                                                        .map((col) => (
-                                                            <button
-                                                                key={col.id}
-                                                                type="button"
-                                                                onClick={() =>
-                                                                    handleDrop(task.id, col.id)
-                                                                }
-                                                                className="rounded border px-1.5 py-0.5 text-2xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                                                                title={col.title}
-                                                            >
-                                                                {col.title} →
-                                                            </button>
-                                                        ))}
-                                                </div>
-                                            </motion.div>
-                                        ))}
-                                        {columnTasks.length === 0 && (
-                                            <div className="rounded-lg border border-dashed p-6 text-center text-xs text-muted-foreground">
-                                                {t('dragHere')}
-                                            </div>
-                                        )}
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        );
-                    })}
-                </div>
-            </main>
-        </PageTransition>
+                                            )}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            );
+                        })}
+                    </div>
+                </main>
+            </PageTransition>
+        </ReducedMotionProvider>
     );
 }

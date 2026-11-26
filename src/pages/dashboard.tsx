@@ -16,7 +16,7 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-full bg-background">
-            <main className="dashboard-content flex w-full flex-col p-4 md:p-6">
+            <main className="dashboard-content flex w-full flex-col app-page">
                 <div className="flex items-end justify-between">
                     <div>
                         <h1 className="text-2xl font-semibold tracking-tight">{t('dashboard')}</h1>

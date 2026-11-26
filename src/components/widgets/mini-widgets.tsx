@@ -21,13 +21,18 @@ export function SparklineCard({
 }: SparklineCardProps) {
     const color = getChartColor(colorIndex);
     return (
-        <Card className={cn('gap-3 overflow-hidden py-5 shadow-none', className)}>
+        <Card
+            className={cn(
+                'gap-3 overflow-hidden py-[var(--panel-p,1.25rem)] shadow-none',
+                className,
+            )}
+        >
             <CardHeader className="flex-row items-center justify-between gap-3">
                 <CardDescription className="text-sm font-medium">{title}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
                 <p className="text-2xl font-semibold tracking-tight">{value}</p>
-                <div className="-mx-5 -mb-5">
+                <div className="-mx-[var(--panel-p,1.25rem)] -mb-[var(--panel-p,1.25rem)]">
                     <ResponsiveContainer width="100%" height={48}>
                         <AreaChart data={data} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
                             <Area
@@ -65,7 +70,7 @@ export function ProgressRingCard({
     const circumference = 2 * Math.PI * 42;
     const color = getChartColor(colorIndex);
     return (
-        <Card className={cn('gap-3 py-5 shadow-none', className)}>
+        <Card className={cn('gap-3 py-[var(--panel-p,1.25rem)] shadow-none', className)}>
             <CardHeader className="flex-row items-center justify-between gap-3">
                 <CardDescription className="text-sm font-medium">{title}</CardDescription>
                 <span className="text-xs text-muted-foreground">{label}</span>
@@ -114,7 +119,7 @@ export function KpiDeltaCard({ title, value, delta, suffix, className }: KpiDelt
     const positive = delta >= 0;
     const Icon = positive ? TrendingUp : TrendingDown;
     return (
-        <Card className={cn('gap-3 py-5 shadow-none', className)}>
+        <Card className={cn('gap-3 py-[var(--panel-p,1.25rem)] shadow-none', className)}>
             <CardHeader className="flex-row items-center justify-between gap-3">
                 <CardDescription className="text-sm font-medium">{title}</CardDescription>
                 <span

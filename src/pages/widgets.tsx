@@ -70,7 +70,7 @@ export default function WidgetsPage() {
     const t = useTranslations(language);
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader title={t('widgets')} description={t('widgetsDescription')} />
                 <section className="space-y-3">
                     <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
@@ -137,7 +137,7 @@ export default function WidgetsPage() {
                         {progressItems.map((item) => (
                             <div
                                 key={item.key}
-                                className="space-y-2 rounded-[--radius-lg] border bg-card p-5"
+                                className="space-y-2 rounded-lg border bg-card p-[var(--panel-p,1.25rem)]"
                             >
                                 <div className="flex items-center justify-between text-sm">
                                     <span className="font-medium">{t(item.key)}</span>
@@ -157,7 +157,7 @@ export default function WidgetsPage() {
                     <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                         {t('badges')}
                     </h2>
-                    <div className="flex flex-wrap items-center gap-3 rounded-[--radius-lg] border bg-card p-5">
+                    <div className="flex flex-wrap items-center gap-3 rounded-lg border bg-card p-[var(--panel-p,1.25rem)]">
                         {badgeVariants.map((variant) => (
                             <Badge key={variant} variant={variant}>
                                 {t(
@@ -177,7 +177,7 @@ export default function WidgetsPage() {
                     <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                         {t('avatars')}
                     </h2>
-                    <div className="flex flex-wrap items-center gap-2 rounded-[--radius-lg] border bg-card p-5">
+                    <div className="flex flex-wrap items-center gap-2 rounded-lg border bg-card p-[var(--panel-p,1.25rem)]">
                         {avatarPeople.map((person) => (
                             <Avatar
                                 key={person.initials}

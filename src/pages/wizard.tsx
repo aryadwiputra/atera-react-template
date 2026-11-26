@@ -86,7 +86,7 @@ export default function WizardPage() {
 
     return (
         <PageTransition>
-            <main className="mx-auto flex min-h-full w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
+            <main className="mx-auto flex min-h-full w-full max-w-3xl flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader title={t('wizardTitle')} description={t('projectSetupDescription')} />
                 <Card>
                     <CardHeader>

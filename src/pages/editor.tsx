@@ -206,7 +206,7 @@ export default function EditorPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     breadcrumbs={[{ title: t('editor'), href: '/editor' }]}
                     title={t('editor')}

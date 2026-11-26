@@ -22,7 +22,7 @@ export function StatCard({
     className,
 }: StatCardProps) {
     return (
-        <Card className={cn('gap-3 py-5 shadow-none', className)}>
+        <Card className={cn('gap-3 py-[var(--panel-p,1.25rem)] shadow-none', className)}>
             <CardHeader className="flex-row items-center justify-between gap-3">
                 <CardDescription className="text-sm font-medium">{title}</CardDescription>
                 {Icon && <Icon className="size-4 shrink-0 text-muted-foreground" />}

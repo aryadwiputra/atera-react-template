@@ -42,11 +42,11 @@ const helper = createAppColumnHelper<User>();
 const roleBadge = (role: User['role']) => {
     switch (role) {
         case 'Admin':
-            return 'bg-primary/10 text-primary';
+            return 'bg-primary/10 text-foreground';
         case 'Editor':
-            return 'bg-chart-2/10 text-chart-2';
+            return 'bg-chart-2/10 text-foreground';
         case 'Moderator':
-            return 'bg-chart-3/10 text-chart-3';
+            return 'bg-chart-3/10 text-foreground';
         default:
             return 'bg-muted text-muted-foreground';
     }
@@ -313,7 +313,7 @@ export default function UsersPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('users')}
                     description={t('usersDescription')}
@@ -405,7 +405,6 @@ export default function UsersPage() {
                             toast({ title: t('userDeleted'), variant: 'success' });
                         }
                     }}
-                    trigger={<span />}
                 />
                 <Dialog open={createOpen} onOpenChange={setCreateOpen}>
                     <DialogContent>

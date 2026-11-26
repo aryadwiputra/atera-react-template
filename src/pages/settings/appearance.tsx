@@ -25,7 +25,7 @@ const accentSwatches: Record<Accent, string> = {
     mono: 'oklch(0.205 0 0)',
     blue: 'oklch(0.546 0.245 262.881)',
     violet: 'oklch(0.541 0.281 293.009)',
-    orange: 'oklch(0.646 0.222 41.116)',
+    orange: 'oklch(0.58 0.19 41.116)',
     green: 'oklch(0.527 0.154 150.069)',
     rose: 'oklch(0.586 0.253 17.585)',
 };

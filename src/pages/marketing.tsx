@@ -45,9 +45,9 @@ const campaigns: Array<{
 ];
 
 const statusStyles: Record<CampaignStatus, string> = {
-    active: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
-    paused: 'bg-amber-500/15 text-amber-600 dark:text-amber-400',
-    ended: 'bg-zinc-500/15 text-zinc-600 dark:text-zinc-400',
+    active: 'bg-status-success/15 text-status-success',
+    paused: 'bg-status-warning/15 text-status-warning',
+    ended: 'bg-muted text-muted-foreground',
 };
 
 export default function MarketingPage() {
@@ -55,7 +55,7 @@ export default function MarketingPage() {
     const t = useTranslations(language);
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader title={t('marketing')} description={t('marketingDescription')} />
                 <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                     <StatCard

@@ -171,7 +171,7 @@ export default function FinancePage() {
                         className={cn(
                             'font-semibold tabular-nums',
                             info.row.original.type === 'Income'
-                                ? 'text-emerald-600 dark:text-emerald-400'
+                                ? 'text-status-success'
                                 : 'text-destructive',
                         )}
                     >
@@ -252,7 +252,7 @@ export default function FinancePage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('finance')}
                     description={t('financeDescription')}
@@ -435,7 +435,6 @@ export default function FinancePage() {
                 description={t('deleteTransactionDescription')}
                 confirmLabel={t('delete')}
                 cancelLabel={t('cancel')}
-                trigger={<span />}
                 onConfirm={() => {
                     if (!pendingDelete) return;
                     financeService.remove(pendingDelete.id);

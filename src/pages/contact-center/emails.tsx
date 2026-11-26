@@ -616,7 +616,7 @@ export default function EmailsPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col p-4 md:p-6">
+            <main className="flex min-h-full flex-col app-page">
                 <Card className="overflow-hidden py-0 md:h-[calc(100svh-7rem)] md:min-h-[520px]">
                     <div className="grid min-h-[560px] md:h-full md:min-h-0 md:grid-cols-[200px_340px_minmax(0,1fr)]">
                         <FolderRail

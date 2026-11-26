@@ -89,7 +89,7 @@ export default function AiChatPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader title={t('aiChat')} description={t('aiChatDescription')} />
                 <Card className="overflow-hidden">
                     <div className="grid min-h-[560px] md:grid-cols-[240px_minmax(0,1fr)]">
@@ -145,7 +145,7 @@ export default function AiChatPage() {
                                     </p>
                                 </div>
                             </header>
-                            <div className="flex-1 space-y-4 overflow-y-auto p-5">
+                            <div className="flex-1 space-y-4 overflow-y-auto p-[var(--panel-p,1.25rem)]">
                                 {messages.map((item, index) => (
                                     <div
                                         key={`${item.role}-${index}`}

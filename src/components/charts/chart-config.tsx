@@ -23,7 +23,7 @@ export function ChartCard({ title, description, children, actions, className }: 
     return (
         <div
             className={cn(
-                'flex h-full flex-col gap-3 rounded-[--radius-lg] border bg-card p-5 shadow-none',
+                'flex h-full flex-col gap-3 rounded-lg border bg-card p-[var(--panel-p,1.25rem)] shadow-none',
                 className,
             )}
         >

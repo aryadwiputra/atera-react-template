@@ -25,7 +25,7 @@ export default function SupportPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader title={t('helpSupport')} description={t('helpSupportDescription')} />
                 <Card>
                     <CardHeader>
@@ -84,7 +84,9 @@ export default function SupportPage() {
                             </Button>
                         </form>
                         {sent && (
-                            <p className="mt-4 text-sm text-emerald-600">{t('sentSuccessfully')}</p>
+                            <p className="mt-4 text-sm text-status-success">
+                                {t('sentSuccessfully')}
+                            </p>
                         )}
                     </CardContent>
                 </Card>

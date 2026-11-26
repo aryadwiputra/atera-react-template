@@ -51,7 +51,7 @@ export default function MailPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('mail')}
                     description={t('mailDescription')}
@@ -63,13 +63,13 @@ export default function MailPage() {
                     }
                 />
                 {sent && (
-                    <div className="rounded-md border border-success bg-success/10 px-4 py-3 text-sm">
+                    <div className="rounded-md border border-status-success bg-status-success/10 px-4 py-3 text-sm">
                         {t('mailSent')}
                     </div>
                 )}
                 {compose ? (
                     <Card>
-                        <CardContent className="grid gap-4 p-5">
+                        <CardContent className="grid gap-4 p-[var(--panel-p,1.25rem)]">
                             <div className="grid gap-1.5">
                                 <label className="text-sm font-medium">{t('to')}</label>
                                 <Input
@@ -185,7 +185,7 @@ export default function MailPage() {
                             <section className="flex min-h-[500px] flex-col">
                                 {selected ? (
                                     <>
-                                        <header className="flex items-start gap-3 border-b p-5">
+                                        <header className="flex items-start gap-3 border-b p-[var(--panel-p,1.25rem)]">
                                             <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
                                                 {selected.initials}
                                             </div>
@@ -203,7 +203,7 @@ export default function MailPage() {
                                                 </p>
                                             </div>
                                         </header>
-                                        <div className="flex-1 overflow-y-auto p-5">
+                                        <div className="flex-1 overflow-y-auto p-[var(--panel-p,1.25rem)]">
                                             <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
                                                 {selected.body}
                                             </p>

@@ -79,7 +79,7 @@ export function InvoicesPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('invoices')}
                     description={t('reviewInvoicesDescription')}
@@ -100,7 +100,6 @@ export function InvoicesPage() {
                     description={t('deleteInvoiceDescription')}
                     confirmLabel={t('delete')}
                     cancelLabel={t('cancel')}
-                    trigger={<span />}
                     onConfirm={() => {
                         if (!pendingDelete) return;
                         invoiceService.remove(pendingDelete.id);

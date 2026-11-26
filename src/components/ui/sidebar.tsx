@@ -220,6 +220,7 @@ function Sidebar({
                 )}
             />
             <div
+                data-sidebar-fixed
                 className={cn(
                     'fixed top-16 bottom-0 z-10 hidden h-[calc(100svh-4rem)] w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex',
                     side === 'left'
@@ -460,12 +461,12 @@ const sidebarMenuButtonVariants = cva(
             variant: {
                 default: 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
                 outline:
-                    'bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]',
+                    'bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]',
             },
             size: {
-                default: 'h-8 text-sm',
-                sm: 'h-7 text-xs',
-                lg: 'h-12 text-sm group-data-[collapsible=icon]:p-0!',
+                default: 'h-[var(--sidebar-item-h,2rem)] text-sm',
+                sm: 'h-[calc(var(--sidebar-item-h,2rem)-0.25rem)] text-xs',
+                lg: 'h-[calc(var(--sidebar-item-h,2rem)+1rem)] text-sm group-data-[collapsible=icon]:p-0!',
             },
         },
         defaultVariants: {

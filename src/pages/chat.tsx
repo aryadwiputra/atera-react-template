@@ -43,7 +43,7 @@ export default function ChatPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader title={t('chat')} description={t('chatDescription')} />
                 <Card className="overflow-hidden">
                     <div className="grid min-h-[560px] md:grid-cols-[220px_minmax(0,1fr)]">
@@ -92,7 +92,7 @@ export default function ChatPage() {
                                     </p>
                                 </div>
                             </header>
-                            <div className="flex-1 space-y-5 overflow-y-auto p-5">
+                            <div className="flex-1 space-y-5 overflow-y-auto p-[var(--panel-p,1.25rem)]">
                                 {currentMessages.map((item, index) => (
                                     <div key={`${item}-${index}`} className="flex gap-3">
                                         <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-medium">

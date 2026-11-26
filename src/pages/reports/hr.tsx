@@ -20,7 +20,7 @@ import type { ReportFilters } from '@/lib/report-utils';
 
 const statusVariant: Record<EmployeeStatus, string> = {
     Active: 'bg-status-success/15 text-status-success',
-    Remote: 'bg-blue-500/15 text-blue-500',
+    Remote: 'bg-primary/15 text-primary',
     'On Leave': 'bg-status-warning/15 text-status-warning',
     Offboarded: 'bg-muted text-muted-foreground',
 };
@@ -81,7 +81,7 @@ export default function HrReportPage() {
 
     return (
         <PageTransition>
-            <main className="dashboard-content flex min-h-full flex-col p-4 md:p-6">
+            <main className="dashboard-content flex min-h-full flex-col app-page">
                 <div className="dashboard-section">
                     <ReportToolbar
                         title="HR Report"

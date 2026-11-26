@@ -22,7 +22,7 @@ export default function SettingsLayout() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <div className="space-y-4">
                     <div className="min-w-0">
                         <h1 className="text-2xl font-semibold tracking-tight">{t('settings')}</h1>

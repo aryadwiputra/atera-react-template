@@ -122,7 +122,7 @@ export default function PosPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full w-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full w-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('pointOfSale')}
                     description="Process a sale from start to finish."

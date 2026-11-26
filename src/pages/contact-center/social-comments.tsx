@@ -60,7 +60,7 @@ const statusLabels: Record<
 
 const statusBadge: Record<string, string> = {
     new: '',
-    replied: 'bg-status-success/15 text-success',
+    replied: 'bg-status-success/15 text-status-success',
     hidden: 'bg-muted text-muted-foreground',
 };
 
@@ -243,7 +243,7 @@ export default function SocialCommentsPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col p-4 md:p-6">
+            <main className="flex min-h-full flex-col app-page">
                 <Card className="overflow-hidden py-0 md:h-[calc(100svh-7rem)] md:min-h-[520px]">
                     <div className="grid min-h-[560px] md:h-full md:min-h-0 md:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[220px_minmax(0,1fr)_320px]">
                         <aside className="chat-scroll flex min-h-0 flex-col gap-4 overflow-y-auto border-b bg-muted/20 p-4 md:border-r md:border-b-0">

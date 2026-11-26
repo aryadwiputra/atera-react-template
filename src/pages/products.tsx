@@ -87,7 +87,7 @@ export default function ProductsPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('products')}
                     description={t('productsDescription')}
@@ -108,7 +108,6 @@ export default function ProductsPage() {
                     description={t('deleteProductDescription')}
                     confirmLabel={t('delete')}
                     cancelLabel={t('cancel')}
-                    trigger={<span />}
                     onConfirm={() => {
                         if (!pendingDelete) return;
                         productService.remove(pendingDelete.id);

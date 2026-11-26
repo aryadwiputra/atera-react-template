@@ -94,7 +94,7 @@ export default function ChartsPage() {
     const t = useTranslations(language);
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader title={t('charts')} description={t('chartsDescription')} />
                 <div className="grid gap-4 lg:grid-cols-2">
                     <Card>

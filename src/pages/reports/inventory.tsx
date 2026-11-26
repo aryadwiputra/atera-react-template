@@ -80,7 +80,7 @@ export default function InventoryReportPage() {
 
     return (
         <PageTransition>
-            <main className="dashboard-content flex min-h-full flex-col p-4 md:p-6">
+            <main className="dashboard-content flex min-h-full flex-col app-page">
                 <ReportToolbar
                     title="Inventory Report"
                     filters={filters}

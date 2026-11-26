@@ -118,7 +118,7 @@ export default function FinanceReportPage() {
 
     return (
         <PageTransition>
-            <main className="dashboard-content flex min-h-full flex-col p-4 md:p-6">
+            <main className="dashboard-content flex min-h-full flex-col app-page">
                 <ReportToolbar
                     title="Finance Report"
                     filters={filters}

@@ -170,7 +170,7 @@ export default function FormsPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full w-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full w-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader title={t('forms')} description={t('formsDescription')} />
                 <div className="grid gap-6 lg:grid-cols-2">
                     <InputVariantsSection t={t} />

@@ -51,7 +51,7 @@ export default function FilesPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col gap-6 p-4 md:p-6">
+            <main className="flex min-h-full flex-col gap-[var(--page-gap,1.5rem)] app-page">
                 <PageHeader
                     title={t('files')}
                     description={t('filesDescription')}
@@ -123,7 +123,7 @@ export default function FilesPage() {
                             const Icon = typeIcons[file.type];
                             return (
                                 <Card key={file.id}>
-                                    <CardContent className="space-y-3 p-5">
+                                    <CardContent className="space-y-3 p-[var(--panel-p,1.25rem)]">
                                         <div className="flex items-center justify-between">
                                             <Icon className="size-8 text-muted-foreground" />
                                             <Button

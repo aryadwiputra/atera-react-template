@@ -734,7 +734,7 @@ export default function LiveChatPage() {
 
     return (
         <PageTransition>
-            <main className="flex min-h-full flex-col p-4 md:p-6">
+            <main className="flex min-h-full flex-col app-page">
                 <Card className="overflow-hidden py-0 md:h-[calc(100svh-7rem)] md:min-h-[520px]">
                     <div className="grid min-h-[560px] md:h-full md:min-h-0 md:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)_400px]">
                         <ConversationList
