@@ -20,6 +20,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { RichTextEditor } from '@/components/shared/rich-text-editor';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
@@ -81,7 +82,10 @@ function FolderRail({
     t,
 }: FolderRailProps) {
     return (
-        <aside className="chat-scroll hidden min-h-0 flex-col overflow-y-auto border-b bg-muted/20 md:flex md:border-r md:border-b-0">
+        <aside
+            className="chat-scroll hidden min-h-0 flex-col overflow-y-auto overscroll-contain border-b bg-muted/20 md:flex md:border-r md:border-b-0"
+            data-section-scroll="email-folders"
+        >
             <div className="flex h-14 shrink-0 items-center justify-between gap-2 border-b px-3">
                 <h2 className="text-sm font-semibold">{t('folders')}</h2>
                 {unreadCount > 0 && (
@@ -153,12 +157,17 @@ type EmailListProps = {
     selectedId: string | null;
     unreadCount: number;
     hasActiveFilters: boolean;
+    selectedIds: Set<string>;
     className?: string;
     onViewChange: (view: EmailView) => void;
     onSearchChange: (value: string) => void;
     onSelect: (id: string) => void;
     onReset: () => void;
     onCompose: () => void;
+    onToggleSelect: (id: string) => void;
+    onToggleSelectAll: () => void;
+    onClearSelection: () => void;
+    onBulkAction: (action: 'read' | 'unread' | 'archive' | 'trash') => void;
     t: Translator;
 };
 
@@ -170,12 +179,17 @@ function EmailList({
     selectedId,
     unreadCount,
     hasActiveFilters,
+    selectedIds,
     className,
     onViewChange,
     onSearchChange,
     onSelect,
     onReset,
     onCompose,
+    onToggleSelect,
+    onToggleSelectAll,
+    onClearSelection,
+    onBulkAction,
     t,
 }: EmailListProps) {
     const activeLabel = folderViews.find((item) => item.value === view)?.label ?? 'inbox';
@@ -223,6 +237,73 @@ function EmailList({
                     </Button>
                 </div>
             </div>
+            {selectedIds.size > 0 && (
+                <div className="flex shrink-0 items-center gap-1 border-b bg-muted/20 px-3 py-2">
+                    <Checkbox
+                        checked={
+                            filtered.length > 0 &&
+                            filtered.every((item) => selectedIds.has(item.id))
+                        }
+                        onCheckedChange={onToggleSelectAll}
+                        aria-label={t('selectAllVisibleRows')}
+                    />
+                    <span className="ml-1 text-xs font-medium">
+                        {selectedIds.size} {t('selected')}
+                    </span>
+                    <div className="ml-auto flex items-center gap-0.5">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-7"
+                            onClick={() => onBulkAction('read')}
+                            aria-label={t('markRead')}
+                            title={t('markRead')}
+                        >
+                            <MailOpen className="size-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-7"
+                            onClick={() => onBulkAction('unread')}
+                            aria-label={t('markUnread')}
+                            title={t('markUnread')}
+                        >
+                            <Mail className="size-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-7"
+                            onClick={() => onBulkAction('archive')}
+                            aria-label={t('archive')}
+                            title={t('archive')}
+                        >
+                            <Archive className="size-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-7"
+                            onClick={() => onBulkAction('trash')}
+                            aria-label={t('trash')}
+                            title={t('trash')}
+                        >
+                            <Trash2 className="size-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-7"
+                            onClick={onClearSelection}
+                            aria-label={t('clear')}
+                            title={t('clear')}
+                        >
+                            <X className="size-4" />
+                        </Button>
+                    </div>
+                </div>
+            )}
             <div className="flex shrink-0 flex-col gap-2 border-b p-3">
                 <div className="relative">
                     <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2" />
@@ -255,7 +336,10 @@ function EmailList({
                     })}
                 </div>
             </div>
-            <div className="chat-scroll no-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain">
+            <div
+                className="chat-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain"
+                data-section-scroll="email-list"
+            >
                 {filtered.length === 0 ? (
                     <div className="flex flex-col items-center justify-center gap-2 p-6 text-center">
                         <Mail className="text-muted-foreground/50 size-8" />
@@ -265,55 +349,68 @@ function EmailList({
                         </Button>
                     </div>
                 ) : (
-                    filtered.map((email) => (
-                        <button
-                            key={email.id}
-                            type="button"
-                            onClick={() => onSelect(email.id)}
-                            className={cn(
-                                'flex w-full items-start gap-3 border-b px-3 py-3 text-left hover:bg-accent/50',
-                                selectedId === email.id && 'bg-accent',
-                            )}
-                        >
-                            <Avatar className="size-9 shrink-0">
-                                <AvatarFallback className="text-xs">
-                                    {email.from.initials}
-                                </AvatarFallback>
-                            </Avatar>
-                            <div className="min-w-0 flex-1">
-                                <div className="flex items-center gap-2">
-                                    <span
-                                        className={cn(
-                                            'truncate text-sm',
-                                            email.unread ? 'font-semibold' : 'font-medium',
-                                        )}
-                                    >
-                                        {email.from.name}
-                                    </span>
-                                    <span className="text-muted-foreground ml-auto shrink-0 text-xs">
-                                        {email.time}
-                                    </span>
-                                </div>
-                                <div
-                                    className={cn(
-                                        'mt-0.5 truncate text-sm',
-                                        email.unread ? 'font-semibold' : 'font-medium',
-                                    )}
+                    filtered.map((email) => {
+                        const isSelected = selectedIds.has(email.id);
+                        return (
+                            <div
+                                key={email.id}
+                                className={cn(
+                                    'flex items-start gap-2 border-b px-3 py-3 transition-colors hover:bg-accent/50',
+                                    selectedId === email.id && 'bg-accent',
+                                )}
+                            >
+                                <Checkbox
+                                    checked={isSelected}
+                                    onCheckedChange={() => onToggleSelect(email.id)}
+                                    aria-label={email.subject}
+                                    className="mt-1"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => onSelect(email.id)}
+                                    className="flex min-w-0 flex-1 items-start gap-3 text-left"
                                 >
-                                    {email.subject}
-                                </div>
-                                <p className="text-muted-foreground mt-0.5 line-clamp-2 text-xs">
-                                    {email.preview}
-                                </p>
+                                    <Avatar className="size-9 shrink-0">
+                                        <AvatarFallback className="text-xs">
+                                            {email.from.initials}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className="min-w-0 flex-1">
+                                        <div className="flex items-center gap-2">
+                                            <span
+                                                className={cn(
+                                                    'truncate text-sm',
+                                                    email.unread ? 'font-semibold' : 'font-medium',
+                                                )}
+                                            >
+                                                {email.from.name}
+                                            </span>
+                                            <span className="text-muted-foreground ml-auto shrink-0 text-xs">
+                                                {email.time}
+                                            </span>
+                                        </div>
+                                        <div
+                                            className={cn(
+                                                'mt-0.5 truncate text-sm',
+                                                email.unread ? 'font-semibold' : 'font-medium',
+                                            )}
+                                        >
+                                            {email.subject}
+                                        </div>
+                                        <p className="text-muted-foreground mt-0.5 line-clamp-2 text-xs">
+                                            {email.preview}
+                                        </p>
+                                    </div>
+                                    {email.starred && (
+                                        <Star className="text-status-warning size-3.5 shrink-0" />
+                                    )}
+                                    {email.unread && (
+                                        <span className="size-2 shrink-0 rounded-full bg-primary" />
+                                    )}
+                                </button>
                             </div>
-                            {email.starred && (
-                                <Star className="text-status-warning size-3.5 shrink-0" />
-                            )}
-                            {email.unread && (
-                                <span className="size-2 shrink-0 rounded-full bg-primary" />
-                            )}
-                        </button>
-                    ))
+                        );
+                    })
                 )}
             </div>
         </section>
@@ -406,7 +503,10 @@ function ReadingPane({
                     <Trash2 className="size-4" />
                 </Button>
             </div>
-            <div className="chat-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain p-4">
+            <div
+                className="chat-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain p-4"
+                data-section-scroll="email-reading"
+            >
                 <div className="mb-4 flex items-center gap-3">
                     <Avatar className="size-10 shrink-0">
                         <AvatarFallback className="text-sm">{email.from.initials}</AvatarFallback>
@@ -512,6 +612,7 @@ export default function EmailsPage() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [search, setSearch] = useState('');
     const [replyDraft, setReplyDraft] = useState('');
+    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
     const emails = emailService.list();
     const selected = selectedId ? (emailService.get(selectedId) ?? null) : null;
@@ -578,6 +679,7 @@ export default function EmailsPage() {
 
     const changeView = (next: EmailView) => {
         setSelectedId(null);
+        setSelectedIds(new Set());
         setSearchParams(
             (current) => {
                 const params = new URLSearchParams(current);
@@ -591,6 +693,7 @@ export default function EmailsPage() {
 
     const changeLabel = (next: EmailLabel | 'all') => {
         setSelectedId(null);
+        setSelectedIds(new Set());
         setSearchParams(
             (current) => {
                 const params = new URLSearchParams(current);
@@ -604,6 +707,7 @@ export default function EmailsPage() {
 
     const resetFilters = () => {
         setSearch('');
+        setSelectedIds(new Set());
         setSearchParams(
             (current) => {
                 const params = new URLSearchParams(current);
@@ -612,6 +716,38 @@ export default function EmailsPage() {
             },
             { replace: true },
         );
+    };
+
+    const toggleSelect = (id: string) => {
+        setSelectedIds((current) => {
+            const next = new Set(current);
+            if (next.has(id)) next.delete(id);
+            else next.add(id);
+            return next;
+        });
+    };
+
+    const toggleSelectAll = () => {
+        setSelectedIds((current) => {
+            const allSelected =
+                filtered.length > 0 && filtered.every((email) => current.has(email.id));
+            return allSelected ? new Set() : new Set(filtered.map((email) => email.id));
+        });
+    };
+
+    const clearSelection = () => setSelectedIds(new Set());
+
+    const bulkAction = (action: 'read' | 'unread' | 'archive' | 'trash') => {
+        if (selectedIds.size === 0) return;
+        for (const id of selectedIds) {
+            if (action === 'read') emailService.markRead(id, false);
+            else if (action === 'unread') emailService.markRead(id, true);
+            else if (action === 'archive') emailService.move(id, 'archive');
+            else emailService.move(id, 'trash');
+        }
+        if (selectedId && selectedIds.has(selectedId)) setSelectedId(null);
+        setSelectedIds(new Set());
+        force();
     };
 
     return (
@@ -636,12 +772,17 @@ export default function EmailsPage() {
                             selectedId={selectedId}
                             unreadCount={unreadCount}
                             hasActiveFilters={hasActiveFilters}
+                            selectedIds={selectedIds}
                             className={cn(selected && 'hidden md:flex')}
                             onViewChange={changeView}
                             onSearchChange={setSearch}
                             onSelect={selectEmail}
                             onReset={resetFilters}
                             onCompose={() => navigate('/contact-center/emails/compose')}
+                            onToggleSelect={toggleSelect}
+                            onToggleSelectAll={toggleSelectAll}
+                            onClearSelection={clearSelection}
+                            onBulkAction={bulkAction}
                             t={t}
                         />
                         {selected ? (

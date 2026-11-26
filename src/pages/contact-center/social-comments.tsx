@@ -11,6 +11,7 @@ import {
     Send,
     ThumbsUp,
     Users,
+    X,
     type LucideIcon,
 } from 'lucide-react';
 import { useReducer, useState } from 'react';
@@ -18,6 +19,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -104,7 +106,10 @@ function CommentDetailPanel({
     ];
 
     return (
-        <aside className="chat-scroll hidden min-h-0 flex-col overflow-y-auto border-l bg-muted/10 xl:flex">
+        <aside
+            className="chat-scroll hidden min-h-0 flex-col overflow-y-auto overscroll-contain border-l bg-muted/10 xl:flex"
+            data-section-scroll="social-detail"
+        >
             <div className="flex items-center justify-between gap-2 border-b p-4">
                 <h2 className="text-sm font-semibold">{t('commentDetails')}</h2>
                 <Badge className={cn('text-xs', statusBadge[comment.status])}>
@@ -209,6 +214,7 @@ export default function SocialCommentsPage() {
     const [status, setStatus] = useState<string>('all');
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [draft, setDraft] = useState('');
+    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
     const query = search.trim().toLowerCase();
     const comments = socialCommentService.list();
@@ -241,17 +247,53 @@ export default function SocialCommentsPage() {
         force();
     };
 
+    const toggleSelect = (id: string) => {
+        setSelectedIds((current) => {
+            const next = new Set(current);
+            if (next.has(id)) next.delete(id);
+            else next.add(id);
+            return next;
+        });
+    };
+
+    const toggleSelectAll = () => {
+        setSelectedIds((current) => {
+            const allSelected = visible.length > 0 && visible.every((item) => current.has(item.id));
+            return allSelected ? new Set() : new Set(visible.map((item) => item.id));
+        });
+    };
+
+    const clearSelection = () => setSelectedIds(new Set());
+
+    const bulkHidden = (hidden: boolean) => {
+        if (selectedIds.size === 0) return;
+        for (const id of selectedIds) {
+            const comment = comments.find((item) => item.id === id);
+            if (!comment) continue;
+            if (hidden && comment.status !== 'hidden') socialCommentService.toggleHidden(id);
+            if (!hidden && comment.status === 'hidden') socialCommentService.toggleHidden(id);
+        }
+        setSelectedIds(new Set());
+        force();
+    };
+
     return (
         <PageTransition>
             <main className="flex min-h-full flex-col app-page">
                 <Card className="overflow-hidden py-0 md:h-[calc(100svh-7rem)] md:min-h-[520px]">
                     <div className="grid min-h-[560px] md:h-full md:min-h-0 md:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[220px_minmax(0,1fr)_320px]">
-                        <aside className="chat-scroll flex min-h-0 flex-col gap-4 overflow-y-auto border-b bg-muted/20 p-4 md:border-r md:border-b-0">
+                        <aside
+                            className="chat-scroll flex min-h-0 flex-col gap-4 overflow-y-auto overscroll-contain border-b bg-muted/20 p-4 md:border-r md:border-b-0"
+                            data-section-scroll="social-filters"
+                        >
                             <div className="relative">
                                 <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                                 <Input
                                     value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
+                                    onChange={(e) => {
+                                        setSearch(e.target.value);
+                                        setSelectedIds(new Set());
+                                    }}
                                     placeholder={t('search')}
                                     className="pl-8"
                                 />
@@ -274,7 +316,10 @@ export default function SocialCommentsPage() {
                                     return (
                                         <button
                                             key={p}
-                                            onClick={() => setChannel(p)}
+                                            onClick={() => {
+                                                setChannel(p);
+                                                setSelectedIds(new Set());
+                                            }}
                                             className={cn(
                                                 'flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors',
                                                 active
@@ -293,7 +338,13 @@ export default function SocialCommentsPage() {
                                     );
                                 })}
                             </nav>
-                            <Select value={status} onValueChange={setStatus}>
+                            <Select
+                                value={status}
+                                onValueChange={(value) => {
+                                    setStatus(value);
+                                    setSelectedIds(new Set());
+                                }}
+                            >
                                 <SelectTrigger className="w-full" aria-label={t('status')}>
                                     <SelectValue />
                                 </SelectTrigger>
@@ -307,7 +358,51 @@ export default function SocialCommentsPage() {
                             </Select>
                         </aside>
                         <section className="flex min-h-0 flex-col border-b md:border-b-0 md:border-r">
-                            <div className="chat-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
+                            {selectedIds.size > 0 && (
+                                <div className="flex shrink-0 items-center gap-1 border-b bg-muted/20 px-3 py-2">
+                                    <Checkbox
+                                        checked={
+                                            visible.length > 0 &&
+                                            visible.every((item) => selectedIds.has(item.id))
+                                        }
+                                        onCheckedChange={toggleSelectAll}
+                                        aria-label={t('selectAllVisibleRows')}
+                                    />
+                                    <span className="ml-1 text-xs font-medium">
+                                        {selectedIds.size} {t('selected')}
+                                    </span>
+                                    <div className="ml-auto flex items-center gap-1">
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => bulkHidden(true)}
+                                        >
+                                            {t('hide')}
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => bulkHidden(false)}
+                                        >
+                                            {t('unhide')}
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="size-7"
+                                            onClick={clearSelection}
+                                            aria-label={t('clear')}
+                                            title={t('clear')}
+                                        >
+                                            <X className="size-4" />
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
+                            <div
+                                className="chat-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain"
+                                data-section-scroll="social-list"
+                            >
                                 {visible.length === 0 && (
                                     <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
                                         {t('noResults')}
@@ -317,54 +412,64 @@ export default function SocialCommentsPage() {
                                     const platform = platformConfig[comment.platform];
                                     const Icon = platform.icon;
                                     return (
-                                        <button
+                                        <div
                                             key={comment.id}
-                                            type="button"
-                                            onClick={() => setSelectedId(comment.id)}
                                             className={cn(
-                                                'flex w-full items-start gap-3 border-b p-4 text-left transition-colors hover:bg-accent/50',
+                                                'flex items-start gap-2 border-b p-4 transition-colors hover:bg-accent/50',
                                                 selectedId === comment.id && 'bg-accent',
                                             )}
                                         >
-                                            <Avatar className="size-9">
-                                                <AvatarFallback className="text-xs">
-                                                    {comment.initials}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <div className="min-w-0 flex-1">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="truncate text-sm font-medium">
-                                                        {comment.username}
-                                                    </span>
-                                                    <Icon
-                                                        className={cn(
-                                                            'size-3.5',
-                                                            platform.className,
-                                                        )}
-                                                    />
-                                                    <span className="text-muted-foreground ml-auto shrink-0 text-xs">
-                                                        {comment.time}
-                                                    </span>
+                                            <Checkbox
+                                                checked={selectedIds.has(comment.id)}
+                                                onCheckedChange={() => toggleSelect(comment.id)}
+                                                aria-label={`${comment.username}: ${comment.text}`}
+                                                className="mt-1"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setSelectedId(comment.id)}
+                                                className="flex min-w-0 flex-1 items-start gap-3 text-left"
+                                            >
+                                                <Avatar className="size-9">
+                                                    <AvatarFallback className="text-xs">
+                                                        {comment.initials}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <div className="min-w-0 flex-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="truncate text-sm font-medium">
+                                                            {comment.username}
+                                                        </span>
+                                                        <Icon
+                                                            className={cn(
+                                                                'size-3.5',
+                                                                platform.className,
+                                                            )}
+                                                        />
+                                                        <span className="text-muted-foreground ml-auto shrink-0 text-xs">
+                                                            {comment.time}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-muted-foreground mt-1 line-clamp-2 text-xs">
+                                                        {comment.text}
+                                                    </p>
+                                                    <div className="mt-2 flex items-center gap-3">
+                                                        <span className="text-muted-foreground flex items-center gap-1 text-xs">
+                                                            <Heart className="size-3.5" />
+                                                            {comment.likes}
+                                                        </span>
+                                                        <Badge
+                                                            className={cn(
+                                                                'text-xs',
+                                                                statusBadge[comment.status],
+                                                            )}
+                                                        >
+                                                            {t(statusLabels[comment.status])}
+                                                        </Badge>
+                                                    </div>
                                                 </div>
-                                                <p className="text-muted-foreground mt-1 line-clamp-2 text-xs">
-                                                    {comment.text}
-                                                </p>
-                                                <div className="mt-2 flex items-center gap-3">
-                                                    <span className="text-muted-foreground flex items-center gap-1 text-xs">
-                                                        <Heart className="size-3.5" />
-                                                        {comment.likes}
-                                                    </span>
-                                                    <Badge
-                                                        className={cn(
-                                                            'text-xs',
-                                                            statusBadge[comment.status],
-                                                        )}
-                                                    >
-                                                        {t(statusLabels[comment.status])}
-                                                    </Badge>
-                                                </div>
-                                            </div>
-                                        </button>
+                                            </button>
+                                        </div>
                                     );
                                 })}
                             </div>

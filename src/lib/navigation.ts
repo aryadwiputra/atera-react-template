@@ -15,6 +15,7 @@ import {
     FormInput,
     HelpCircle,
     KanbanSquare,
+    LayoutDashboard,
     LayoutGrid,
     LayoutPanelTop,
     Mail,
@@ -310,6 +311,14 @@ export const navigationItems: NavigationItem[] = [
         group: 'commerce',
         keywords: ['plans', 'upgrade'],
         translationKey: 'pricing',
+    },
+    {
+        title: 'Overview',
+        href: '/contact-center',
+        icon: LayoutDashboard,
+        group: 'contact-center',
+        keywords: ['contact', 'center', 'overview', 'queue'],
+        translationKey: 'contactCenterOverview',
     },
     {
         title: 'Live Chat',

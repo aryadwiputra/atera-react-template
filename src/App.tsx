@@ -67,6 +67,7 @@ const InventoryReportPage = lazy(() => import('@/pages/reports/inventory'));
 const CustomersReportPage = lazy(() => import('@/pages/reports/customers'));
 const HrReportPage = lazy(() => import('@/pages/reports/hr'));
 const ProcurementReportPage = lazy(() => import('@/pages/reports/procurement'));
+const ContactCenterOverviewPage = lazy(() => import('@/pages/contact-center/overview'));
 const LiveChatPage = lazy(() => import('@/pages/contact-center/live-chat'));
 const SocialCommentsPage = lazy(() => import('@/pages/contact-center/social-comments'));
 const EmailsPage = lazy(() => import('@/pages/contact-center/emails'));
@@ -193,6 +194,7 @@ const explicitPaths = new Set([
     '/settings/billing',
     '/settings/departments',
     '/editor',
+    '/contact-center',
     '/contact-center/live-chat',
     '/contact-center/social-comments',
     '/contact-center/emails',
@@ -248,6 +250,10 @@ const router = createBrowserRouter([
             { path: '/reports/customers', element: suspend(<CustomersReportPage />) },
             { path: '/reports/hr', element: suspend(<HrReportPage />) },
             { path: '/reports/procurement', element: suspend(<ProcurementReportPage />) },
+            {
+                path: '/contact-center',
+                element: suspend(<ContactCenterOverviewPage />),
+            },
             { path: '/contact-center/live-chat', element: suspend(<LiveChatPage />) },
             { path: '/contact-center/social-comments', element: suspend(<SocialCommentsPage />) },
             { path: '/contact-center/emails', element: suspend(<EmailsPage />) },

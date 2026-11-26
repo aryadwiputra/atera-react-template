@@ -58,6 +58,34 @@ const channels: ConversationChannel[] = ['whatsapp', 'webchat', 'email', 'messen
 
 type StatusFilter = 'all' | 'unread' | ConversationStatus;
 type ChannelFilter = 'all' | ConversationChannel;
+type Priority = 'High' | 'Medium' | 'Low' | 'Normal';
+type PriorityFilter = 'all' | Priority;
+
+const priorityLabels: Record<Priority, TranslationKey> = {
+    High: 'highPriority',
+    Medium: 'mediumPriority',
+    Low: 'lowPriority',
+    Normal: 'normalPriority',
+};
+
+const priorityClasses: Record<Priority, string> = {
+    High: 'bg-destructive/10 text-destructive',
+    Medium: 'bg-status-warning/15 text-status-warning',
+    Low: 'bg-muted text-muted-foreground',
+    Normal: 'bg-muted text-muted-foreground',
+};
+
+const priorityFilters: { value: PriorityFilter; label: TranslationKey }[] = [
+    { value: 'all', label: 'statusAll' },
+    { value: 'High', label: 'highPriority' },
+    { value: 'Medium', label: 'mediumPriority' },
+    { value: 'Low', label: 'lowPriority' },
+    { value: 'Normal', label: 'normalPriority' },
+];
+
+function priorityOf(conversation: Conversation): Priority {
+    return (conversation.ticketPriority as Priority | undefined) ?? 'Normal';
+}
 
 const statusFilters: { value: StatusFilter; label: TranslationKey }[] = [
     { value: 'all', label: 'statusAll' },
@@ -82,9 +110,11 @@ type ConversationListProps = {
     search: string;
     statusFilter: StatusFilter;
     channelFilter: ChannelFilter;
+    priorityFilter: PriorityFilter;
     onSearch: (value: string) => void;
     onStatusFilter: (value: StatusFilter) => void;
     onChannelFilter: (value: ChannelFilter) => void;
+    onPriorityFilter: (value: PriorityFilter) => void;
     onSelect: (id: string) => void;
     onReset: () => void;
     t: Translator;
@@ -97,14 +127,20 @@ function ConversationList({
     search,
     statusFilter,
     channelFilter,
+    priorityFilter,
     onSearch,
     onStatusFilter,
     onChannelFilter,
+    onPriorityFilter,
     onSelect,
     onReset,
     t,
 }: ConversationListProps) {
-    const hasFilters = Boolean(search.trim()) || statusFilter !== 'all' || channelFilter !== 'all';
+    const hasFilters =
+        Boolean(search.trim()) ||
+        statusFilter !== 'all' ||
+        channelFilter !== 'all' ||
+        priorityFilter !== 'all';
 
     return (
         <aside className="flex min-h-0 flex-col border-b bg-muted/20 md:border-r md:border-b-0">
@@ -142,7 +178,7 @@ function ConversationList({
                         value={channelFilter}
                         onValueChange={(value) => onChannelFilter(value as ChannelFilter)}
                     >
-                        <SelectTrigger size="sm" className="w-full">
+                        <SelectTrigger size="sm" className="w-full" aria-label={t('channels')}>
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -158,7 +194,7 @@ function ConversationList({
                         value={statusFilter}
                         onValueChange={(value) => onStatusFilter(value as StatusFilter)}
                     >
-                        <SelectTrigger size="sm" className="w-full">
+                        <SelectTrigger size="sm" className="w-full" aria-label={t('status')}>
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -170,6 +206,21 @@ function ConversationList({
                         </SelectContent>
                     </Select>
                 </div>
+                <Select
+                    value={priorityFilter}
+                    onValueChange={(value) => onPriorityFilter(value as PriorityFilter)}
+                >
+                    <SelectTrigger size="sm" className="w-full" aria-label={t('priority')}>
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {priorityFilters.map((filter) => (
+                            <SelectItem key={filter.value} value={filter.value}>
+                                {t(filter.label)}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </div>
             <div className="chat-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
                 {conversations.length === 0 ? (
@@ -185,6 +236,7 @@ function ConversationList({
                 ) : (
                     conversations.map((conversation) => {
                         const last = conversation.messages[conversation.messages.length - 1];
+                        const priority = priorityOf(conversation);
                         return (
                             <button
                                 key={conversation.id}
@@ -224,6 +276,14 @@ function ConversationList({
                                             className="text-muted-foreground px-1.5 py-0 text-xs"
                                         >
                                             {channelLabels[conversation.channel]}
+                                        </Badge>
+                                        <Badge
+                                            className={cn(
+                                                'shrink-0 px-1.5 py-0 text-[10px]',
+                                                priorityClasses[priority],
+                                            )}
+                                        >
+                                            {t(priorityLabels[priority])}
                                         </Badge>
                                         <span className="text-muted-foreground truncate text-xs">
                                             {last?.body}
@@ -431,7 +491,7 @@ function CustomerPanel({ conversation, onAssigneeChange, onSaveTicket, t }: Cust
                             {t('assign')}
                         </h3>
                         <Select value={conversation.assignee} onValueChange={onAssigneeChange}>
-                            <SelectTrigger className="w-full">
+                            <SelectTrigger className="w-full" aria-label={t('assign')}>
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -591,7 +651,7 @@ function TicketForm({ form, onChange, onSubmit, onCancel, isEditing, t }: Ticket
             <label className="grid gap-2 text-xs font-medium">
                 {t('category')}
                 <Select value={form.category} onValueChange={(value) => set({ category: value })}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full" aria-label={t('category')}>
                         <SelectValue placeholder={t('categoryPh')} />
                     </SelectTrigger>
                     <SelectContent>
@@ -604,7 +664,7 @@ function TicketForm({ form, onChange, onSubmit, onCancel, isEditing, t }: Ticket
             <label className="grid gap-2 text-xs font-medium">
                 {t('type')}
                 <Select value={form.type} onValueChange={(value) => set({ type: value })}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full" aria-label={t('type')}>
                         <SelectValue placeholder={t('typePh')} />
                     </SelectTrigger>
                     <SelectContent>
@@ -617,7 +677,7 @@ function TicketForm({ form, onChange, onSubmit, onCancel, isEditing, t }: Ticket
             <label className="grid gap-2 text-xs font-medium">
                 {t('priority')}
                 <Select value={form.priority} onValueChange={(value) => set({ priority: value })}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full" aria-label={t('priority')}>
                         <SelectValue placeholder={t('priorityPh')} />
                     </SelectTrigger>
                     <SelectContent>
@@ -673,6 +733,7 @@ export default function LiveChatPage() {
     const [search, setSearch] = useState('');
     const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
     const [channelFilter, setChannelFilter] = useState<ChannelFilter>('all');
+    const [priorityFilter, setPriorityFilter] = useState<PriorityFilter>('all');
 
     const conversations = conversationService.list();
     const selected = conversations.find((c) => c.id === selectedId) ?? null;
@@ -695,13 +756,15 @@ export default function LiveChatPage() {
             statusFilter === 'all' ||
             (statusFilter === 'unread' ? c.unread : c.status === statusFilter);
         const matchesChannel = channelFilter === 'all' || c.channel === channelFilter;
-        return matchesQuery && matchesStatus && matchesChannel;
+        const matchesPriority = priorityFilter === 'all' || priorityOf(c) === priorityFilter;
+        return matchesQuery && matchesStatus && matchesChannel && matchesPriority;
     });
 
     const resetFilters = () => {
         setSearch('');
         setStatusFilter('all');
         setChannelFilter('all');
+        setPriorityFilter('all');
     };
 
     const select = (id: string) => {
@@ -744,9 +807,11 @@ export default function LiveChatPage() {
                             search={search}
                             statusFilter={statusFilter}
                             channelFilter={channelFilter}
+                            priorityFilter={priorityFilter}
                             onSearch={setSearch}
                             onStatusFilter={setStatusFilter}
                             onChannelFilter={setChannelFilter}
+                            onPriorityFilter={setPriorityFilter}
                             onSelect={select}
                             onReset={resetFilters}
                             t={t}
@@ -770,6 +835,14 @@ export default function LiveChatPage() {
                                             >
                                                 {channelLabels[selected.channel]}
                                             </Badge>
+                                            <Badge
+                                                className={cn(
+                                                    'shrink-0 px-1.5 py-0 text-[10px]',
+                                                    priorityClasses[priorityOf(selected)],
+                                                )}
+                                            >
+                                                {t(priorityLabels[priorityOf(selected)])}
+                                            </Badge>
                                         </div>
                                         <Select
                                             value={selected.status}
@@ -781,7 +854,11 @@ export default function LiveChatPage() {
                                                 force();
                                             }}
                                         >
-                                            <SelectTrigger size="sm" className="ml-auto w-32">
+                                            <SelectTrigger
+                                                size="sm"
+                                                className="ml-auto w-32"
+                                                aria-label={t('status')}
+                                            >
                                                 <SelectValue />
                                             </SelectTrigger>
                                             <SelectContent>

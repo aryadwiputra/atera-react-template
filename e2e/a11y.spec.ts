@@ -83,6 +83,22 @@ test.describe('accessibility', () => {
         }
     });
 
+    test('contact center pages have no serious or critical WCAG violations', async ({ page }) => {
+        await signInAsDemo(page);
+
+        for (const path of [
+            '/contact-center',
+            '/contact-center/live-chat',
+            '/contact-center/emails',
+            '/contact-center/social-comments',
+        ]) {
+            await page.goto(path);
+            await expect(page.locator('#main-content')).toBeVisible();
+            await settleAnimations(page);
+            expect(await wcagViolations(page, '#main-content')).toEqual([]);
+        }
+    });
+
     test('users page status chips meet contrast', async ({ page }) => {
         await signInAsDemo(page);
         await page.goto('/users');
