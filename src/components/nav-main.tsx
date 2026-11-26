@@ -11,6 +11,7 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar';
 import { useCurrentUrl } from '@/hooks/use-current-url';
+import { prefetchRoute } from '@/lib/route-prefetch';
 import { cn } from '@/lib/utils';
 import type { NavItem } from '@/types';
 
@@ -117,6 +118,10 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
                                                 ) : (
                                                     <Link
                                                         to={item.href}
+                                                        onMouseEnter={() =>
+                                                            prefetchRoute(item.href)
+                                                        }
+                                                        onFocus={() => prefetchRoute(item.href)}
                                                         aria-current={
                                                             !item.disabled &&
                                                             isCurrentUrl(item.href, undefined, true)
