@@ -11,6 +11,7 @@ const navLinks = [
     { label: 'Live preview', href: '#live-preview', external: false },
     { label: 'Features', href: '#features', external: false },
     { label: 'Pages', href: '#pages', external: false },
+    { label: 'Stack', href: '#stack', external: false },
     { label: 'Pricing', href: '#pricing', external: false },
     { label: 'Docs', href: '/docs', external: true },
 ];

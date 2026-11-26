@@ -65,6 +65,7 @@ test('navbar marks the section in view and keeps links as links', async ({ page 
     const features = main.getByRole('link', { name: 'Features', exact: true });
     const livePreview = main.getByRole('link', { name: 'Live preview', exact: true });
     const pages = main.getByRole('link', { name: 'Pages', exact: true });
+    const stack = main.getByRole('link', { name: 'Stack', exact: true });
     const docs = main.getByRole('link', { name: /^Docs/ });
 
     await expect(main.getByRole('link').first()).toHaveAccessibleName(/^Live preview/);
@@ -92,6 +93,15 @@ test('navbar marks the section in view and keeps links as links', async ({ page 
     await pages.click();
     await expect(page).toHaveURL(/#pages$/);
     await expect(pages).toHaveAttribute('aria-current', 'true');
+
+    await stack.click();
+    await expect(page).toHaveURL(/#stack$/);
+    await expect(stack).toHaveAttribute('aria-current', 'true');
+    await expect(
+        page.getByRole('heading', { name: 'The dependencies, already in place' }),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Framework' })).toBeVisible();
+    await expect(page.getByText('TanStack Query', { exact: true })).toBeVisible();
 
     await expect(
         page.getByRole('link', { name: 'Get the template', exact: true }).first(),

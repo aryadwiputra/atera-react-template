@@ -154,6 +154,7 @@ export function Footer() {
             links: [
                 { label: 'Features', href: '#features' },
                 { label: 'Pages', href: '#pages' },
+                { label: 'Stack', href: '#stack' },
                 { label: 'Pricing', href: '#pricing' },
                 { label: 'Live preview', href: '#live-preview' },
             ],

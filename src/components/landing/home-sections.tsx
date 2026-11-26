@@ -180,6 +180,93 @@ export function Features() {
     );
 }
 
+const stackGroups = [
+    {
+        title: 'Framework',
+        items: [
+            { name: 'React', version: '19.3' },
+            { name: 'React Router', version: '8.5' },
+            { name: 'TypeScript', version: '7.0' },
+            { name: 'Vite', version: '8.3' },
+        ],
+    },
+    {
+        title: 'Interface',
+        items: [
+            { name: 'Tailwind CSS', version: '4.3' },
+            { name: 'Radix UI', version: '1.8' },
+            { name: 'shadcn', version: '4.23' },
+            { name: 'Lucide', version: '1.70' },
+        ],
+    },
+    {
+        title: 'Data',
+        items: [
+            { name: 'TanStack Query', version: '5.108' },
+            { name: 'TanStack Table', version: '9.3' },
+            { name: 'Dexie', version: '4.4' },
+            { name: 'Zod', version: '4.6' },
+        ],
+    },
+    {
+        title: 'Workflow',
+        items: [
+            { name: 'React Hook Form', version: '7.91' },
+            { name: 'Recharts', version: '3.8' },
+            { name: 'date-fns', version: '4.4' },
+            { name: 'Playwright', version: '1.65' },
+        ],
+    },
+];
+
+export function Stack() {
+    return (
+        <section id="stack" aria-labelledby="stack-title" className="scroll-mt-24 border-t">
+            <div className="mx-auto w-full max-w-6xl px-6 py-24">
+                <Reveal className="max-w-[680px]">
+                    <h2
+                        id="stack-title"
+                        className="text-3xl font-bold tracking-tight text-balance sm:text-4xl"
+                    >
+                        The dependencies, already in place
+                    </h2>
+                    <p className="mt-4 text-pretty text-muted-foreground">
+                        No custom runtime and no hidden layer. These are the libraries that ship
+                        with the template, installed, typed, and wired into the build.
+                    </p>
+                </Reveal>
+                <div className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+                    {stackGroups.map((group, index) => (
+                        <Reveal key={group.title} delay={index * 0.06}>
+                            <h3 className="text-sm font-semibold">{group.title}</h3>
+                            <ul className="mt-2">
+                                {group.items.map((item) => (
+                                    <li
+                                        key={item.name}
+                                        className="flex items-baseline justify-between gap-4 border-b border-border/60 py-2.5 last:border-0"
+                                    >
+                                        <span className="text-sm">{item.name}</span>
+                                        <span className="font-mono text-xs tabular-nums text-muted-foreground">
+                                            {item.version}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </Reveal>
+                    ))}
+                </div>
+                <Link
+                    to="/docs"
+                    className="mt-10 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                >
+                    Full dependency list in the docs
+                    <ArrowRight className="size-4" />
+                </Link>
+            </div>
+        </section>
+    );
+}
+
 export function Showcase() {
     return (
         <section id="pages" className="scroll-mt-24 bg-muted/40">
