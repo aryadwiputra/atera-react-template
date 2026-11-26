@@ -2,16 +2,9 @@ import { Bell, Languages, Moon, Search, SlidersHorizontal } from 'lucide-react';
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import AppLogo from '@/components/app-logo';
+import { CustomizeDialog } from '@/components/theme-studio-lazy';
 import { useAppearance } from '@/hooks/use-appearance';
-import {
-    useCustomizePreferences,
-    type ColorPreset,
-    type Container,
-    type Density,
-    type Language,
-    type Layout,
-    type PreferencesReturn,
-} from '@/hooks/use-customize-preferences';
+import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
 import {
     CommandDialog,
@@ -22,14 +15,6 @@ import {
 } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
-import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
@@ -37,21 +22,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 
 import { useNavigate } from 'react-router';
 import { navigationItems } from '@/lib/navigation';
 import { buildSearchSections } from '@/lib/search';
 import type { BreadcrumbItem as BreadcrumbItemType } from '@/types';
-
-const colors: ColorPreset[] = ['neutral', 'zinc', 'blue', 'violet', 'rose', 'orange'];
 
 export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItemType[] }) {
     const { appearance, resolvedAppearance, updateAppearance } = useAppearance();
@@ -264,165 +240,5 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
                 updateAppearance={updateAppearance}
             />
         </header>
-    );
-}
-
-type CustomizeDialogProps = {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    preferences: PreferencesReturn;
-    t: ReturnType<typeof useTranslations>;
-    appearance: ReturnType<typeof useAppearance>['appearance'];
-    updateAppearance: ReturnType<typeof useAppearance>['updateAppearance'];
-};
-
-export function CustomizeDialog({
-    open,
-    onOpenChange,
-    preferences,
-    t,
-    appearance,
-    updateAppearance,
-}: CustomizeDialogProps) {
-    const update = <K extends keyof PreferencesReturn>(key: K, value: PreferencesReturn[K]) =>
-        preferences.updatePreferences({ [key]: value });
-    const colorSwatches: Record<ColorPreset, string> = {
-        neutral: 'oklch(0.205 0 0)',
-        zinc: 'oklch(0.274 0.006 286.033)',
-        blue: 'oklch(0.546 0.245 262.881)',
-        violet: 'oklch(0.541 0.281 293.009)',
-        rose: 'oklch(0.586 0.253 17.585)',
-        orange: 'oklch(0.646 0.222 41.116)',
-    };
-    const labels: Record<ColorPreset, string> = {
-        neutral: 'Neutral',
-        zinc: 'Zinc',
-        blue: 'Blue',
-        violet: 'Violet',
-        rose: 'Rose',
-        orange: 'Orange',
-    };
-
-    return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-md">
-                <DialogHeader>
-                    <DialogTitle>{t('customize')}</DialogTitle>
-                    <DialogDescription>
-                        {t('color')}, {t('density')}, {t('layout')}, {t('container')} {t('and')}{' '}
-                        {t('language')}
-                    </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-5">
-                    <PreferenceRow label={t('theme')}>
-                        <div className="grid grid-cols-3 gap-2">
-                            {(['light', 'dark', 'system'] as const).map((mode) => (
-                                <Button
-                                    key={mode}
-                                    variant={appearance === mode ? 'default' : 'outline'}
-                                    className="capitalize"
-                                    onClick={() => updateAppearance(mode)}
-                                >
-                                    {t(mode)}
-                                </Button>
-                            ))}
-                        </div>
-                    </PreferenceRow>
-                    <PreferenceRow label={t('color')}>
-                        <div className="grid grid-cols-3 gap-2">
-                            {colors.map((color) => (
-                                <Button
-                                    key={color}
-                                    variant={preferences.color === color ? 'default' : 'outline'}
-                                    className="justify-start gap-2"
-                                    onClick={() => update('color', color)}
-                                >
-                                    <span
-                                        className="size-3 rounded-full"
-                                        style={{
-                                            backgroundColor: colorSwatches[color],
-                                        }}
-                                    />
-                                    {labels[color]}
-                                </Button>
-                            ))}
-                        </div>
-                    </PreferenceRow>
-                    <PreferenceRow label={t('density')}>
-                        <Select
-                            value={preferences.density}
-                            onValueChange={(value) => update('density', value as Density)}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="compact">{t('compact')}</SelectItem>
-                                <SelectItem value="comfortable">{t('comfortable')}</SelectItem>
-                                <SelectItem value="spacious">{t('spacious')}</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </PreferenceRow>
-                    <PreferenceRow label={t('layout')}>
-                        <Select
-                            value={preferences.layout}
-                            onValueChange={(value) => update('layout', value as Layout)}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="sidebar">{t('sidebar')}</SelectItem>
-                                <SelectItem value="top-nav">{t('topNav')}</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </PreferenceRow>
-                    <PreferenceRow label={t('container')}>
-                        <Select
-                            value={preferences.container}
-                            onValueChange={(value) => update('container', value as Container)}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="fluid">{t('fluid')}</SelectItem>
-                                <SelectItem value="boxed">{t('boxed')}</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </PreferenceRow>
-                    <PreferenceRow label={t('language')}>
-                        <Select
-                            value={preferences.language}
-                            onValueChange={(value) => update('language', value as Language)}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="en">{t('english')}</SelectItem>
-                                <SelectItem value="de">{t('deutsch')}</SelectItem>
-                                <SelectItem value="fr">{t('francais')}</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </PreferenceRow>
-                </div>
-                <DialogFooter>
-                    <Button variant="outline" onClick={preferences.resetPreferences}>
-                        {t('resetDefaults')}
-                    </Button>
-                    <Button onClick={() => onOpenChange(false)}>{t('close')}</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    );
-}
-
-function PreferenceRow({ label, children }: { label: string; children: React.ReactNode }) {
-    return (
-        <div className="space-y-2">
-            <p className="text-sm font-medium">{label}</p>
-            {children}
-        </div>
     );
 }

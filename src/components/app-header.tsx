@@ -21,7 +21,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { CustomizeDialog } from '@/components/app-sidebar-header';
+import { CustomizeDialog } from '@/components/theme-studio-lazy';
 import { useAppearance } from '@/hooks/use-appearance';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
 import { useTranslations } from '@/i18n';
@@ -57,7 +57,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
 
     return (
         <>
-            <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
+            <header
+                data-app-header
+                className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur"
+            >
                 <div className="flex h-16 w-full items-center gap-4 px-4 md:px-6">
                     <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
                         <SheetTrigger asChild>
