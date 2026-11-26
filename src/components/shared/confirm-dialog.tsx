@@ -18,7 +18,7 @@ export interface ConfirmDialogProps {
     cancelLabel?: string;
     destructive?: boolean;
     onConfirm: () => Promise<void> | void;
-    trigger: React.ReactNode;
+    trigger?: React.ReactNode;
 }
 
 export function ConfirmDialog({
@@ -34,7 +34,7 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogTrigger asChild>{trigger}</DialogTrigger>
+            {trigger ? <DialogTrigger asChild>{trigger}</DialogTrigger> : null}
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>

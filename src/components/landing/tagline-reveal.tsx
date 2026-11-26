@@ -16,7 +16,7 @@ export function TaglineReveal({ text, className }: { text: string; className?: s
                 <motion.span
                     key={`${word}-${index}`}
                     className="inline-block"
-                    initial={{ opacity: 0.25 }}
+                    initial={{ opacity: 0.55 }}
                     animate={inView ? { opacity: 1 } : undefined}
                     transition={{
                         duration: 0.6,

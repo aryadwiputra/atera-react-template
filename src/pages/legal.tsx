@@ -8,7 +8,7 @@ function LegalShell({ title, children }: { title: string; children: React.ReactN
         <main className="min-h-svh bg-background text-foreground">
             <header className="border-b">
                 <div className="mx-auto flex w-full max-w-3xl items-center justify-between px-6 py-4">
-                    <Link to="/" aria-label="Atera home">
+                    <Link to="/">
                         <AppLogo />
                     </Link>
                     <Button asChild variant="ghost" size="sm">

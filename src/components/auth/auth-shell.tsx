@@ -5,6 +5,7 @@ import AppLogo from '@/components/app-logo';
 import { Button } from '@/components/ui/button';
 import { useAppearance } from '@/hooks/use-appearance';
 import { useCustomizePreferences } from '@/hooks/use-customize-preferences';
+import { useRouteFocus } from '@/hooks/use-route-focus';
 import { useTranslations } from '@/i18n';
 import { getDemoCredentials } from '@/lib/auth';
 
@@ -38,6 +39,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
     const { language } = useCustomizePreferences();
     const t = useTranslations(language);
     const demo = getDemoCredentials();
+    useRouteFocus();
 
     return (
         <div className="min-h-svh bg-background">
@@ -46,7 +48,6 @@ export function AuthShell({ children }: { children: ReactNode }) {
                     <div className="flex items-center justify-between">
                         <Link
                             to="/"
-                            aria-label="Atera home"
                             className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
                         >
                             <AppLogo />
@@ -105,11 +106,14 @@ export function AuthShell({ children }: { children: ReactNode }) {
                     </p>
                 </aside>
 
-                <main id="main-content" className="flex min-w-0 flex-col">
+                <main
+                    id="main-content"
+                    tabIndex={-1}
+                    className="flex min-w-0 flex-col outline-none"
+                >
                     <div className="flex items-center justify-between px-6 py-6 lg:hidden">
                         <Link
                             to="/"
-                            aria-label="Atera home"
                             className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
                         >
                             <AppLogo />

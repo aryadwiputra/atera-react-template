@@ -37,7 +37,7 @@ export function Navbar() {
                 aria-label="Main"
                 className="flex items-center justify-between rounded-xl border bg-background/80 px-4 py-3 shadow-sm backdrop-blur-md"
             >
-                <Link to="/" className="flex items-center" aria-label="Atera home">
+                <Link to="/" className="flex items-center">
                     <AppLogo />
                 </Link>
                 <div className="hidden items-center gap-6 md:flex">

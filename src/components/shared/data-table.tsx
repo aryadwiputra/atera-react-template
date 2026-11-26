@@ -316,34 +316,39 @@ export function DataTable<TData extends RowData>({
                                         }
                                     />
                                 </th>
-                                {visibleHeaders.map((header) => (
-                                    <th
-                                        key={header.id}
-                                        className="h-11 px-4 text-left text-xs font-medium text-muted-foreground"
-                                    >
-                                        {header.isPlaceholder ? null : (
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center gap-1 hover:text-foreground"
-                                                onClick={() => toggleSort(header.column.id)}
-                                            >
-                                                {flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext(),
-                                                )}
-                                                {activeSort?.id === header.column.id ? (
-                                                    activeSort.direction === 'asc' ? (
-                                                        <ChevronUp className="size-3" />
+                                {visibleHeaders.map((header) => {
+                                    const headerContent = header.isPlaceholder
+                                        ? null
+                                        : flexRender(
+                                              header.column.columnDef.header,
+                                              header.getContext(),
+                                          );
+                                    return (
+                                        <th
+                                            key={header.id}
+                                            className="h-11 px-4 text-left text-xs font-medium text-muted-foreground"
+                                        >
+                                            {headerContent ? (
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex items-center gap-1 hover:text-foreground"
+                                                    onClick={() => toggleSort(header.column.id)}
+                                                >
+                                                    {headerContent}
+                                                    {activeSort?.id === header.column.id ? (
+                                                        activeSort.direction === 'asc' ? (
+                                                            <ChevronUp className="size-3" />
+                                                        ) : (
+                                                            <ChevronDown className="size-3" />
+                                                        )
                                                     ) : (
-                                                        <ChevronDown className="size-3" />
-                                                    )
-                                                ) : (
-                                                    <ChevronsUpDown className="size-3 opacity-50" />
-                                                )}
-                                            </button>
-                                        )}
-                                    </th>
-                                ))}
+                                                        <ChevronsUpDown className="size-3 opacity-50" />
+                                                    )}
+                                                </button>
+                                            ) : null}
+                                        </th>
+                                    );
+                                })}
                             </tr>
                         </thead>
                         <tbody>
@@ -439,7 +444,10 @@ export function DataTable<TData extends RowData>({
                             value={String(activePageSize)}
                             onValueChange={(value) => handlePageSizeChange(Number(value))}
                         >
-                            <SelectTrigger className="h-8 w-16">
+                            <SelectTrigger
+                                className="h-8 w-16"
+                                aria-label={`${t('rowsPerPage')}: ${activePageSize}`}
+                            >
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>

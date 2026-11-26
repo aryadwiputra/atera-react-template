@@ -170,7 +170,7 @@ export function Footer() {
         <footer className="border-t bg-muted/40">
             <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-14 md:grid-cols-[1.5fr_1fr_1fr]">
                 <div>
-                    <Link to="/" aria-label="Atera home" className="inline-flex items-center">
+                    <Link to="/" className="inline-flex items-center">
                         <AppLogo />
                     </Link>
                     <p className="mt-4 max-w-xs text-sm text-pretty text-muted-foreground">
