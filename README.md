@@ -6,11 +6,11 @@ Atera is a modern admin dashboard template built with React 19, TypeScript, and 
 
 - **Full-Featured Dashboard** - Pre-built analytics, orders, customers, finance, inventory, HR, and more
 - **Service Layer Architecture** - Easy backend integration with typed interfaces
-- **Comprehensive Theming System** - 5 color presets, dark/light modes, customizable density and layout
+- **Comprehensive Theming System** - Theme Studio with live preview, presets, accent/neutral colors, radius, typography, density, sidebar, layout, and motion controls
 - **Internationalization** - Built-in support for English, German, and French
 - **Developer-Friendly** - Comprehensive documentation and clear patterns
 - **Production Ready** - Strict TypeScript, linting, unit tests, and a verified build pipeline
-- **Mock Data Only** - No backend required; data lives in memory and resets on refresh (see the service layer for the swap point)
+- **Local-First Orders** - Orders persist in IndexedDB (Dexie) with export, import, and reset from the Local workspace bar. Other domains remain in-memory mock data.
 - **Demo Authentication** - Demo accounts live in `localStorage`; passwords are salted and SHA-256 hashed, but this is not production auth (no server, tokens, or authorization). Replace it before shipping.
 
 ## Quick Start
@@ -134,15 +134,16 @@ bun run format:check  # verify without writing
 
 ### Testing
 ```bash
-bun run test        # Vitest unit tests
+bun run test        # Vitest unit tests (19 tests)
 bun run test:watch  # Vitest in watch mode
-bun run test:e2e    # Playwright smoke + critical a11y checks
+bun run test:e2e    # Playwright: full suite on Chromium, smoke on Firefox/WebKit, visual + WCAG AA checks
+bun run perf:budget # gzip budget for the initial payload and largest asset
 ```
 
-The first Playwright run needs a browser:
+The first Playwright run needs the browsers:
 
 ```bash
-bunx playwright install chromium
+bunx playwright install chromium firefox webkit
 ```
 
 ### Deployment
@@ -169,8 +170,16 @@ SEO files live in `public/`: `robots.txt` and `sitemap.xml`. Both use
 before deploying. `index.html` references `/dashboard-preview.png` for social
 previews - use an absolute URL if your host does not serve it from the root.
 
-The app requires no environment variables. If you add integrations, expose them
-through Vite (`VITE_*`) and read them with `import.meta.env.VITE_*`.
+The app requires no environment variables to run. Core Web Vitals reporting is
+optional: set `VITE_RUM_ENDPOINT` to a URL and metrics are sent with
+`navigator.sendBeacon`; without it, metrics only log in development. If you add
+other integrations, expose them through Vite (`VITE_*`) and read them with
+`import.meta.env.VITE_*`.
+
+The production build also registers a service worker (`public/sw.js`) and ships
+`public/manifest.webmanifest`, so the app installs as a PWA and the shell remains
+available offline. Orders already persist locally; other domains still use
+in-memory mock data.
 
 ## Customization
 
