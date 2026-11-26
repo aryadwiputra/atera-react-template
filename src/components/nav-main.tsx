@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 import type { NavItem } from '@/types';
 
 type NavGroup = {
+    id: string;
     label: string;
     items: (NavItem & { badge?: string })[];
 };
@@ -23,7 +24,7 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
     const { currentUrl, isCurrentUrl } = useCurrentUrl();
     const { state, isMobile } = useSidebar();
     const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
-        Object.fromEntries(groups.map((group) => [group.label, true])),
+        Object.fromEntries(groups.map((group) => [group.id, true])),
     );
     const isCollapsed = state === 'collapsed' && !isMobile;
 
@@ -35,11 +36,14 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
             groups.forEach((group) => {
                 if (
                     group.items.some(
-                        (item) =>                     !item.disabled && (isCurrentUrl(item.href) || (item.href !== '/dashboard' && currentUrl.startsWith(item.href))),
+                        (item) =>
+                            !item.disabled &&
+                            (isCurrentUrl(item.href) ||
+                                (item.href !== '/dashboard' && currentUrl.startsWith(item.href))),
                     )
                 ) {
-                    if (!next[group.label]) {
-                        next[group.label] = true;
+                    if (!next[group.id]) {
+                        next[group.id] = true;
                         changed = true;
                     }
                 }
@@ -52,11 +56,11 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
     return (
         <nav aria-label="Main navigation" className="space-y-3">
             {groups.map((group) => {
-                const isOpen = openGroups[group.label] ?? true;
-                const groupId = `sidebar-group-${group.label.toLowerCase()}`;
+                const isOpen = openGroups[group.id] ?? true;
+                const groupId = `sidebar-group-${group.id}`;
 
                 return (
-                    <SidebarGroup key={group.label} className="p-0">
+                    <SidebarGroup key={group.id} className="p-0">
                         <SidebarGroupLabel asChild className="h-7 px-0">
                             <button
                                 type="button"
@@ -66,7 +70,7 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
                                 onClick={() =>
                                     setOpenGroups((current) => ({
                                         ...current,
-                                        [group.label]: !isOpen,
+                                        [group.id]: !isOpen,
                                     }))
                                 }
                                 className="group/section w-full justify-between px-2 text-2xs leading-5 font-medium tracking-[0.12em] text-sidebar-foreground/45 hover:bg-transparent hover:text-sidebar-foreground/70"
@@ -107,28 +111,26 @@ export function NavMain({ groups }: { groups: NavGroup[] }) {
                                             >
                                                 {item.disabled ? (
                                                     <>
-                                                        {item.icon && (
-                                                            <item.icon />
-                                                        )}
-                                                        <span>
-                                                            {item.title}
-                                                        </span>
+                                                        {item.icon && <item.icon />}
+                                                        <span>{item.title}</span>
                                                     </>
                                                 ) : (
-                                                    <Link to={item.href}>
-                                                        {item.icon && (
-                                                            <item.icon />
-                                                        )}
-                                                        <span>
-                                                            {item.title}
-                                                        </span>
+                                                    <Link
+                                                        to={item.href}
+                                                        aria-current={
+                                                            !item.disabled &&
+                                                            isCurrentUrl(item.href, undefined, true)
+                                                                ? 'page'
+                                                                : undefined
+                                                        }
+                                                    >
+                                                        {item.icon && <item.icon />}
+                                                        <span>{item.title}</span>
                                                     </Link>
                                                 )}
                                             </SidebarMenuButton>
                                             {item.badge && (
-                                                <SidebarMenuBadge>
-                                                    {item.badge}
-                                                </SidebarMenuBadge>
+                                                <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
                                             )}
                                         </SidebarMenuItem>
                                     ))}

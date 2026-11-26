@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /$
+Allow: /docs
+Allow: /terms
+Allow: /privacy
+
+Disallow: /
+
+Sitemap: https://atera.example.com/sitemap.xml
