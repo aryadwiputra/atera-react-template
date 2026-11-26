@@ -6,7 +6,16 @@ import {
     type ColumnDef,
     type RowData,
 } from '@tanstack/react-table';
-import { ChevronDown, ChevronUp, ChevronsUpDown, Download, Eye, Search, X } from 'lucide-react';
+import {
+    ChevronDown,
+    ChevronUp,
+    ChevronsUpDown,
+    Download,
+    Eye,
+    LoaderCircle,
+    Search,
+    X,
+} from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -34,7 +43,7 @@ import {
 export const tableFeaturesConfig = tableFeatures({});
 export const createAppColumnHelper = <TData extends RowData>() =>
     createColumnHelper<typeof tableFeaturesConfig, TData>();
-type SortState = { id: string; direction: 'asc' | 'desc' } | null;
+export type SortState = { id: string; direction: 'asc' | 'desc' } | null;
 type DataTableProps<TData extends RowData> = {
     columns: ColumnDef<typeof tableFeaturesConfig, TData, any>[];
     data: TData[];
@@ -84,12 +93,26 @@ const exportCsv = <TData extends RowData>(
     URL.revokeObjectURL(link.href);
 };
 
+export type DataTableServerProps = {
+    rowCount: number;
+    page: number;
+    pageSize: number;
+    sort: SortState;
+    filter: string;
+    onPageChange: (page: number) => void;
+    onPageSizeChange: (pageSize: number) => void;
+    onSortChange: (sort: SortState) => void;
+    onFilterChange: (filter: string) => void;
+    isLoading?: boolean;
+};
+
 export function DataTable<TData extends RowData>({
     columns,
     data,
     filterPlaceholder = 'Filter...',
     renderMobileCard,
-}: DataTableProps<TData>) {
+    server,
+}: DataTableProps<TData> & { server?: DataTableServerProps }) {
     const { language } = useCustomizePreferences();
     const t = useTranslations(language);
     const [filter, setFilter] = useState('');
@@ -98,8 +121,13 @@ export function DataTable<TData extends RowData>({
     const [sort, setSort] = useState<SortState>(null);
     const [visible, setVisible] = useState<Record<string, boolean>>({});
     const [selected, setSelected] = useState<Set<number>>(new Set());
+    const activeFilter = server?.filter ?? filter;
+    const activePage = server?.page ?? page;
+    const activePageSize = server?.pageSize ?? pageSize;
+    const activeSort = server?.sort ?? sort;
     const filteredData = useMemo(() => {
-        const query = filter.trim().toLowerCase();
+        if (server) return data;
+        const query = activeFilter.trim().toLowerCase();
         const filtered = query
             ? data.filter((row) =>
                   Object.values(row as Record<string, unknown>).some((value) =>
@@ -107,40 +135,75 @@ export function DataTable<TData extends RowData>({
                   ),
               )
             : data;
-        if (!sort) return filtered;
+        if (!activeSort) return filtered;
         return [...filtered].sort((left, right) => {
             const leftColumn = columns.find(
                 (column) =>
                     String(asColumnShape(column).id ?? asColumnShape(column).accessorKey) ===
-                    sort.id,
+                    activeSort.id,
             );
             const rightColumn = columns.find(
                 (column) =>
                     String(asColumnShape(column).id ?? asColumnShape(column).accessorKey) ===
-                    sort.id,
+                    activeSort.id,
             );
             const a = String(leftColumn ? getCellValue(left, leftColumn) : '');
             const b = String(rightColumn ? getCellValue(right, rightColumn) : '');
-            return sort.direction === 'asc'
+            return activeSort.direction === 'asc'
                 ? a.localeCompare(b, undefined, { numeric: true })
                 : b.localeCompare(a, undefined, { numeric: true });
         });
-    }, [columns, data, filter, sort]);
-    const pageCount = Math.max(1, Math.ceil(filteredData.length / pageSize));
-    const currentPage = Math.min(page, pageCount);
-    const pageData = filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    }, [columns, data, activeFilter, activeSort, server]);
+    const totalRows = server?.rowCount ?? filteredData.length;
+    const pageCount = Math.max(1, Math.ceil(totalRows / activePageSize));
+    const currentPage = Math.min(activePage, pageCount);
+    const pageData = server
+        ? data
+        : filteredData.slice((currentPage - 1) * activePageSize, currentPage * activePageSize);
     const table = useTable({ features: tableFeaturesConfig, columns, data: pageData });
     const visibleHeaders =
         table
             .getHeaderGroups()[0]
             ?.headers.filter((header) => visible[header.column.id] !== false) ?? [];
     const toggleSort = (id: string) => {
-        setSort((current) =>
-            current?.id === id
-                ? { id, direction: current.direction === 'asc' ? 'desc' : 'asc' }
-                : { id, direction: 'asc' },
-        );
-        setPage(1);
+        const next =
+            activeSort?.id === id
+                ? {
+                      id,
+                      direction:
+                          activeSort.direction === 'asc' ? ('desc' as const) : ('asc' as const),
+                  }
+                : { id, direction: 'asc' as const };
+        if (server) {
+            server.onSortChange(next);
+            server.onPageChange(1);
+        } else {
+            setSort(next);
+            setPage(1);
+        }
+    };
+    const handleFilterChange = (value: string) => {
+        if (server) {
+            server.onFilterChange(value);
+            server.onPageChange(1);
+        } else {
+            setFilter(value);
+            setPage(1);
+        }
+    };
+    const clearFilter = () => handleFilterChange('');
+    const handlePageChange = (value: number) => {
+        if (server) server.onPageChange(value);
+        else setPage(value);
+    };
+    const handlePageSizeChange = (value: number) => {
+        if (server) {
+            server.onPageSizeChange(value);
+            server.onPageChange(1);
+        } else {
+            setPageSize(value);
+            setPage(1);
+        }
     };
     const toggleSelected = (index: number) =>
         setSelected((current) => {
@@ -151,18 +214,15 @@ export function DataTable<TData extends RowData>({
         });
     return (
         <Card>
-            <CardContent className="space-y-0 p-0">
+            <CardContent className="space-y-0 p-0" aria-busy={server?.isLoading}>
                 <div className="flex flex-col gap-3 border-b px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="relative w-full sm:max-w-xs">
                         <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
                             className="pl-9"
                             placeholder={filterPlaceholder}
-                            value={filter}
-                            onChange={(event) => {
-                                setFilter(event.target.value);
-                                setPage(1);
-                            }}
+                            value={activeFilter}
+                            onChange={(event) => handleFilterChange(event.target.value)}
                         />
                     </div>
                     <div className="flex items-center gap-2">
@@ -195,7 +255,9 @@ export function DataTable<TData extends RowData>({
                         <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => exportCsv(filteredData, columns, visible)}
+                            onClick={() =>
+                                exportCsv(server ? data : filteredData, columns, visible)
+                            }
                         >
                             <Download className="size-4" />
                             {t('export')}
@@ -206,14 +268,14 @@ export function DataTable<TData extends RowData>({
                     <span>
                         {selected.size
                             ? `${selected.size} ${t('selected')}`
-                            : `${filteredData.length} ${t('results')}`}
+                            : `${totalRows} ${t('results')}`}
                     </span>
-                    {filter && (
+                    {activeFilter && (
                         <Button
                             variant="ghost"
                             size="sm"
                             className="h-7 px-2"
-                            onClick={() => setFilter('')}
+                            onClick={clearFilter}
                         >
                             <X className="size-3" />
                             {t('clear')}
@@ -230,7 +292,9 @@ export function DataTable<TData extends RowData>({
                                         checked={
                                             pageData.length > 0 &&
                                             pageData.every((_, index) =>
-                                                selected.has((currentPage - 1) * pageSize + index),
+                                                selected.has(
+                                                    (currentPage - 1) * activePageSize + index,
+                                                ),
                                             )
                                         }
                                         onCheckedChange={(checked) =>
@@ -239,10 +303,12 @@ export function DataTable<TData extends RowData>({
                                                 pageData.forEach((_, index) =>
                                                     checked
                                                         ? next.add(
-                                                              (currentPage - 1) * pageSize + index,
+                                                              (currentPage - 1) * activePageSize +
+                                                                  index,
                                                           )
                                                         : next.delete(
-                                                              (currentPage - 1) * pageSize + index,
+                                                              (currentPage - 1) * activePageSize +
+                                                                  index,
                                                           ),
                                                 );
                                                 return next;
@@ -265,8 +331,8 @@ export function DataTable<TData extends RowData>({
                                                     header.column.columnDef.header,
                                                     header.getContext(),
                                                 )}
-                                                {sort?.id === header.column.id ? (
-                                                    sort.direction === 'asc' ? (
+                                                {activeSort?.id === header.column.id ? (
+                                                    activeSort.direction === 'asc' ? (
                                                         <ChevronUp className="size-3" />
                                                     ) : (
                                                         <ChevronDown className="size-3" />
@@ -281,7 +347,19 @@ export function DataTable<TData extends RowData>({
                             </tr>
                         </thead>
                         <tbody>
-                            {table.getRowModel().rows.length ? (
+                            {server?.isLoading ? (
+                                <tr>
+                                    <td
+                                        colSpan={visibleHeaders.length + 1}
+                                        className="px-4 py-12 text-center"
+                                    >
+                                        <LoaderCircle
+                                            aria-label="Loading"
+                                            className="mx-auto size-5 animate-spin text-muted-foreground"
+                                        />
+                                    </td>
+                                </tr>
+                            ) : table.getRowModel().rows.length ? (
                                 table.getRowModel().rows.map((row, index) => (
                                     <tr
                                         key={row.id}
@@ -291,11 +369,11 @@ export function DataTable<TData extends RowData>({
                                             <Checkbox
                                                 aria-label={`Select row ${index + 1}`}
                                                 checked={selected.has(
-                                                    (currentPage - 1) * pageSize + index,
+                                                    (currentPage - 1) * activePageSize + index,
                                                 )}
                                                 onCheckedChange={() =>
                                                     toggleSelected(
-                                                        (currentPage - 1) * pageSize + index,
+                                                        (currentPage - 1) * activePageSize + index,
                                                     )
                                                 }
                                             />
@@ -317,14 +395,7 @@ export function DataTable<TData extends RowData>({
                                 <tr>
                                     <td colSpan={visibleHeaders.length + 1}>
                                         <EmptyTableState
-                                            onClear={
-                                                filter
-                                                    ? () => {
-                                                          setFilter('');
-                                                          setPage(1);
-                                                      }
-                                                    : undefined
-                                            }
+                                            onClear={activeFilter ? clearFilter : undefined}
                                         />
                                     </td>
                                 </tr>
@@ -358,27 +429,15 @@ export function DataTable<TData extends RowData>({
                             ),
                         )
                     ) : (
-                        <EmptyTableState
-                            onClear={
-                                filter
-                                    ? () => {
-                                          setFilter('');
-                                          setPage(1);
-                                      }
-                                    : undefined
-                            }
-                        />
+                        <EmptyTableState onClear={activeFilter ? clearFilter : undefined} />
                     )}
                 </div>
                 <div className="flex flex-col gap-3 border-t px-4 py-3 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-2">
                         <span>{t('rowsPerPage')}</span>
                         <Select
-                            value={String(pageSize)}
-                            onValueChange={(value) => {
-                                setPageSize(Number(value));
-                                setPage(1);
-                            }}
+                            value={String(activePageSize)}
+                            onValueChange={(value) => handlePageSizeChange(Number(value))}
                         >
                             <SelectTrigger className="h-8 w-16">
                                 <SelectValue />
@@ -390,8 +449,8 @@ export function DataTable<TData extends RowData>({
                             </SelectContent>
                         </Select>
                         <span>
-                            {filteredData.length
-                                ? `${(currentPage - 1) * pageSize + 1}-${Math.min(currentPage * pageSize, filteredData.length)} of ${filteredData.length}`
+                            {totalRows
+                                ? `${(currentPage - 1) * activePageSize + 1}-${Math.min(currentPage * activePageSize, totalRows)} of ${totalRows}`
                                 : '0 rows'}
                         </span>
                     </div>
@@ -400,7 +459,7 @@ export function DataTable<TData extends RowData>({
                             variant="outline"
                             size="sm"
                             disabled={currentPage === 1}
-                            onClick={() => setPage(currentPage - 1)}
+                            onClick={() => handlePageChange(currentPage - 1)}
                         >
                             {t('previous')}
                         </Button>
@@ -411,7 +470,7 @@ export function DataTable<TData extends RowData>({
                             variant="outline"
                             size="sm"
                             disabled={currentPage === pageCount}
-                            onClick={() => setPage(currentPage + 1)}
+                            onClick={() => handlePageChange(currentPage + 1)}
                         >
                             {t('next')}
                         </Button>
