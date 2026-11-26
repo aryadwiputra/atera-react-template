@@ -11,11 +11,13 @@ import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { chartData, type Translator } from './types';
 
+const isEmbedded = typeof window !== 'undefined' && window.self !== window.top;
+
 export function OverviewChart({ t }: { t: Translator }) {
     return (
         <div
             className={cn(
-                'flex h-full flex-col gap-4 rounded-[--radius-lg] border bg-card p-5 shadow-none',
+                'flex h-full flex-col gap-4 rounded-lg border bg-card p-[var(--card-p,1.5rem)] shadow-none',
             )}
         >
             <div className="flex items-start justify-between gap-4">
@@ -67,6 +69,7 @@ export function OverviewChart({ t }: { t: Translator }) {
                             stroke="var(--chart-1)"
                             fill="url(#overviewGradient)"
                             strokeWidth={2}
+                            isAnimationActive={!isEmbedded}
                         />
                     </AreaChart>
                 </ResponsiveContainer>

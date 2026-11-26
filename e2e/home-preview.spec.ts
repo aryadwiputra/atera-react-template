@@ -60,6 +60,10 @@ test('in-page navigation scrolls smoothly to the matching section', async ({ pag
 test('showcase preview switches pages without a login step', async ({ page }) => {
     await page.goto('/');
 
+    await page
+        .getByRole('heading', { name: 'Open any page and it already works' })
+        .scrollIntoViewIfNeeded();
+
     await expect(
         page.getByRole('region', { name: 'Analytics page preview', exact: true }),
     ).toBeVisible();
